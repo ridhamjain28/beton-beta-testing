@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resources | Beton Lighting</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&amp;f[]=general-sans@300,400,500,600&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-cream: #Fdfbf9;
+            --border-neutral: rgba(0, 61, 130, 0.15);
+            --text-primary: #003D82;
+            --accent-orange: #FF6B35;
+            --text-secondary: #737373;
+        }
+        body {
+            font-family: 'General Sans', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-cream);
+            overflow-x: hidden;
+        }
+        .font-serif { font-family: 'Zodiak', serif; }
+        .image-grayscale { filter: grayscale(20%); transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .image-grayscale:hover { filter: grayscale(0%); transform: scale(1.02); }
+        .underline-hover { position: relative; }
+        .underline-hover::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s ease; }
+        .underline-hover:hover::after { width: 100%; }
+        .underline-hover:hover { color: #FF6B35; }
+        .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 1.2s ease forwards; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        .stagger-1 { animation-delay: 0.2s; }
+        .stagger-2 { animation-delay: 0.4s; }
+        .stagger-3 { animation-delay: 0.6s; }
+
+        
+        .pdf-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom baseline grid alignment */
+        .technical-grid {
+            background-size: 40px 40px;
+            background-image: radial-gradient(circle, #e2e2e9 1px, transparent 1px);
+        }
+        /* Accordion transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+        .accordion-item.active .rotate-icon {
+            transform: rotate(180deg);
+        }
+    
+    </style>
+</head>
+<body>
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#Fdfbf9]"><header class="sticky top-0 z-50 bg-[#Fdfbf9]/95 backdrop-blur-sm border-b border-[#003D82]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="flex-1">
+<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.jpg"/></a>
+</div>
+<nav class="hidden lg:flex items-center gap-12 flex-none">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="projects.html">Projects</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors text-[#FF6B35]" style="display: none;" href="professionals.html">For Professionals</a>
+</nav>
+<div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors hidden" href="#">Search</a>
+<a class="px-5 py-2 border border-[#FF6B35] text-[#FF6B35] text-[10px] uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+<!-- Mobile Hamburger Icon -->
+<div class="flex-1 flex lg:hidden justify-end items-center">
+<button class="text-2xl text-[#003D82] focus:outline-none" id="mobile-menu-btn">
+<iconify-icon icon="heroicons:bars-3-20-solid"></iconify-icon>
+</button>
+</div>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 bg-[#Fdfbf9]/98 z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+<button class="absolute top-6 right-8 text-3xl text-[#003D82] focus:outline-none" id="mobile-menu-close">
+<iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+</button>
+<div class="flex flex-col items-center gap-8 text-center">
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="projects.html">Projects</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors text-[#FF6B35]" style="display: none;" href="professionals.html">For Professionals</a>
+<a class="mt-4 px-8 py-3 border border-[#FF6B35] text-[#FF6B35] text-sm uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const close = document.getElementById('mobile-menu-close');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        
+        if(btn && close && overlay) {
+            btn.addEventListener('click', () => {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            });
+            close.addEventListener('click', () => {
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
+<!-- Global Header -->
+<main>
+<section class="h-[307px] flex flex-col justify-center items-start px-8 max-w-container-max mx-auto technical-grid">
+<div class="border-l-4 border-secondary pl-6">
+<h1 class="font-display-lg text-display-lg text-primary mb-2">Resources</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Comprehensive installation guides, wiring diagrams, and technical articles designed for architectural precision and electrical safety.
+                </p>
+</div>
+</section>
+<!-- Document Library Section -->
+<section class="px-8 max-w-container-max mx-auto my-section-gap">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary uppercase">Document Library</h2>
+<div class="h-1 w-20 bg-secondary mt-2"></div>
+</div>
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-alt border border-outline-variant focus:outline-none focus:border-secondary rounded-DEFAULT font-label-md transition-colors" placeholder="Search documentation..." type="text"/>
+</div>
+</div>
+<!-- Bento-style Grid for Downloads -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Item 1 -->
+<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<h3 class="font-title-lg text-title-lg text-primary mb-2">Installation Guide - Series 7</h3>
+<p class="text-sm text-on-surface-variant">Step-by-step mounting and alignment instructions for recessed systems.</p>
+</div>
+<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="#">
+                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
+</a>
+</div>
+<!-- Item 2 -->
+<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<h3 class="font-title-lg text-title-lg text-primary mb-2">Maintenance Manual</h3>
+<p class="text-sm text-on-surface-variant">Cleaning protocols and thermal management checks for long-term reliability.</p>
+</div>
+<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="#">
+                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
+</a>
+</div>
+<!-- Item 3 -->
+<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<h3 class="font-title-lg text-title-lg text-primary mb-2">Standard Warranty Policy</h3>
+<p class="text-sm text-on-surface-variant">Terms of performance guarantee and component replacement schedules.</p>
+</div>
+<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="#">
+                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
+</a>
+</div>
+<!-- Item 4 -->
+<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<h3 class="font-title-lg text-title-lg text-primary mb-2">Wiring Diagrams - Magnetic Systems</h3>
+<p class="text-sm text-on-surface-variant">Low-voltage track connection maps and driver load calculations.</p>
+</div>
+<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="#">
+                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Technical Knowledge Section (Asymmetric) -->
+<section class="bg-surface-alt py-section-gap px-8">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="order-2 lg:order-1">
+<div class="w-full aspect-video bg-cover bg-center border border-outline-variant shadow-sm relative" data-alt="A clean, clinical architectural photography shot of a modern factory hallway illuminated by precise magnetic track lighting. The scene highlights the engineering detail of the fixtures against a backdrop of brushed concrete and industrial steel, reflecting a professional and authoritative manufacturer atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmUaoqrtORbmQ0OhXiHVTZarexgJvFZmo4hceeKAetvMMuX_Q-G5ysF8rshTkholIYb5txEDjz5-hDOQEIpZrRgE7euzr02b4e8TjjRMW3FJ0Ku05gB9pwTc2xNNJ468mSZfOca2P6gpvblKxkm7ViBV-GVajrTNWybMuDBF43_zR47Fn4nBZkTs-vTkA9CbWWVx2xQjZT02bcFBEmBiBCM2EiI9YLTbSqybH8UH90OFpyKTl_Ts-L7C7MrKf3VS2g7ks4bIy4qD8')">
+<div class="absolute -bottom-6 -right-6 bg-secondary text-on-primary p-8 hidden md:block">
+<p class="font-display-lg text-display-lg-mobile leading-none">98+</p>
+<p class="font-label-md text-label-md opacity-80 uppercase">CRI Accuracy</p>
+</div>
+</div>
+</div>
+<div class="order-1 lg:order-2">
+<h2 class="font-headline-md text-headline-md text-primary mb-6">ENGINEERING EXCELLENCE</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        At Beton Lighting, we believe that technical transparency is the foundation of architectural success. Our resources are developed by the same engineers who design our luminaires in the Bardoli facility.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">verified</span>
+<div>
+<h4 class="font-label-md text-label-md text-primary">Lab-Certified Data</h4>
+<p class="text-sm text-on-surface-variant">Every IES file is generated in our in-house photometric darkroom.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">settings_input_component</span>
+<div>
+<h4 class="font-label-md text-label-md text-primary">System Compatibility</h4>
+<p class="text-sm text-on-surface-variant">Validated integration with major dimming protocols including DALI and 0-10V.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="px-8 max-w-3xl mx-auto my-section-gap">
+<div class="text-center mb-16">
+<h2 class="font-headline-md text-headline-md text-primary uppercase">Frequently Asked Questions</h2>
+<div class="h-1 w-20 bg-secondary mx-auto mt-2"></div>
+</div>
+<div class="space-y-4">
+<!-- Question 1 -->
+<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
+<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
+<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">What is the standard warranty period?</span>
+<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
+                            Beton Lighting provides a standard 5-year replacement warranty on all LED engines and integrated drivers. Extended 7-year and 10-year warranties are available for project-specific industrial applications upon request.
+                        </div>
+</div>
+</div>
+<!-- Question 2 -->
+<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
+<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
+<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">Can I request custom wiring diagrams?</span>
+<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
+                            Yes. For complex architectural installations involving non-standard layouts, our engineering team can provide bespoke CAD-ready wiring schematics. Please contact the Technical Support team with your floor plan.
+                        </div>
+</div>
+</div>
+<!-- Question 3 -->
+<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
+<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
+<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">How do I book a tour of the Bardoli factory?</span>
+<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
+                            Tours of our Bardoli manufacturing facility and experience center are available by appointment for industry professionals. Please use the "Contact" page to select a preferred date and time for a guided technical walkthrough.
+                        </div>
+</div>
+</div>
+<!-- Question 4 -->
+<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
+<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
+<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">Are IES files available for all products?</span>
+<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
+                            Absolutely. We provide full photometric data including IES and LDT files for all luminaire configurations. These can be found in the technical section of each individual product page or requested as a bulk library for Dialux/Relux simulations.
+                        </div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<!-- FOOTER -->
+<script>
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all items
+            document.querySelectorAll('.accordion-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Toggle clicked item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Add a simple fade-in interaction on scroll for cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.group').forEach(card => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = "all 0.6s cubic-bezier(0.22, 1, 0.36, 1)";
+            observer.observe(card);
+        });
+    </script>
+<footer class="py-24 px-8 lg:px-16 bg-[#003D82] text-[#Fdfbf9]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+<div class="col-span-1 lg:col-span-1">
+<a class="block mb-8" href="index.html"><img alt="Beton" class="h-14 object-contain rounded" src="Beton_logo.jpg"/></a>
+<p class="text-xs leading-relaxed text-[#Fdfbf9]/90 max-w-xs mb-8">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
+<div class="flex gap-6">
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+</div>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Portfolio</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Indoor Lighting</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Outdoor Systems</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Magnetic Tracks</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Digital Catalogues</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Technical Datasheets</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Installation Guides</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Warranty Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Newsletter</h4>
+<p class="text-xs text-[#Fdfbf9]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
+<div class="relative flex border-b border-[#FF6B35]/30 pb-2">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
+<button class="text-[#FF6B35] hover:text-[#FF6B35]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</div>
+</div>
+</div>
+<div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-[10px] uppercase tracking-widest text-[#Fdfbf9]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<div class="flex gap-10">
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Legal</a>
+</div>
+</div>
+</footer></div>
+</body>
+</html>

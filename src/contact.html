@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Beton | Inquiry — Lighting for Eternity</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&amp;f[]=general-sans@300,400,500,600&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-cream: #Fdfbf9;
+            --border-navy: rgba(0, 61, 130, 0.15);
+            --text-primary: #003D82;
+            --accent-orange: #FF6B35;
+        }
+        body {
+            font-family: 'General Sans', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-cream);
+            overflow-x: hidden;
+        }
+        .font-serif {
+            font-family: 'Zodiak', serif;
+        }
+        .form-input {
+            background: transparent;
+            border-bottom: 1px solid var(--border-navy);
+            padding: 1rem 0;
+            width: 100%;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        .form-input:focus {
+            border-bottom-color: var(--accent-orange);
+        }
+        .checkbox-custom {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--border-navy);
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox-custom:checked {
+            background-color: var(--accent-orange);
+            border-color: var(--accent-orange);
+        }
+        .checkbox-custom:checked::after {
+            content: '\2713';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+    </style>
+</head>
+<body>
+<div class="max-w-[1440px] mx-auto border-x border-[rgba(0,61,130,0.15)] relative min-h-screen bg-[#Fdfbf9]"><header class="sticky top-0 z-50 bg-[#Fdfbf9]/95 backdrop-blur-sm border-b border-[#003D82]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="flex-1">
+<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.jpg"/></a>
+</div>
+<nav class="hidden lg:flex items-center gap-12 flex-none">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="projects.html">Projects</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
+</nav>
+<div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors hidden" href="#">Search</a>
+<a class="px-5 py-2 border border-[#FF6B35] text-[#FF6B35] text-[10px] uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+<!-- Mobile Hamburger Icon -->
+<div class="flex-1 flex lg:hidden justify-end items-center">
+<button class="text-2xl text-[#003D82] focus:outline-none" id="mobile-menu-btn">
+<iconify-icon icon="heroicons:bars-3-20-solid"></iconify-icon>
+</button>
+</div>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 bg-[#Fdfbf9]/98 z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+<button class="absolute top-6 right-8 text-3xl text-[#003D82] focus:outline-none" id="mobile-menu-close">
+<iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+</button>
+<div class="flex flex-col items-center gap-8 text-center">
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="projects.html">Projects</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
+<a class="mt-4 px-8 py-3 border border-[#FF6B35] text-[#FF6B35] text-sm uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const close = document.getElementById('mobile-menu-close');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        
+        if(btn && close && overlay) {
+            btn.addEventListener('click', () => {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            });
+            close.addEventListener('click', () => {
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
+<main class="relative">
+<section class="flex flex-col lg:flex-row border-b border-[rgba(0,61,130,0.15)]">
+<div class="lg:w-1/3 p-12 lg:p-24 border-r border-[rgba(0,61,130,0.15)]">
+<span class="text-[10px] uppercase tracking-[0.4em] text-[#003D82]/90 block mb-6">Collaborate</span>
+<h1 class="text-5xl lg:text-7xl font-serif leading-[1.1] mb-12 animate-slide-up">
+                        Start your <br/><em class="italic font-light text-[#FF6B35]">Journey.</em>
+</h1>
+<div class="space-y-8 animate-slide-up" style="animation-delay: 0.2s">
+<p class="text-sm text-[#003D82]/70 leading-relaxed">
+                            Every exceptional space deserves lighting that defines its soul. Share your vision with us, and let our experts architect your illumination.
+                        </p>
+<div class="pt-8 border-t border-[rgba(0,61,130,0.15)]" id="wizard-nav">
+<div class="wizard-step-nav flex items-center gap-4 mb-4 transition-opacity duration-300">
+<div class="step-circle w-8 h-8 rounded-full border border-[rgba(0,61,130,0.15)] flex items-center justify-center bg-[#FF6B35] border-[#FF6B35] text-white transition-all duration-300">
+<span class="text-[10px] font-mono">01</span>
+</div>
+<span class="step-label text-[10px] uppercase tracking-widest font-semibold text-[#FF6B35] transition-all duration-300">Discovery</span>
+</div>
+<div class="wizard-step-nav flex items-center gap-4 mb-4 opacity-40 transition-opacity duration-300">
+<div class="step-circle w-8 h-8 rounded-full border border-[rgba(0,61,130,0.15)] flex items-center justify-center transition-all duration-300">
+<span class="text-[10px] font-mono">02</span>
+</div>
+<span class="step-label text-[10px] uppercase tracking-widest font-semibold transition-all duration-300">Design Strategy</span>
+</div>
+<div class="wizard-step-nav flex items-center gap-4 transition-opacity duration-300 opacity-40">
+<div class="step-circle w-8 h-8 rounded-full border border-[rgba(0,61,130,0.15)] flex items-center justify-center transition-all duration-300">
+<span class="text-[10px] font-mono">03</span>
+</div>
+<span class="step-label text-[10px] uppercase tracking-widest font-semibold transition-all duration-300">Specifications</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-2/3 p-12 lg:p-24 bg-white">
+<form action="https://api.web3forms.com/submit" method="POST" class="max-w-2xl animate-slide-up" id="wizard-form" style="animation-delay: 0.3s">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<!-- STEP 1 -->
+<div class="wizard-step hidden opacity-0 transition-all duration-500 transform translate-x-4" data-step="1">
+<h3 class="text-[10px] uppercase tracking-[0.4em] text-[#003D82]/90 mb-12 border-b border-[rgba(0,61,130,0.15)] pb-4">01. Discovery</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-12">
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Full Name</label>
+<input class="form-input text-lg font-serif" name="name" placeholder="Enter your name" type="text"/>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Company Name</label>
+<input class="form-input text-lg font-serif" name="company" placeholder="Firm or studio" type="text"/>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Email Address</label>
+<input class="form-input text-lg font-serif" name="email" placeholder="hello@example.com" type="email"/>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Phone Number</label>
+<input class="form-input text-lg font-serif" name="phone" placeholder="+91 ..." type="tel"/>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Location</label>
+<input class="form-input text-lg font-serif" name="location" placeholder="City, Country" type="text"/>
+</div>
+</div>
+<div class="mb-12">
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Project Sphere</label>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Residential" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Residential</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Commercial" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Commercial</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Hospitality" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Hospitality</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Retail" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Retail</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Office" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Office</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="project_sphere" value="Institutional" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Institutional</span>
+</label>
+</div>
+</div>
+<div class="flex justify-end pt-8 border-t border-[rgba(0,61,130,0.15)] mt-auto">
+<button class="px-12 py-5 bg-[#FF6B35] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] transition-colors duration-700 flex items-center justify-center gap-4" onclick="nextStep(2)" type="button">
+    Next Step
+    <iconify-icon class="text-lg" icon="lucide:arrow-right-circle"></iconify-icon>
+</button>
+</div>
+</div>
+<!-- STEP 2 -->
+<div class="wizard-step hidden opacity-0 transition-all duration-500 transform translate-x-4" data-step="2">
+<h3 class="text-[10px] uppercase tracking-[0.4em] text-[#003D82]/90 mb-12 border-b border-[rgba(0,61,130,0.15)] pb-4">02. Design Strategy</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-12">
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Timeline</label>
+<select class="form-input text-lg font-serif appearance-none bg-transparent" name="timeline">
+<option>Select timeframe</option>
+<option>Immediate (0-1 Month)</option>
+<option>Planning (3-6 Months)</option>
+<option>Ongoing Development</option>
+</select>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60">Project Scale</label>
+<select class="form-input text-lg font-serif appearance-none bg-transparent" name="project_scale">
+<option>Select scale</option>
+<option>Small / Boutique</option>
+<option>Medium / Independent</option>
+<option>Large / Multi-story</option>
+<option>Masterplan / Urban</option>
+</select>
+</div>
+</div>
+<div class="mb-12">
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-4">Aesthetic Goals / Brief</label>
+<textarea class="form-input text-lg font-serif h-32 resize-none" name="message" placeholder="Describe the architecture and desired mood..."></textarea>
+</div>
+<div class="flex items-center justify-between pt-8 border-t border-[rgba(0,61,130,0.15)] mt-auto">
+<button class="px-8 py-5 border border-[#003D82]/20 text-[#003D82] text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] hover:text-white transition-colors duration-500 flex items-center justify-center gap-4" onclick="prevStep(1)" type="button">
+<iconify-icon class="text-lg" icon="lucide:arrow-left-circle"></iconify-icon>
+    Back
+</button>
+<button class="px-12 py-5 bg-[#FF6B35] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] transition-colors duration-700 flex items-center justify-center gap-4" onclick="nextStep(3)" type="button">
+    Next Step
+    <iconify-icon class="text-lg" icon="lucide:arrow-right-circle"></iconify-icon>
+</button>
+</div>
+</div>
+<!-- STEP 3 -->
+<div class="wizard-step hidden opacity-0 transition-all duration-500 transform translate-x-4" data-step="3">
+<h3 class="text-[10px] uppercase tracking-[0.4em] text-[#003D82]/90 mb-12 border-b border-[rgba(0,61,130,0.15)] pb-4">03. Specifications</h3>
+<div class="mb-10">
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Technical Requirements (Dimming)</label>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="technical_requirements" value="DALI" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">DALI</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="technical_requirements" value="Phase Cut" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Phase Cut</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="technical_requirements" value="Non-Dimmable" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Non-Dimmable</span>
+</label>
+</div>
+</div>
+<div class="mb-10">
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Color Temperature (CCT)</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom rounded-full" name="cct" value="Warm (2700-3000K)" type="radio"/>
+<span class="text-xs uppercase tracking-widest">Warm (2700-3000K)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom rounded-full" name="cct" value="Natural (4000K)" type="radio"/>
+<span class="text-xs uppercase tracking-widest">Natural (4000K)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom rounded-full" name="cct" value="Tunable / Custom" type="radio"/>
+<span class="text-xs uppercase tracking-widest">Tunable / Custom</span>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Beam Angles</label>
+<div class="flex flex-col gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="beam_angles" value="Narrow (Spot)" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Narrow (Spot)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="beam_angles" value="Medium / Wide" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Medium / Wide</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="beam_angles" value="Asymmetric (Wallwash)" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Asymmetric (Wallwash)</span>
+</label>
+</div>
+</div>
+<div>
+<label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Specific Product Lines</label>
+<div class="flex flex-col gap-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="product_lines" value="Indoor Lighting" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Indoor Lighting</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="product_lines" value="Outdoor Systems" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Outdoor Systems</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom" name="product_lines" value="Magnetic Tracks" type="checkbox"/>
+<span class="text-xs uppercase tracking-widest group-hover:text-[#FF6B35] transition-colors">Magnetic Tracks</span>
+</label>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-[rgba(0,61,130,0.15)] mt-auto">
+<button class="w-full md:w-auto px-8 py-5 border border-[#003D82]/20 text-[#003D82] text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] hover:text-white transition-colors duration-500 flex items-center justify-center gap-4" onclick="prevStep(2)" type="button">
+<iconify-icon class="text-lg" icon="lucide:arrow-left-circle"></iconify-icon>
+    Back
+</button>
+<button class="w-full md:w-auto px-12 py-5 bg-[#FF6B35] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] transition-colors duration-700 flex items-center justify-center gap-4" type="submit">
+    Submit Inquiry
+    <iconify-icon class="text-lg" icon="lucide:arrow-right-circle"></iconify-icon>
+</button>
+</div>
+<div class="flex items-center gap-4 mt-8 justify-center">
+<iconify-icon class="text-lg text-[#FF6B35]" icon="lucide:lock"></iconify-icon>
+<p class="text-[10px] uppercase tracking-widest text-[#003D82]/70 font-medium leading-tight max-w-[300px]">Your data is secured by our privacy standards and only used for consultation.</p>
+</div>
+</div>
+</form>
+
+<div id="success-modal" class="fixed inset-0 bg-[#Fdfbf9]/95 z-[100] hidden flex-col justify-center items-center opacity-100 transition-opacity duration-300">
+    <div class="bg-white p-12 lg:p-16 border border-[rgba(0,61,130,0.15)] shadow-2xl max-w-lg text-center animate-slide-up">
+        <div class="w-16 h-16 bg-[#e6f4ea] rounded-full flex items-center justify-center mx-auto mb-6">
+            <iconify-icon icon="lucide:check" class="text-3xl text-[#34a853]"></iconify-icon>
+        </div>
+        <h3 class="font-serif text-3xl text-[#003D82] mb-4">Inquiry Received</h3>
+        <p class="text-xs uppercase tracking-widest text-[#003D82]/90 leading-relaxed mb-10">Thank you for reaching out. We will review your project details and get back to you within 24-48 business hours.</p>
+        <button onclick="closeSuccessModal()" type="button" class="px-12 py-4 bg-[#FF6B35] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#003D82] transition-colors duration-500">
+            Continue Exploring
+        </button>
+    </div>
+</div>
+
+<script>
+    function updateWizardNav(activeStep) {
+        const navSteps = document.querySelectorAll('.wizard-step-nav');
+        navSteps.forEach((nav, index) => {
+            const stepNum = index + 1;
+            const circle = nav.querySelector('.step-circle');
+            const label = nav.querySelector('.step-label');
+            
+            nav.classList.add('opacity-40');
+            circle.className = 'step-circle w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300';
+            label.className = 'step-label text-[10px] uppercase tracking-widest font-semibold transition-all duration-300';
+            
+            if (stepNum === activeStep) {
+                nav.classList.remove('opacity-40');
+                circle.classList.add('bg-[#FF6B35]', 'border-[#FF6B35]', 'text-white');
+                label.classList.add('text-[#FF6B35]');
+            } else if (stepNum < activeStep) {
+                nav.classList.remove('opacity-40');
+                circle.classList.add('border-[rgba(0,61,130,0.15)]', 'text-[#003D82]', 'opacity-60');
+                label.classList.add('text-[#003D82]', 'opacity-60');
+            } else {
+                circle.classList.add('border-[rgba(0,61,130,0.15)]');
+            }
+        });
+    }
+
+    function showStep(step) {
+        const steps = document.querySelectorAll('.wizard-step');
+        
+        steps.forEach(s => {
+            s.classList.add('hidden');
+            s.classList.remove('opacity-100', 'translate-x-0');
+            s.classList.add('opacity-0', 'translate-x-4');
+        });
+        
+        const currentStep = document.querySelector(`.wizard-step[data-step="${step}"]`);
+        if (currentStep) {
+            currentStep.classList.remove('hidden');
+            setTimeout(() => {
+                currentStep.classList.remove('opacity-0', 'translate-x-4');
+                currentStep.classList.add('opacity-100', 'translate-x-0');
+            }, 50);
+        }
+        
+        updateWizardNav(step);
+    }
+
+    function nextStep(step) {
+        showStep(step);
+    }
+
+    function prevStep(step) {
+        showStep(step);
+    }
+
+
+    function closeSuccessModal() {
+        const modal = document.getElementById('success-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showStep(1);
+
+        const form = document.getElementById('wizard-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!form.name.value || !form.email.value || !form.message.value) {
+                alert("Please make sure you have filled out your Name, Email, and Aesthetic Goals (Message) in the previous steps.");
+                return;
+            }
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Sending...';
+            
+            const formData = new FormData(form);
+            const object = {};
+            formData.forEach((value, key) => {
+                if (Reflect.has(object, key)) {
+                    let currentVal = object[key];
+                    if (!Array.isArray(currentVal)) {
+                        currentVal = [currentVal];
+                    }
+                    currentVal.push(value);
+                    object[key] = currentVal;
+                } else {
+                    object[key] = value;
+                }
+            });
+            const json = JSON.stringify(object);
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    const modal = document.getElementById('success-modal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    form.reset();
+                    showStep(1);
+                } else {
+                    console.log(response);
+                    alert('Something went wrong submitting your form.');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                alert('Something went wrong submitting your form.');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+            });
+        });
+    });
+
+</script>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-3 border-b border-[rgba(0,61,130,0.15)]">
+<div class="p-12 border-r border-[rgba(0,61,130,0.15)] flex flex-col justify-center items-center text-center">
+<iconify-icon class="text-3xl text-[#FF6B35] mb-6" icon="lucide:calendar"></iconify-icon>
+<h4 class="text-xs uppercase tracking-widest font-bold mb-2">Response Time</h4>
+<p class="text-[10px] text-[#003D82]/80 font-medium tracking-widest uppercase">Within 24-48 Business Hours</p>
+</div>
+<div class="p-12 border-r border-[rgba(0,61,130,0.15)] flex flex-col justify-center items-center text-center">
+<iconify-icon class="text-3xl text-[#FF6B35] mb-6" icon="lucide:file-text"></iconify-icon>
+<h4 class="text-xs uppercase tracking-widest font-bold mb-2">Proposal format</h4>
+<p class="text-[10px] text-[#003D82]/80 font-medium tracking-widest uppercase">Technical BOQ &amp; Render Integration</p>
+</div>
+<div class="p-12 flex flex-col justify-center items-center text-center">
+<iconify-icon class="text-3xl text-[#FF6B35] mb-6" icon="lucide:map-pin"></iconify-icon>
+<h4 class="text-xs uppercase tracking-widest font-bold mb-2">Studio Base</h4>
+<p class="text-[10px] text-[#003D82]/80 font-medium tracking-widest uppercase">Bardoli, Surat, Gujarat</p>
+</div>
+</section>
+</main>
+<footer class="py-24 px-8 lg:px-16 bg-[#003D82] text-[#Fdfbf9]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+<div class="col-span-1 lg:col-span-1">
+<a class="block mb-8" href="index.html"><img alt="Beton" class="h-14 object-contain rounded" src="Beton_logo.jpg"/></a>
+<p class="text-xs leading-relaxed text-[#Fdfbf9]/90 max-w-xs mb-8">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
+<div class="flex gap-6">
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+</div>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Portfolio</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Indoor Lighting</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Outdoor Systems</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Magnetic Tracks</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Digital Catalogues</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Technical Datasheets</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Installation Guides</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Warranty Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Newsletter</h4>
+<p class="text-xs text-[#Fdfbf9]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
+<div class="relative flex border-b border-[#FF6B35]/30 pb-2">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
+<button class="text-[#FF6B35] hover:text-[#FF6B35]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</div>
+</div>
+</div>
+<div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-[10px] uppercase tracking-widest text-[#Fdfbf9]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<div class="flex gap-10">
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Legal</a>
+</div>
+</div>
+</footer></div>
+</body>
+</html>

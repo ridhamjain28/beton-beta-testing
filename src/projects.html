@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BETON LIGHTING | Projects Showcase</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&amp;f[]=general-sans@300,400,500,600&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-cream: #Fdfbf9;
+            --border-neutral: rgba(0, 61, 130, 0.15);
+            --text-primary: #003D82;
+            --accent-orange: #FF6B35;
+            --text-secondary: #737373;
+        }
+        body {
+            font-family: 'General Sans', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-cream);
+            overflow-x: hidden;
+        }
+        .font-serif { font-family: 'Zodiak', serif; }
+        .image-grayscale { filter: grayscale(20%); transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .image-grayscale:hover { filter: grayscale(0%); transform: scale(1.02); }
+        .underline-hover { position: relative; }
+        .underline-hover::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s ease; }
+        .underline-hover:hover::after { width: 100%; }
+        .underline-hover:hover { color: #FF6B35; }
+        .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 1.2s ease forwards; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        .stagger-1 { animation-delay: 0.2s; }
+        .stagger-2 { animation-delay: 0.4s; }
+        .stagger-3 { animation-delay: 0.6s; }
+
+        body {
+            
+            
+            
+            overflow-x: hidden;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-overlay {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(to top, rgba(17,17,17,0.9), transparent);
+        }
+
+        .image-zoom-container img {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .image-zoom-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111111;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #C84B31;
+        }
+    
+    </style>
+</head>
+<body>
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#Fdfbf9]"><header class="sticky top-0 z-50 bg-[#Fdfbf9]/95 backdrop-blur-sm border-b border-[#003D82]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="flex-1">
+<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.jpg"/></a>
+</div>
+<nav class="hidden lg:flex items-center gap-12 flex-none">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors text-[#FF6B35]" href="projects.html">Projects</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
+</nav>
+<div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors hidden" href="#">Search</a>
+<a class="px-5 py-2 border border-[#FF6B35] text-[#FF6B35] text-[10px] uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+<!-- Mobile Hamburger Icon -->
+<div class="flex-1 flex lg:hidden justify-end items-center">
+<button class="text-2xl text-[#003D82] focus:outline-none" id="mobile-menu-btn">
+<iconify-icon icon="heroicons:bars-3-20-solid"></iconify-icon>
+</button>
+</div>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 bg-[#Fdfbf9]/98 z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+<button class="absolute top-6 right-8 text-3xl text-[#003D82] focus:outline-none" id="mobile-menu-close">
+<iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+</button>
+<div class="flex flex-col items-center gap-8 text-center">
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="index.html">Home</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="about.html">About</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="products.html">Products</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" href="applications.html">Applications</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors text-[#FF6B35]" href="projects.html">Projects</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#FF6B35] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
+<a class="mt-4 px-8 py-3 border border-[#FF6B35] text-[#FF6B35] text-sm uppercase tracking-[0.2em] hover:bg-[#FF6B35] hover:text-white transition-colors duration-500" href="contact.html">Inquire</a>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const close = document.getElementById('mobile-menu-close');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        
+        if(btn && close && overlay) {
+            btn.addEventListener('click', () => {
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            });
+            close.addEventListener('click', () => {
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
+<!-- Project Grid (Asymmetric) -->
+<main class="max-w-[1440px] mx-auto px-margin-desktop py-xxl bg-white">
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Project 01: Large Vertical -->
+<div class="col-span-12 md:col-span-7 mb-xxl">
+<div class="group relative project-card image-zoom-container overflow-hidden aspect-[4/5] bg-gray-50">
+<img class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" data-alt="An expansive interior view of a modern museum corridor constructed from dark gray concrete. Soft, warm linear light emanates from a recessed ceiling channel, reflecting off a polished granite floor. The composition is asymmetrical and minimalist, focusing on the interplay of light and heavy material. High-end architectural photography with a dark luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABJW6XbmYbz4JIiNEDrZnUnV8SNX1QeDzV-wWFQr1sgXeb__8GhZWz-GlO1Vai-hqxUs5_Lne06ykkaVCYzoi04FmtwFA4dxnyyv1mPz6CT9U_yMHpcstbtfWoZBF3XjU12-3NQ07-wXjKx_ZWLUCSpOIedHdqO6p_6dwkOw9z1MlLGXfzcIEVazHBbRB7n9F3Y4C9jVrrWsJKCFMJobtZzv5xsu6xzVKslbMVvsXZOK2WlxuMzn0VOLeXbiBM2rstUgDbY0nrPBM"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end project-overlay">
+<h3 class="font-headline-md text-headline-md text-gray-900">The Void Museum</h3>
+<p class="font-label-md text-label-md text-gray-600">OSLO, NORWAY</p>
+</div>
+</div>
+</div>
+<!-- Project 02: Small Horizontal Right -->
+<div class="col-span-12 md:col-span-5 md:mt-xxl mb-xxl">
+<div class="group relative project-card image-zoom-container overflow-hidden aspect-square bg-gray-50">
+<img class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" data-alt="A private residence exterior at night. A stark, rectangular concrete wall is illuminated from the base by narrow-beam spotlights, creating a dramatic wash of light. The surrounding landscape is dark, emphasizing the architectural silhouette. Sharp edges and luxury materials define the visual language of the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpKvO-s7OcTTYwarmJUhtzz5dG-nPfBg_3LKshwY-QrdMHSPe6FDR76hagLIvDm8xuY6MCTvr5-PfSJ0tTP6ogUX9oa_R0WrVqQqNLQV1uJKpysNqnQf8YtJl8SXRbpSvC0aTwg7_HtlVaQGMpMSdcISX_6oXXAcTfiBcfFxvuYcdpl4ws0ypxENvv2zIhrg9Z_cAb94jPWPsejX6EOb3Z4qAWECnxjZmB0p_CDmALA1rSxFsHemuMSLqNkPiEZnWfnDmAD6sl-BA"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end project-overlay">
+<h3 class="font-headline-sm text-headline-sm text-gray-900">Residenza Pietra</h3>
+<p class="font-label-md text-label-md text-gray-600">MILAN, ITALY</p>
+</div>
+</div>
+</div>
+<!-- Project 03: Full Width Banner -->
+<div class="col-span-12 mb-xxl">
+<div class="group relative project-card image-zoom-container overflow-hidden h-[600px] bg-gray-50">
+<img class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" data-alt="A wide-angle shot of a brutalist government building facade. Rhythmic concrete pillars are highlighted by cool-toned architectural floodlights, creating a strong pattern of light and dark. The composition is heroic and authoritative, showcasing the precision of large-scale outdoor lighting design. Obsidian black shadows and international clay accents in the details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6BvujqknxfoHCtjIValSqwllm7Lmbz1V6ZoLXO7pSoW3S8ywyq9JBI1jZosfZdld8yMDT_tD8CT_eFHGmEmhR1Klh_pzD2cK2DZRDKMt5LjUYKhPqV5Oq0HdMwdqzPRkNN-3W5LEu70eenhlUePrR-v13Du4IEYCpA_-7mEsaLC1VUVUShGryiNxlIRzx1JdNZD8Gpcle8JiVXDJTmZfTfFyqP2Qc9yg_y-R7pUBHHFV8nD_vsLBWTRLmjB0nFXyXjGZPXaUSy8A"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end project-overlay">
+<h3 class="font-display-lg text-headline-lg text-gray-900">Civilis Plaza</h3>
+<p class="font-label-md text-label-md text-gray-600">BRASÍLIA, BRAZIL</p>
+</div>
+</div>
+</div>
+<!-- Project 04 & 05: Balanced Pair -->
+<div class="col-span-12 md:col-span-6 mb-xxl">
+<div class="group relative project-card image-zoom-container overflow-hidden aspect-[4/3] bg-gray-50">
+<img class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" data-alt="An interior stairwell of a luxury hotel made of black steel and raw concrete. A singular, bold linear light follows the handrail, casting a sharp graphic line across the walls. The atmosphere is quiet, sophisticated, and technically precise. Minimalist architectural lighting in a dark luxury setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfSptNICp_jVjvTHq_9MOKnFhGf3wUTW4YE05g5gYLSuGF5oCVqzWW6IkAe39yxXFqwWlkljP59suGDDlbIRDsNcE2rCbu0mKpCwjYaRzdOkO7kd7hbMNXh4D79lezLGyJK9mb9SVa8lY8Tbr-di5h3j1yNcR_1PFtFArw2fI9LKd25ais-FUSxsJw7dR72q3KfpvsDd4DuC2h9u57eo64cPug6lPmEqWRg3of1gAQqT65glOkaGW3OKUNfgeHgaR-GMA_c8NAHTE"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end project-overlay">
+<h3 class="font-headline-sm text-headline-sm text-gray-900">The Monolith</h3>
+<p class="font-label-md text-label-md text-gray-600">BERLIN, GERMANY</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 md:mt-xl mb-xxl">
+<div class="group relative project-card image-zoom-container overflow-hidden aspect-[4/3] bg-gray-50">
+<img class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" data-alt="A detail shot of an outdoor concrete terrace. Hidden step lights cast soft pools of light onto the ground, guiding the path. The materials include weather-worn steel and rough-cast concrete, emphasizing a connection between nature and industrial architecture. High-contrast lighting with a moody, dark aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsKjaUCFOc77tmPxCZ5jj2QhLy621RQiaYdQnSBEWKuvBcNOrvc6S4jqyHKf-Up4UQEHADIjviZ0xtT4R4RPlm8Q9uw3-NfN4f4IwNH0xgFSimX_pybaaeqf_uWqa1rV_1emmwYr5oaFRYMv1JcM_lqOasG1UQBztaBxnIiOjwJhd2usw88lr9uGOavKuLfiRiGy405rEfvJD4UeqszgLBqvPTVni_0I8cwoq_S4kg55vI1IvcrqY1C7_dS3K53oiH_xKg9AQFrPA"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end project-overlay">
+<h3 class="font-headline-sm text-headline-sm text-gray-900">Coastal Brut</h3>
+<p class="font-label-md text-label-md text-gray-600">REYKJAVÍK, ICELAND</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Flagship Project Highlight -->
+<section class="bg-gray-50 border-t border-b border-gray-200 py-xxl">
+<div class="max-w-[1440px] mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Main Image -->
+<div class="w-full md:w-2/3 h-[800px]">
+<div class="w-full h-full bg-cover bg-center" data-alt="A massive architectural installation called The Obsidian Pavilion. It is an open-air structure made of stacked black concrete slabs. Dramatic, thin beams of light shoot upwards between the slabs into the night sky. The ground is a reflective black water feature. The overall mood is one of profound silence and architectural rigor." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8mJC_wZOcvIvBA5o7GopQz7AqHE64k0W5UzqMyVm1lCI5jmi_CAoZbXaAL4Xmfn7dQ29OTPf46jta8lbRIfGQ2Z52byvg_GWbA6SxPqBNysDHMUYGarWVz7No0qkljN23ZFA69lqYSXJedCL3gxBPrn7tLbQLK7Fnh6O5Vrm6MFD84OVdUp9McnwzvuC3BZkKb_2TDUs6uSNM5IH0BtyUKC6OgzxxRpx-QU3i6W2vmIrliL3HnTp_ZgU1WwhSMSastQ6Iw9cBd2c')"></div>
+</div>
+<!-- Detail Grid & Content -->
+<div class="w-full md:w-1/3 flex flex-col gap-gutter">
+<div class="grid grid-cols-1 gap-gutter h-2/3">
+<div class="bg-center bg-cover border border-gray-200 h-[250px]" data-alt="A macro detail shot of a Beteon lighting fixture. The casing is made of micro-textured black aluminum with visible stainless steel hex screws. The lens is frosted glass, diffusing a sharp led source. Technical, industrial, and high-end craftsmanship focus." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjs4En9k4tlg3dAH5_d_eYGy_NSF30olCSLAf44ngLyiPjThq28Xexf0Uwb4tlOFF0KeFh_Eu4Quz7gYf0upvMID9IxEqrVaOE1xH0Ns0oTw1BhoSKZnl6SqUgkpK4hV23A1LYjgjJgwC6w7LgsRPx4R1ZJuF27kmXfypa8CngaPZm7PO0kn4_khfD6Oog-kXVjJDVf89t9O8-QrSSeyryFSdWTvGP0kqrN5_UBuCknn28em7kSKagYxA-JK5-EsRmLuWkeYbZPEE')"></div>
+<div class="bg-center bg-cover border border-gray-200 h-[250px]" data-alt="Close up of raw, shuttered concrete texture illuminated by a sharp grazing light from the side. The light reveals every imperfection and grain in the concrete, creating a beautiful architectural relief." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAV1Pjdancu_F4jAHN7xIXKMMxkRR8DVThXrb0nSFkMhV5XPAcCE3V7S13NXYAtRdRrydGb74ihHJSfXOCdBptT8m1GBjml361I5o_eIWnULLAE9XxTONuotOaHn_lDxPWNkVEbw3BHGlV9fzMRhLAffl9hqMOqMIRa_ah2dmMn8cV9563WinOkWyTk7XwP07zOc9dL_LLsdhzFHSfsq52L44vM5kR0TOVoZ7vgTW7zCAj4nMN8HhrUDhRz0Qh9TZDPIo_P8TnvYGY')"></div>
+</div>
+<div class="flex flex-col gap-base mt-auto border-t border-international-clay pt-md">
+<span class="font-label-sm text-label-sm text-[#ff6b00] uppercase tracking-[0.2em]">Flagship Case Study</span>
+<h2 class="font-headline-lg text-headline-lg">The Obsidian Pavilion</h2>
+<div class="font-body-md text-body-md text-gray-600">
+<p class="mb-md">The Obsidian Pavilion represents our most rigorous application of light as a structural element. By embedding high-output linear modules directly into the 12-ton concrete slabs, we achieve a seamless integration that challenges the boundary between fixture and architecture.</p>
+<p>Materials: 80% Recycled Concrete, Blackened Steel, 3200K Linear LED Modules. Design Focus: Volumetric shadows and geometric precision.</p>
+</div>
+<button class="mt-md border border-muted-silver text-gray-900 px-md py-xs font-label-md text-label-md hover:border-international-clay transition-colors w-fit">
+                            VIEW CASE STUDY
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<!-- FOOTER -->
+<script>
+        // Simple parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('header .bg-cover');
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+            }
+        });
+
+        // Intersection Observer for scroll reveal
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('translate-y-10');
+                    entry.target.classList.remove('opacity-0');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(card);
+        });
+    </script>
+<footer class="py-24 px-8 lg:px-16 bg-[#003D82] text-[#Fdfbf9]">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+<div class="col-span-1 lg:col-span-1">
+<a class="block mb-8" href="index.html"><img alt="Beton" class="h-14 object-contain rounded" src="Beton_logo.jpg"/></a>
+<p class="text-xs leading-relaxed text-[#Fdfbf9]/90 max-w-xs mb-8">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
+<div class="flex gap-6">
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
+<a class="text-[#FF6B35] hover:text-[#FF6B35]/80 transition-colors" href="#"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+</div>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Portfolio</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Indoor Lighting</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Outdoor Systems</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">Magnetic Tracks</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="products.html">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Digital Catalogues</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Technical Datasheets</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Installation Guides</a></li>
+<li><a class="text-xs text-[#Fdfbf9]/90 hover:text-white transition-colors" href="#">Warranty Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#Fdfbf9]/90">Newsletter</h4>
+<p class="text-xs text-[#Fdfbf9]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
+<div class="relative flex border-b border-[#FF6B35]/30 pb-2">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
+<button class="text-[#FF6B35] hover:text-[#FF6B35]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</div>
+</div>
+</div>
+<div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-[10px] uppercase tracking-widest text-[#Fdfbf9]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<div class="flex gap-10">
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#FF6B35] hover:text-[#FF6B35]/80" href="#">Legal</a>
+</div>
+</div>
+</footer></div>
+</body>
+</html>
