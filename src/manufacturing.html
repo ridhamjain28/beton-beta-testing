@@ -75,12 +75,12 @@
 <!-- Mobile Hamburger Icon -->
 <div class="flex-1 flex lg:hidden justify-end items-center">
 <button class="text-2xl text-[#003D82] focus:outline-none" id="mobile-menu-btn">
-<iconify-icon icon="heroicons:bars-3-20-solid"></iconify-icon>
+<iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
 </button>
 </div>
 </header>
 <!-- Mobile Menu Overlay -->
-<div class="fixed inset-0 bg-[#Fdfbf9]/98 z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+<div class="fixed inset-0 bg-[#Fdfbf9]/98 z-[100] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
 <button class="absolute top-6 right-8 text-3xl text-[#003D82] focus:outline-none" id="mobile-menu-close">
 <iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
 </button>
@@ -303,7 +303,7 @@
             observer.observe(card);
         });
     </script>
-<footer class="py-24 px-8 lg:px-16 bg-[#003D82] text-[#Fdfbf9]">
+<footer class="py-12 md:py-24 px-8 lg:px-16 bg-[#003D82] text-[#Fdfbf9]">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
 <div class="col-span-1 lg:col-span-1">
 <a class="block mb-8" href="index.html"><img alt="Beton" class="h-14 object-contain rounded" src="Beton_logo.jpg"/></a>
