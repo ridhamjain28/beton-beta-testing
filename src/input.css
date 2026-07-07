@@ -573,8 +573,8 @@
       bottom: 0;
       z-index: 90;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      gap: 1px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
       padding: 8px;
       background: rgba(254, 254, 254, 0.96);
       border-top: 1px solid var(--beton-hairline);
@@ -587,12 +587,14 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
+      min-width: 0;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       line-height: 1.1;
       text-align: center;
+      overflow: hidden;
     }
 
     .beton-sticky-enquiry .primary {
@@ -619,7 +621,11 @@
     .beton-sticky-enquiry a {
       padding-left: 6px;
       padding-right: 6px;
-      white-space: nowrap;
+      white-space: normal;
+    }
+
+    .beton-sticky-enquiry iconify-icon {
+      flex: 0 0 auto;
     }
   }
 }
