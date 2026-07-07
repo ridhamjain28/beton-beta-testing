@@ -70,6 +70,23 @@
         .animate-slide-up {
             animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
+        @media (min-width: 1024px) {
+            .contact-hero-grid {
+                display: grid;
+                grid-template-columns: minmax(420px, 35%) minmax(0, 65%);
+            }
+            .contact-intro-panel, .contact-form-panel {
+                width: auto !important;
+            }
+            .contact-intro-panel {
+                padding-inline: clamp(2rem, 3vw, 4rem) !important;
+                padding-block: clamp(3rem, 5vw, 6rem) !important;
+            }
+            .contact-form-panel {
+                padding-inline: clamp(2rem, 4vw, 6rem) !important;
+                padding-block: clamp(3rem, 5vw, 6rem) !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -135,7 +152,7 @@
 <section class="contact-hero-grid flex flex-col lg:flex-row border-b border-[rgba(19,64,149,0.15)]">
 <div class="contact-intro-panel lg:w-1/3 p-12 lg:p-24 border-r border-[rgba(19,64,149,0.15)]">
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 block mb-6">Collaborate</span>
-<h1 class="text-4xl md:text-5xl lg:text-7xl font-serif leading-[1.1] mb-12 animate-slide-up">
+<h1 class="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-serif leading-[1.1] mb-12 animate-slide-up">
                         Start your <br/><em class="italic font-light text-[#EF7F1A]">Journey.</em>
 </h1>
 <div class="space-y-8 animate-slide-up" style="animation-delay: 0.2s">
