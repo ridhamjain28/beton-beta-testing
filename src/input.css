@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --beton-cobalt: #264796;
+    --beton-cobalt: #134095;
     --beton-orange: #EF7F1A;
     --beton-yellow: #FECC00;
     --beton-white: #FEFEFE;
@@ -449,19 +449,36 @@
     }
 
     .footer-logo-link {
-      width: 104px;
-      height: 72px;
+      width: 140px;
+      height: 96px;
       display: flex !important;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.08);
-      margin-bottom: 22px !important;
+      background: var(--beton-cobalt);
+      margin-bottom: 24px !important;
     }
 
     .footer-logo {
-      width: 88px !important;
+      width: 116px !important;
       height: auto !important;
-      max-height: 44px;
+      max-height: 58px;
+      object-fit: contain;
+    }
+
+    footer a:has(img[src*="Beton_logo"]) {
+      width: 140px;
+      height: 96px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      background: var(--beton-cobalt);
+      margin-bottom: 24px !important;
+    }
+
+    footer a:has(img[src*="Beton_logo"]) img {
+      width: 116px !important;
+      height: auto !important;
+      max-height: 58px;
       object-fit: contain;
     }
 
