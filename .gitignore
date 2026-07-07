@@ -3,7 +3,6 @@ real-time-light-simulation/node_modules/
 real-time-light-simulation/.next/
 .DS_Store
 *.log
-.agents/
 .codex/
 *.png
 *.jpg
