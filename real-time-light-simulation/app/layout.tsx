@@ -47,7 +47,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               const accessKey = prompt("Please enter your access key:");
-              if (accessKey !== "BetonOrange2026") {
+              if (accessKey !== "customer") {
                   alert("Invalid key. Redirecting to home.");
                   window.location.href = "../index.html";
               }

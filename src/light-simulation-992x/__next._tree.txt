@@ -1,2 +1,2 @@
-:HL["/light-simulation-992x/_next/static/chunks/17fj8-_ez95.h.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"c-XcH1CI4zu0TRbfLyisE"}
+:HL["/light-simulation-992x/_next/static/chunks/03n~2v7~hovh6.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"jKjB5l8rNRA75uyCbc3nx"}

@@ -43,6 +43,18 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Beton Brand Color Palette */
+  --color-brand-cobalt: #264796;
+  --color-brand-orange: #EF7F1A;
+  --color-brand-yellow: #FECC00;
+  --color-brand-white: #FEFEFE;
+  --color-brand-ink: #111827;
+  --color-brand-body: #374151;
+  --color-brand-muted: #6B7280;
+  --color-brand-hairline: #D9DEE8;
+  --color-brand-surface-soft: #F5F7FA;
+  --color-brand-surface-blue-soft: #EEF3FF;
 }
 
 :root {

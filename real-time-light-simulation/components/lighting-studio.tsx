@@ -85,7 +85,7 @@ export function LightingStudio() {
       </div>
 
       {/* control panel */}
-      <aside className="h-[52vh] w-full shrink-0 border-t border-neutral-800 bg-neutral-950 lg:h-full lg:w-[340px] lg:border-l lg:border-t-0">
+      <aside className="h-[52vh] w-full shrink-0 border-t border-brand-hairline bg-brand-white lg:h-full lg:w-[340px] lg:border-l lg:border-t-0">
         <LightControls
           lights={lights}
           selectedId={selectedId}

@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[29195,["/light-simulation-992x/_next/static/chunks/04.om6zh15hdw.js","/light-simulation-992x/_next/static/chunks/0s2dol14lrfmb.js","/light-simulation-992x/_next/static/chunks/0snc6.qm_84zo.js"],"LightingStudio"]
+2:I[29195,["/light-simulation-992x/_next/static/chunks/04.om6zh15hdw.js","/light-simulation-992x/_next/static/chunks/0s2dol14lrfmb.js","/light-simulation-992x/_next/static/chunks/0qq~8~c~upu9q.js"],"LightingStudio"]
 3:I[35240,["/light-simulation-992x/_next/static/chunks/04.om6zh15hdw.js","/light-simulation-992x/_next/static/chunks/0s2dol14lrfmb.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/light-simulation-992x/_next/static/chunks/0snc6.qm_84zo.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"c-XcH1CI4zu0TRbfLyisE"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/light-simulation-992x/_next/static/chunks/0qq~8~c~upu9q.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"jKjB5l8rNRA75uyCbc3nx"}
 5:null
