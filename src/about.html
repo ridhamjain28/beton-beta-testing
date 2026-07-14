@@ -109,7 +109,6 @@
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
 </nav>
 <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="javascript:void(0)">Search</a>
 <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
 <!-- Mobile Hamburger Icon -->
@@ -156,8 +155,12 @@
 </script>
 <!-- REUSABLE HEADER -->
 <!-- HERO / MANIFESTO -->
-<section class="pt-40 pb-32 px-8 lg:px-16 text-center border-b border-[var(--border-navy)]">
-<div class="max-w-4xl mx-auto">
+<section class="relative pt-40 pb-32 px-8 lg:px-16 text-center border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
+<img src="assets/images/beton-watermark.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1400px] opacity-10 z-0 pointer-events-none select-none hidden md:block" alt="" />
+<div class="relative max-w-4xl mx-auto z-10 flex flex-col items-center">
+<div class="block md:hidden mb-8 fade-in">
+    <img src="Beton_logo.webp" alt="Beton Logo" class="h-16 object-contain rounded">
+</div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block fade-in">The Philosophy</span>
 <h1 class="text-4xl lg:text-5xl font-serif leading-tight mb-8 fade-in stagger-1">
                     Lighting <span class="text-[#EF7F1A]">Beyond</span> <em class="italic font-light">Eternity.</em>
@@ -167,6 +170,10 @@
                 </p>
 </div>
 </section>
+<!-- Mobile-Only Image between Philosophy and Identity -->
+<div class="block lg:hidden w-full border-b border-[var(--border-navy)] overflow-hidden">
+    <img alt="Precision Lighting Integration" class="w-full h-auto object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
+</div>
 <!-- OUR IDENTITY -->
 <section class="border-b border-[var(--border-navy)]">
 <div class="flex flex-col lg:flex-row">
@@ -180,20 +187,24 @@
 <p>Every product is a testament to structural integrity, designed to withstand time and define space through calibrated beams and technical brilliance.</p>
 </div>
 </div>
-<div class="lg:w-1/2 relative overflow-hidden">
+<div class="lg:w-1/2 relative overflow-hidden hidden lg:block">
 <img alt="Precision Lighting Integration" class="w-full h-full object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
 </div>
 </div>
 </section>
 <!-- THE ORIGIN -->
-<section class="border-b border-[var(--border-navy)] bg-white">
-<div class="flex flex-col lg:flex-row">
+<section class="relative border-b border-[var(--border-navy)] bg-white overflow-hidden" data-watermark-section>
+<img src="assets/images/beton-watermark.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1400px] opacity-10 z-0 pointer-events-none select-none hidden md:block" alt="" />
+<div class="relative z-10 flex flex-col lg:flex-row">
 <div class="lg:w-1/2 relative overflow-hidden order-2 lg:order-1">
 <img alt="Beton Manufacturing Precision" class="w-full h-full object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
 </div>
 <div class="lg:w-1/2 p-12 lg:p-24 border-l border-[var(--border-navy)] flex flex-col justify-center order-1 lg:order-2">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">The Origin</span>
-<h3 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-4">Founding Principles</h3>
+<div class="block lg:hidden mb-6 self-center">
+    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
+</div>
+<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Origin</span>
+<h3 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-4 text-center lg:text-left">Founding Principles</h3>
 <p class="text-sm text-[#134095]/70 leading-relaxed mb-8">
                         Beton was founded on the belief that lighting should be as durable as the structures it inhabits. We rejected the ephemeral nature of mass-produced fixtures in favor of a materials-first approach.
                     </p>
@@ -204,15 +215,19 @@
 </div>
 </section>
 <!-- VISION & MISSION SPLIT -->
-<section class="grid grid-cols-1 lg:grid-cols-2 border-b border-[var(--border-navy)]">
-<div class="p-12 lg:p-24 border-r border-[var(--border-navy)]">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">The Vision</span>
+<section class="relative grid grid-cols-1 lg:grid-cols-2 border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
+<img src="assets/images/beton-watermark.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1400px] opacity-10 z-0 pointer-events-none select-none hidden md:block" alt="" />
+<div class="relative z-10 p-12 lg:p-24 border-r border-[var(--border-navy)] flex flex-col">
+<div class="block lg:hidden mb-6 self-center">
+    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
+</div>
+<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Vision</span>
 <p class="text-lg lg:text-xl font-serif leading-relaxed text-[#134095]/80">
                     To be the global benchmark for technical architectural lighting in luxury environments. Defining the future of luxury spaces by harmonizing industrial durability with sophisticated optical engineering.
                 </p>
 </div>
-<div class="p-12 lg:p-24">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">The Mission</span>
+<div class="relative z-10 p-12 lg:p-24">
+<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Mission</span>
 <p class="text-lg lg:text-xl font-serif leading-relaxed text-[#134095]/80">
                     Empowering designers with tools that transform light into a structural element. Delivering uncompromising quality through bespoke manufacturing and rigorous technical standards for the world's finest architecture.
                 </p>
@@ -335,6 +350,48 @@
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoLink = document.querySelector('header a img[alt="Beton"]')?.closest('a');
+        if (!logoLink) return;
+        
+        logoLink.style.transition = 'opacity 0.5s ease';
+        
+        const observer = new IntersectionObserver((entries) => {
+            if (window.innerWidth >= 768) {
+                logoLink.style.opacity = '1';
+                logoLink.style.pointerEvents = 'auto';
+                return;
+            }
+            
+            let anyIntersecting = false;
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    anyIntersecting = true;
+                }
+            });
+            
+            if (anyIntersecting) {
+                logoLink.style.opacity = '0';
+                logoLink.style.pointerEvents = 'none';
+            } else {
+                logoLink.style.opacity = '1';
+                logoLink.style.pointerEvents = 'auto';
+            }
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('[data-watermark-section]').forEach(section => {
+            observer.observe(section);
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                logoLink.style.opacity = '1';
+                logoLink.style.pointerEvents = 'auto';
+            }
+        }, { passive: true });
+    });
+</script>
 </body>
 </html>
 
