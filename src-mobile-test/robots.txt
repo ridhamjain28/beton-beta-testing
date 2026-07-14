@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /light-simulation-992x/
