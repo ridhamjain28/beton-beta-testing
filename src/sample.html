@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beton Hover Styles Mockup</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FEFEFE;
+            color: #134095;
+        }
+
+        /* Base Card Styling (Identical to Home page layout structure) */
+        .preview-grid a {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            display: block;
+        }
+
+        .preview-grid img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+        }
+
+        .preview-grid a:hover img {
+            opacity: 1;
+        }
+
+        /* Card Overlay (Standard home page dark photographic cover) */
+        .preview-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.15);
+            pointer-events: none;
+            transition: background-color 2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .preview-grid a:hover .preview-overlay {
+            background-color: transparent;
+        }
+
+        /* ---------------------------------------------------- */
+        /* Premium Apple-Style Glassmorphism Base               */
+        /* ---------------------------------------------------- */
+        .text-rectangle {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 190px;
+            background: #FEFEFE;
+            border-top: 1px solid rgba(19, 64, 149, 0.2);
+            border-right: 1px solid rgba(19, 64, 149, 0.2);
+            transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        backdrop-filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        @media (min-width: 768px) {
+            .text-rectangle {
+                width: 240px;
+            }
+        }
+        .text-rectangle h4, 
+        .text-rectangle span {
+            transition: color 0.4s ease;
+        }
+        
+        /* Universal Hover scale zoom */
+        .preview-grid a:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Universal Glassmorphism Hover styling */
+        .preview-grid a:hover .text-rectangle {
+            background: rgba(255, 255, 255, 0.15); /* Frosted translucent base */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+
+        /* ---------------------------------------------------- */
+        /* OPTION 1: Dynamic Brand Accent Hover Colors          */
+        /* ---------------------------------------------------- */
+        .opt1-grid a:hover .text-rectangle h4 {
+            color: #FEFEFE; /* Clean white title text */
+        }
+        /* Blue Accent Hover (Row 2) */
+        .hover-accent-blue a:hover .text-rectangle span {
+            color: #134095 !important;
+        }
+        /* Orange Accent Hover (Row 1) */
+        .hover-accent-orange a:hover .text-rectangle span {
+            color: #EF7F1A !important;
+        }
+
+        /* ---------------------------------------------------- */
+        /* OPTION 2: Pure Monochrome Glass (All White Hover)    */
+        /* ---------------------------------------------------- */
+        .opt2-grid a:hover .text-rectangle h4 {
+            color: #FEFEFE !important; /* Pure white category title */
+        }
+        .opt2-grid a:hover .text-rectangle span {
+            color: #FEFEFE !important; /* Pure white number - NO orange/blue */
+        }
+    </style>
+</head>
+<body class="py-12 bg-[#FEFEFE]">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        
+        <!-- Header -->
+        <header class="mb-16 border-b border-[#134095]/15 pb-8">
+            <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-[#134095]">Glassmorphism Layout Options</h1>
+            <p class="text-sm text-[#134095]/70 mt-2">Comparing Option 1 (Row-Specific Brand Accents) and Option 2 (Monochrome All-White Glass) side-by-side.</p>
+        </header>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 1: OPTION 1 (ROW-SPECIFIC BRAND ACCENTS)     -->
+        <!-- ==================================================== -->
+        <section class="mb-24">
+            <div class="mb-8 border-l-4 border-[#EF7F1A] pl-4">
+                <h2 class="text-2xl font-bold text-[#134095]">Option 1: Row-Specific Brand Accents</h2>
+                <p class="text-sm text-[#134095]/70 mt-1">Row 1 numbers hover to brand **Orange**, Row 2 numbers hover to brand **Blue**.</p>
+            </div>
+            
+            <div class="preview-grid opt1-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-black/10">
+                <!-- Row 1 (Orange Accent) -->
+                <div class="hover-accent-orange">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/hospitality-bar.jpg" alt="Hospitality">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">03</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Hospitality</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="hover-accent-orange">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/retail-workspace.png" alt="Retail">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">04</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Retail</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="hover-accent-orange">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/commercial-showroom.jpg" alt="Commercial">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">02</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Commercial</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Row 2 (Blue Accent) -->
+                <div class="hover-accent-blue">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/residential-living.jpg" alt="Residential">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">01</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Residential</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="hover-accent-blue">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/office-cabin.jpg" alt="Office">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">05</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Office</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="hover-accent-blue">
+                    <a class="border-r border-b border-black/10" href="#">
+                        <img src="assets/images/applications/healthcare.webp" alt="Healthcare">
+                        <div class="preview-overlay"></div>
+                        <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">06</span>
+                            <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Healthcare</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 2: OPTION 2 (MONOCHROME ALL-WHITE GLASS)     -->
+        <!-- ==================================================== -->
+        <section class="mb-16">
+            <div class="mb-8 border-l-4 border-[#134095] pl-4">
+                <h2 class="text-2xl font-bold text-[#134095]">Option 2: Monochrome All-White Glass</h2>
+                <p class="text-sm text-[#134095]/70 mt-1">Pure white typography, numbers, and border outlines on hover. Completely eliminates blue or orange highlights.</p>
+            </div>
+            
+            <div class="preview-grid opt2-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-black/10">
+                <!-- Hospitality -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/hospitality-bar.jpg" alt="Hospitality">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">03</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Hospitality</h4>
+                    </div>
+                </a>
+
+                <!-- Retail -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/retail-workspace.png" alt="Retail">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">04</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Retail</h4>
+                    </div>
+                </a>
+
+                <!-- Commercial -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/commercial-showroom.jpg" alt="Commercial">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">02</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Commercial</h4>
+                    </div>
+                </a>
+
+                <!-- Residential -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/residential-living.jpg" alt="Residential">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">01</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Residential</h4>
+                    </div>
+                </a>
+
+                <!-- Office -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/office-cabin.jpg" alt="Office">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">05</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Office</h4>
+                    </div>
+                </a>
+
+                <!-- Healthcare -->
+                <a class="border-r border-b border-black/10" href="#">
+                    <img src="assets/images/applications/healthcare.webp" alt="Healthcare">
+                    <div class="preview-overlay"></div>
+                    <div class="text-rectangle p-3 px-5 flex items-center gap-3 z-10">
+                        <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">06</span>
+                        <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Healthcare</h4>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <footer class="mt-20 py-8 border-t border-[#134095]/15 text-center text-xs text-[#134095]/60">
+        Beton Architectural Lighting &copy; 2026. Custom Layout Testing.
+    </footer>
+</body>
+</html>

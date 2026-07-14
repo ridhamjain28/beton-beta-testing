@@ -309,15 +309,10 @@
     .home-applications .grid > a {
       aspect-ratio: 4 / 5 !important;
       min-height: 190px;
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .home-applications .grid > a > div:last-child {
-      left: 14px !important;
-      right: auto !important;
-      bottom: 16px !important;
-    }
 
     .home-applications h4 {
       font-size: 20px !important;
@@ -628,4 +623,9 @@
       flex: 0 0 auto;
     }
   }
+}
+
+/* Global override to disable all grayscale effects */
+.image-grayscale {
+  filter: none !important;
 }
