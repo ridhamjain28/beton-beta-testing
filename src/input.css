@@ -309,13 +309,13 @@
     .home-applications .grid > a {
       aspect-ratio: 4 / 5 !important;
       min-height: 190px;
-      border-right: 1px solid var(--border-neutral);
-      border-bottom: 1px solid var(--border-neutral);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .home-applications .grid > a > div:last-child {
       left: 14px !important;
-      right: 14px;
+      right: auto !important;
       bottom: 16px !important;
     }
 
