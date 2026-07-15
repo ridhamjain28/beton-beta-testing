@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Beton Lighting | Premier Architectural Lighting Manufacturer in Surat, Gujarat</title>
+<title>Beton Lighting Dark Mode Trial | Architectural Lighting in Surat</title>
 <link rel="icon" href="favicons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
@@ -257,6 +257,104 @@
         .group:hover .category-label span {
             color: #FEFEFE !important;
         }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(239, 127, 26, 0.55);
+            color: #EF7F1A;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #FEFEFE;
+            transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .theme-toggle iconify-icon {
+            font-size: 20px;
+            transform: rotate(180deg);
+            transition: opacity 0.25s ease, transform 0.35s ease, filter 0.35s ease;
+        }
+
+        .theme-toggle .bulb-off {
+            display: none;
+        }
+
+        .theme-toggle[aria-pressed="false"] {
+            box-shadow: 0 0 0 1px rgba(254, 204, 0, 0.12), 0 0 24px rgba(254, 204, 0, 0.22);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid #EF7F1A;
+            outline-offset: 3px;
+        }
+
+        body.dark-preview {
+            --bg-cream: #070B16;
+            --border-neutral: rgba(254, 254, 254, 0.16);
+            --text-primary: #FEFEFE;
+            --text-secondary: rgba(254, 254, 254, 0.68);
+            background: #070B16;
+            color: #FEFEFE;
+        }
+
+        body.dark-preview .max-w-\[1440px\],
+        body.dark-preview section.bg-\[\#FEFEFE\],
+        body.dark-preview .bg-\[\#FEFEFE\],
+        body.dark-preview .bg-white {
+            background-color: #070B16 !important;
+        }
+
+        body.dark-preview header {
+            background-color: rgba(7, 11, 22, 0.94) !important;
+            border-color: rgba(254, 254, 254, 0.14) !important;
+        }
+
+        body.dark-preview .text-\[\#134095\],
+        body.dark-preview .text-\[var\(--text-primary\)\],
+        body.dark-preview h1,
+        body.dark-preview h2,
+        body.dark-preview h3,
+        body.dark-preview h4,
+        body.dark-preview p,
+        body.dark-preview li {
+            color: #FEFEFE !important;
+        }
+
+        body.dark-preview .text-\[\#134095\]\/70,
+        body.dark-preview .text-\[\#134095\]\/60,
+        body.dark-preview .text-\[var\(--text-secondary\)\] {
+            color: rgba(254, 254, 254, 0.72) !important;
+        }
+
+        body.dark-preview .border-\[\#134095\]\/15,
+        body.dark-preview .border-\[var\(--border-neutral\)\] {
+            border-color: rgba(254, 254, 254, 0.14) !important;
+        }
+
+        body.dark-preview .theme-toggle {
+            background: #0C1325;
+            border-color: rgba(254, 254, 254, 0.18);
+            color: rgba(254, 254, 254, 0.62);
+            box-shadow: none;
+        }
+
+        body.dark-preview .theme-toggle .bulb-on {
+            display: none;
+        }
+
+        body.dark-preview .theme-toggle .bulb-off {
+            display: inline-block;
+        }
+
+        body.dark-preview .image-grayscale,
+        body.dark-preview img:not(.footer-logo) {
+            filter: brightness(0.82) contrast(1.08);
+        }
+
+        body.dark-preview #mobile-menu-overlay {
+            background-color: rgba(7, 11, 22, 0.96) !important;
+        }
     </style>
 </head>
 <body>
@@ -273,6 +371,10 @@
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
 </nav>
 <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle dark mode">
+<iconify-icon class="bulb-on" icon="lucide:lightbulb"></iconify-icon>
+<iconify-icon class="bulb-off" icon="lucide:lightbulb-off"></iconify-icon>
+</button>
 <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
 <!-- Mobile Hamburger Icon -->
@@ -388,7 +490,7 @@
 <img class="absolute inset-0 w-full h-full object-cover image-grayscale opacity-85 group-hover:opacity-100 transform group-hover:scale-110" loading="lazy" src="assets/images/applications/office-cabin.jpg"/>
 <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-all duration-[10000ms] pointer-events-none"></div>
 <div class="category-label absolute bottom-0 left-0 w-[190px] md:w-[240px] bg-white border-t border-r border-[#134095]/20 p-3 px-5 flex items-center gap-3 z-10">
-<span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">05</span>
+<span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">03</span>
 <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Office</h4>
 </div>
 </a>
@@ -404,7 +506,7 @@
 <img class="absolute inset-0 w-full h-full object-cover image-grayscale opacity-85 group-hover:opacity-100 transform group-hover:scale-110" loading="lazy" src="assets/images/applications/hospitality-bar.jpg"/>
 <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-all duration-[10000ms] pointer-events-none"></div>
 <div class="category-label absolute bottom-0 left-0 w-[190px] md:w-[240px] bg-white border-t border-r border-[#134095]/20 p-3 px-5 flex items-center gap-3 z-10">
-<span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">03</span>
+<span class="text-[12px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] shrink-0">05</span>
 <h4 class="text-2xl font-serif text-[#134095] whitespace-nowrap">Hospitality</h4>
 </div>
 </a>
@@ -618,6 +720,29 @@
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon><span>Call</span></a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon><span>Contact Us</span></a>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('theme-toggle');
+        if (!toggle) return;
+
+        const applyTheme = (mode) => {
+            const isDark = mode === 'dark';
+            document.body.classList.toggle('dark-preview', isDark);
+            toggle.setAttribute('aria-pressed', String(isDark));
+            toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+            toggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+        };
+
+        const storedMode = window.localStorage.getItem('beton-index-dark-mode') || 'light';
+        applyTheme(storedMode);
+
+        toggle.addEventListener('click', () => {
+            const nextMode = document.body.classList.contains('dark-preview') ? 'light' : 'dark';
+            window.localStorage.setItem('beton-index-dark-mode', nextMode);
+            applyTheme(nextMode);
+        });
+    });
+</script>
 </body>
 </html>
 

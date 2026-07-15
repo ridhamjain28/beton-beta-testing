@@ -1,5 +1,11 @@
 # AGENTS.md — Beton Website
 
+## Project Access Scope
+
+For this project, only access files inside `D:\Github Repos\Beton-Website-folder`. Do not read, write, search, or inspect files outside this directory unless the user explicitly changes this rule.
+
+---
+
 ## 1. Project Mission
 
 Build and maintain a mobile-first website for Beton, a premium architectural lighting brand serving Gujarat.

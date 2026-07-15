@@ -5,6 +5,11 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>About Beton Lighting | Architectural Lighting Experts in Surat</title>
+<link rel="icon" href="favicons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+<link rel="manifest" href="favicons/manifest.webmanifest">
     <meta name="description" content="Learn about Beton Lighting's legacy as a premier architectural lighting manufacturer in Surat, Gujarat. Discover our passion for quality and design."/>
     <meta property="og:title" content="About Beton Lighting | Architectural Lighting Experts in Surat"/>
     <meta property="og:description" content="Learn about Beton Lighting's legacy as a premier architectural lighting manufacturer in Surat, Gujarat. Discover our passion for quality and design."/>
@@ -93,12 +98,38 @@
         ::-webkit-scrollbar-thumb {
             background: var(--navy-primary);
         }
+
+        @media (max-width: 767px) {
+            .about-site-header .about-logo-link,
+            .about-site-header .about-mobile-menu-shell {
+                transition: opacity 0.35s ease, transform 0.35s ease;
+            }
+
+            .about-site-header.is-logo-hidden .about-logo-link {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .about-site-header.is-logo-hidden .about-mobile-menu-shell {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                justify-content: center;
+                width: 56px;
+                z-index: 2;
+            }
+
+            .about-site-header.is-logo-visible .about-logo-link {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]"><header class="about-site-header sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between" id="site-header">
 <div class="flex-1">
-<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
+<a class="about-logo-link flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
 </div>
 <nav class="hidden lg:flex items-center gap-12 flex-none">
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
@@ -112,7 +143,7 @@
 <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
 <!-- Mobile Hamburger Icon -->
-<div class="flex-1 flex lg:hidden justify-end items-center">
+<div class="about-mobile-menu-shell flex-1 flex lg:hidden justify-end items-center">
 <button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn"  aria-label="Open Menu">
 <iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
 </button>
@@ -155,17 +186,17 @@
 </script>
 <!-- REUSABLE HEADER -->
 <!-- HERO / MANIFESTO -->
-<section class="relative pt-40 pb-32 px-8 lg:px-16 text-center border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
+<section class="relative pt-32 pb-24 px-8 lg:px-16 text-center border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
 <img src="assets/images/beton-watermark.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1400px] opacity-10 z-0 pointer-events-none select-none hidden md:block" alt="" />
 <div class="relative max-w-4xl mx-auto z-10 flex flex-col items-center">
 <div class="block md:hidden mb-8 fade-in">
     <img src="Beton_logo.webp" alt="Beton Logo" class="h-16 object-contain rounded">
 </div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block fade-in">The Philosophy</span>
-<h1 class="text-4xl lg:text-5xl font-serif leading-tight mb-8 fade-in stagger-1">
-                    Lighting <span class="text-[#EF7F1A]">Beyond</span> <em class="italic font-light">Eternity.</em>
+<h1 class="text-4xl lg:text-5xl font-serif leading-tight mb-8 fade-in stagger-1 max-w-[18rem] sm:max-w-none">
+                    Lighting <span class="text-[#EF7F1A]">Beyond</span> Eternity.
 </h1>
-<p class="text-lg text-[#134095]/70 leading-relaxed font-light fade-in stagger-2">
+<p class="text-lg text-[#134095]/70 leading-relaxed font-light fade-in stagger-2 max-w-[19rem] sm:max-w-2xl mx-auto">
                     At Beton, we believe lighting is more than illumination - it is an essential part of architecture that shapes experiences, enhances spaces, and brings ideas to life.
                 </p>
 </div>
@@ -180,7 +211,7 @@
 <div class="lg:w-1/2 p-12 lg:p-24 border-r border-[var(--border-navy)] flex flex-col justify-center">
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">Our Identity</span>
 <h2 class="text-2xl lg:text-3xl font-serif mb-8 leading-relaxed">
-                        Forged in the industrial heart of Bardoli, Surat, <em class="italic text-[#EF7F1A]">Beton Lighting</em> crafts fixtures that resonate with the permanence of concrete and the precision of steel.
+                        Based in Surat, <span class="text-[#EF7F1A]">Beton Lighting</span> crafts fixtures that combine architectural restraint with technical precision.
                     </h2>
 <div class="space-y-6 text-sm text-[#134095]/70 leading-relaxed font-light">
 <p>We are architects of the unseen. Our Gujarat-based studio specializes in high-end technical lighting solutions that integrate seamlessly into brutalist and modern architectural landscapes.</p>
@@ -350,44 +381,33 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const header = document.getElementById('site-header');
         const logoLink = document.querySelector('header a img[alt="Beton"]')?.closest('a');
-        if (!logoLink) return;
-        
-        logoLink.style.transition = 'opacity 0.5s ease';
-        
-        const observer = new IntersectionObserver((entries) => {
+        const hero = document.querySelector('[data-watermark-section]');
+        if (!header || !logoLink || !hero) return;
+
+        const setHeaderState = () => {
             if (window.innerWidth >= 768) {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
+                header.classList.remove('is-logo-hidden');
+                header.classList.add('is-logo-visible');
                 return;
             }
-            
-            let anyIntersecting = false;
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    anyIntersecting = true;
-                }
-            });
-            
-            if (anyIntersecting) {
-                logoLink.style.opacity = '0';
-                logoLink.style.pointerEvents = 'none';
-            } else {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
-            }
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('[data-watermark-section]').forEach(section => {
-            observer.observe(section);
-        });
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+            const isHeroTopState = window.scrollY < Math.min(120, heroBottom * 0.25);
+
+            if (isHeroTopState) {
+                header.classList.add('is-logo-hidden');
+                header.classList.remove('is-logo-visible');
+            } else {
+                header.classList.remove('is-logo-hidden');
+                header.classList.add('is-logo-visible');
             }
-        }, { passive: true });
+        };
+
+        setHeaderState();
+        window.addEventListener('scroll', setHeaderState, { passive: true });
+        window.addEventListener('resize', setHeaderState, { passive: true });
     });
 </script>
 </body>
