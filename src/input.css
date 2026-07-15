@@ -49,6 +49,12 @@
     background: var(--beton-white);
   }
 
+  .contact-data-link {
+    display: inline-block;
+    color: inherit;
+    text-decoration: none;
+  }
+
   .beton-sticky-enquiry {
     display: none;
   }
@@ -611,6 +617,16 @@
 
     .beton-contact-card {
       overflow: hidden;
+      text-align: center !important;
+      align-items: center !important;
+    }
+
+    .beton-contact-card h4,
+    .beton-contact-card p,
+    .beton-contact-card a {
+      text-align: center !important;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .beton-sticky-enquiry a {
