@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
@@ -285,5 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
+<script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+</script>
 </body>
 </html>

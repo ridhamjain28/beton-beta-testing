@@ -105,6 +105,15 @@
                 transition: opacity 0.35s ease, transform 0.35s ease;
             }
 
+            .about-site-header {
+                transition: transform 0.28s ease, box-shadow 0.28s ease;
+                will-change: transform;
+            }
+
+            .about-site-header.is-header-hidden {
+                transform: translateY(-100%);
+            }
+
             .about-site-header.is-logo-hidden .about-logo-link {
                 opacity: 0;
                 pointer-events: none;
@@ -230,9 +239,6 @@
 <img alt="Beton Manufacturing Precision" class="w-full h-full object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
 </div>
 <div class="lg:w-1/2 p-12 lg:p-24 border-l border-[var(--border-navy)] flex flex-col justify-center order-1 lg:order-2">
-<div class="block lg:hidden mb-6 self-center">
-    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
-</div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Origin</span>
 <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-4 text-center lg:text-left">Founding Principles</h3>
 <p class="text-sm text-[#134095]/70 leading-relaxed mb-8">
@@ -247,9 +253,6 @@
 <!-- VISION & MISSION SPLIT -->
 <section class="relative grid grid-cols-1 lg:grid-cols-2 border-b border-[var(--border-navy)] overflow-hidden">
 <div class="relative z-10 p-12 lg:p-24 border-r border-[var(--border-navy)] flex flex-col">
-<div class="block lg:hidden mb-6 self-center">
-    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
-</div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Vision</span>
 <p class="text-lg lg:text-xl font-serif leading-relaxed text-[#134095]/80">
                     To be the global benchmark for technical architectural lighting in luxury environments. Defining the future of luxury spaces by harmonizing industrial durability with sophisticated optical engineering.
@@ -367,7 +370,7 @@
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
@@ -385,29 +388,48 @@
         const logoLink = document.querySelector('header a img[alt="Beton"]')?.closest('a');
         const hero = document.querySelector('[data-watermark-section]');
         if (!header || !logoLink || !hero) return;
+        let lastScrollY = window.scrollY;
 
         const setHeaderState = () => {
             if (window.innerWidth >= 768) {
+                header.classList.remove('is-header-hidden');
                 header.classList.remove('is-logo-hidden');
                 header.classList.add('is-logo-visible');
+                lastScrollY = window.scrollY;
                 return;
             }
 
-            const heroBottom = hero.offsetTop + hero.offsetHeight;
-            const isHeroTopState = window.scrollY < Math.min(120, heroBottom * 0.25);
+            const currentY = window.scrollY;
+            const delta = currentY - lastScrollY;
+            const isAtTop = currentY < 24;
 
-            if (isHeroTopState) {
+            if (isAtTop) {
+                header.classList.remove('is-header-hidden');
                 header.classList.add('is-logo-hidden');
                 header.classList.remove('is-logo-visible');
-            } else {
+                lastScrollY = currentY;
+                return;
+            }
+
+            if (delta < -8) {
+                header.classList.remove('is-header-hidden');
                 header.classList.remove('is-logo-hidden');
                 header.classList.add('is-logo-visible');
+            } else if (delta > 8 && currentY > 140) {
+                header.classList.add('is-header-hidden');
             }
+
+            lastScrollY = currentY;
         };
 
         setHeaderState();
         window.addEventListener('scroll', setHeaderState, { passive: true });
         window.addEventListener('resize', setHeaderState, { passive: true });
+    });
+</script>
+<script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
     });
 </script>
 </body>

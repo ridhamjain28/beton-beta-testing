@@ -777,36 +777,43 @@
       right: 0;
       bottom: 0;
       z-index: 90;
+      width: 100vw;
+      max-width: 100vw;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0;
+      grid-template-columns: repeat(2, calc((100vw - 22px) / 2));
+      gap: 6px;
       padding: 8px;
       background: rgba(254, 254, 254, 0.96);
       border-top: 1px solid var(--beton-hairline);
       backdrop-filter: blur(10px);
+      box-shadow: 0 -10px 24px rgba(19, 64, 149, 0.08);
+      box-sizing: border-box;
     }
 
     .beton-sticky-enquiry a {
-      min-height: 50px;
+      min-height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1.1;
       text-align: center;
       overflow: hidden;
+      border-radius: 0;
+      white-space: nowrap;
     }
 
     .beton-sticky-enquiry .primary {
       background: var(--beton-cobalt);
       color: var(--beton-white);
-      justify-content: flex-start;
-      padding-left: 18px;
+      border: 1px solid var(--beton-cobalt);
     }
 
     .beton-sticky-enquiry .secondary {
@@ -828,11 +835,11 @@
     .beton-sticky-enquiry a {
       padding-left: 4px;
       padding-right: 4px;
-      white-space: normal;
     }
 
     .beton-sticky-enquiry iconify-icon {
       flex: 0 0 auto;
+      font-size: 15px;
     }
   }
 }
