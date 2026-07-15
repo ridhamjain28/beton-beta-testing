@@ -290,24 +290,64 @@
         }
 
         body.dark-preview {
-            --bg-cream: #070B16;
-            --border-neutral: rgba(254, 254, 254, 0.16);
-            --text-primary: #FEFEFE;
-            --text-secondary: rgba(254, 254, 254, 0.68);
-            background: #070B16;
-            color: #FEFEFE;
+            --dark-bg: #070B14;
+            --dark-section: #0B1120;
+            --dark-surface: #151821;
+            --dark-raised: #1C202C;
+            --dark-overlay: #222838;
+            --dark-border: rgba(255, 255, 255, 0.08);
+            --dark-border-strong: rgba(255, 255, 255, 0.14);
+            --dark-text: #F8FAFC;
+            --dark-muted: #94A3B8;
+            --dark-soft: #CBD5E1;
+            --dark-blue-accent: #5B7CDB;
+            --dark-orange-accent: #EF7F1A;
+            --dark-led-glow: rgba(248, 250, 252, 0.1);
+            --dark-warm-glow: rgba(239, 127, 26, 0.1);
+            --bg-cream: var(--dark-bg);
+            --border-neutral: var(--dark-border);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-muted);
+            background: var(--dark-bg);
+            color: var(--dark-text);
         }
 
         body.dark-preview .max-w-\[1440px\],
-        body.dark-preview section.bg-\[\#FEFEFE\],
+        body.dark-preview .home-hero,
+        body.dark-preview .home-applications,
+        body.dark-preview .home-projects,
+        body.dark-preview .home-products {
+            background-color: var(--dark-bg) !important;
+        }
+
+        body.dark-preview section,
         body.dark-preview .bg-\[\#FEFEFE\],
         body.dark-preview .bg-white {
-            background-color: #070B16 !important;
+            background-color: var(--dark-section) !important;
+        }
+
+        body.dark-preview .home-hero-copy,
+        body.dark-preview .home-applications-label,
+        body.dark-preview .home-applications-copy,
+        body.dark-preview .home-section-heading,
+        body.dark-preview .lg\:w-1\/2.p-16,
+        body.dark-preview .home-products .grid > div,
+        body.dark-preview .home-project-card,
+        body.dark-preview .home-project-meta,
+        body.dark-preview .category-label {
+            background-color: var(--dark-surface) !important;
+            border-color: var(--dark-border) !important;
+        }
+
+        body.dark-preview .home-products .grid > div,
+        body.dark-preview .home-project-card,
+        body.dark-preview .home-hero-copy {
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
         }
 
         body.dark-preview header {
-            background-color: rgba(7, 11, 22, 0.94) !important;
-            border-color: rgba(254, 254, 254, 0.14) !important;
+            background-color: rgba(7, 11, 20, 0.94) !important;
+            border-color: var(--dark-border-strong) !important;
         }
 
         body.dark-preview .text-\[\#134095\],
@@ -318,24 +358,88 @@
         body.dark-preview h4,
         body.dark-preview p,
         body.dark-preview li {
-            color: #FEFEFE !important;
+            color: var(--dark-text) !important;
         }
 
         body.dark-preview .text-\[\#134095\]\/70,
         body.dark-preview .text-\[\#134095\]\/60,
-        body.dark-preview .text-\[var\(--text-secondary\)\] {
-            color: rgba(254, 254, 254, 0.72) !important;
+        body.dark-preview .text-\[\#134095\]\/90,
+        body.dark-preview .text-neutral-600,
+        body.dark-preview .text-\[var\(--text-secondary\)\],
+        body.dark-preview .site-footer p,
+        body.dark-preview .site-footer a:not(.text-\[\#EF7F1A\]) {
+            color: var(--dark-muted) !important;
+        }
+
+        body.dark-preview .text-\[\#EF7F1A\],
+        body.dark-preview a:hover,
+        body.dark-preview .category-label span {
+            color: var(--dark-orange-accent) !important;
         }
 
         body.dark-preview .border-\[\#134095\]\/15,
-        body.dark-preview .border-\[var\(--border-neutral\)\] {
-            border-color: rgba(254, 254, 254, 0.14) !important;
+        body.dark-preview .border-\[\#134095\]\/20,
+        body.dark-preview .border-\[var\(--border-neutral\)\],
+        body.dark-preview .border-black\/10,
+        body.dark-preview .border-neutral-900,
+        body.dark-preview .lg\:border-\[\#e5e5e5\] {
+            border-color: var(--dark-border) !important;
+        }
+
+        body.dark-preview .bg-neutral-50,
+        body.dark-preview .bg-neutral-100 {
+            background-color: var(--dark-raised) !important;
+        }
+
+        body.dark-preview .home-products .aspect-square {
+            position: relative;
+            background: var(--dark-raised) !important;
+            border: 1px solid var(--dark-border);
+        }
+
+        body.dark-preview .home-products .aspect-square::before,
+        body.dark-preview .home-project-card .aspect-\[16\/10\]::before {
+            content: "";
+            position: absolute;
+            inset: 10%;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 45%, var(--dark-warm-glow), transparent 54%),
+                radial-gradient(circle at 55% 58%, var(--dark-led-glow), transparent 62%);
+            filter: blur(10px);
+        }
+
+        body.dark-preview .home-project-card .aspect-\[16\/10\],
+        body.dark-preview .home-products .aspect-square {
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-preview .home-project-card img,
+        body.dark-preview .home-products .aspect-square img {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.dark-preview .site-footer {
+            background:
+                linear-gradient(180deg, #0B1120 0%, #070B14 100%) !important;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        body.dark-preview .site-footer h4 {
+            color: var(--dark-soft) !important;
+        }
+
+        body.dark-preview .site-footer .border-white\/10 {
+            border-color: var(--dark-border) !important;
         }
 
         body.dark-preview .theme-toggle {
-            background: #0C1325;
-            border-color: rgba(254, 254, 254, 0.18);
-            color: rgba(254, 254, 254, 0.62);
+            background: var(--dark-raised);
+            border-color: var(--dark-border-strong);
+            color: var(--dark-muted);
             box-shadow: none;
         }
 
@@ -349,15 +453,46 @@
 
         body.dark-preview .image-grayscale,
         body.dark-preview img:not(.footer-logo) {
-            filter: brightness(0.82) contrast(1.08);
+            filter: brightness(0.9) contrast(1.02);
+        }
+
+        body.dark-preview .home-hero-media::after,
+        body.dark-preview .home-applications a::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(7, 11, 20, 0.08), rgba(7, 11, 20, 0.24));
         }
 
         body.dark-preview #mobile-menu-overlay {
-            background-color: rgba(7, 11, 22, 0.96) !important;
+            background-color: rgba(7, 11, 20, 0.96) !important;
+        }
+
+        body.dark-preview .home-hero-actions a:first-child,
+        body.dark-preview .beton-sticky-enquiry .primary {
+            background-color: var(--dark-orange-accent) !important;
+            color: #FEFEFE !important;
+        }
+
+        body.dark-preview .home-hero-actions a:last-child,
+        body.dark-preview .beton-sticky-enquiry .secondary {
+            background-color: transparent !important;
+            color: var(--dark-text) !important;
+            border-color: var(--dark-border-strong) !important;
+        }
+
+        body.dark-preview iconify-icon {
+            color: currentColor;
         }
     </style>
 </head>
 <body>
+<script>
+    if (new URLSearchParams(window.location.search).get('theme') === 'dark' || window.localStorage.getItem('beton-index-dark-mode') === 'dark') {
+        document.body.classList.add('dark-preview');
+    }
+</script>
 <div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
 <div class="flex-1">
 <a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
@@ -733,7 +868,8 @@
             toggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
         };
 
-        const storedMode = window.localStorage.getItem('beton-index-dark-mode') || 'light';
+        const requestedMode = new URLSearchParams(window.location.search).get('theme');
+        const storedMode = requestedMode === 'dark' ? 'dark' : window.localStorage.getItem('beton-index-dark-mode') || 'light';
         applyTheme(storedMode);
 
         toggle.addEventListener('click', () => {
