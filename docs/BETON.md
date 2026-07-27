@@ -6,7 +6,7 @@
 
 At **Beton**, we believe lighting is more than illumination—it is an essential part of architecture that shapes experiences, enhances spaces, and brings ideas to life.
 
-Based in **Bardoli, Surat, Gujarat**, Beton is a premium architectural lighting company specializing in the design, manufacturing, assembly, and delivery of high-quality lighting solutions for residential, commercial, hospitality, retail, and institutional projects.
+Based in **Bardoli, Surat, Gujarat**, Beton is a precision architectural lighting company specializing in the design, manufacturing, assembly, and delivery of high-quality lighting solutions for residential, commercial, hospitality, retail, and institutional projects.
 
 We partner with architects, interior designers, builders, contractors, dealers, businesses, and homeowners to create lighting that seamlessly combines aesthetics, functionality, and long-lasting performance.
 
@@ -36,7 +36,7 @@ We help create environments where people live, work, celebrate, and build memori
 
 # **Our Vision**
 
-**To become India's most trusted premium architectural lighting brand, illuminating timeless spaces through design, innovation, and uncompromising quality.**
+**To become India's most trusted precision architectural lighting brand, illuminating timeless spaces through design, innovation, and uncompromising quality.**
 
 ---
 
@@ -48,7 +48,7 @@ We help create environments where people live, work, celebrate, and build memori
 
 # **What We Do**
 
-Beton offers premium architectural lighting solutions across a wide range of applications.
+Beton offers precision architectural lighting solutions across a wide range of applications.
 
 Our capabilities include:
 
@@ -146,6 +146,6 @@ We create solutions that transform spaces, inspire confidence, and stand the tes
 
 ### **One recommendation**
 
-As your brand evolves, avoid emphasizing that you're merely a "manufacturer." The aspiration is to be recognized as a **premium architectural lighting brand** that happens to have its own manufacturing capabilities. This subtle positioning elevates Beton above being perceived as just another factory and aligns with the premium image you're building.
+As your brand evolves, avoid emphasizing that you're merely a "manufacturer." The aspiration is to be recognized as a **precision architectural lighting brand** that happens to have its own manufacturing capabilities. This subtle positioning elevates Beton above being perceived as just another factory and aligns with the premium image you're building.
 
 

@@ -8,7 +8,7 @@ For this project, only access files inside `D:\Github Repos\Beton-Website-folder
 
 ## 1. Project Mission
 
-Build and maintain a mobile-first website for Beton, a premium architectural lighting brand serving Gujarat.
+Build and maintain a mobile-first website for Beton, a precision architectural lighting brand serving Gujarat.
 
 The website is a catalogue and enquiry platform. It is not an e-commerce store.
 
@@ -43,7 +43,7 @@ Do not invent brand facts, specifications, certifications, project details, or s
 
 Always present Beton as:
 
-> A premium architectural lighting brand with in-house manufacturing, assembly, testing, and quality control capability.
+> A precision architectural lighting brand with in-house manufacturing, assembly, testing, and quality control capability.
 
 Do not present Beton as only a factory or commodity lighting manufacturer.
 

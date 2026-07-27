@@ -1,7 +1,7 @@
 # Beton Website Memory
 
 ## Project Overview
-Beton is a premium architectural lighting brand based in Surat, Gujarat. The website serves as a catalogue and enquiry platform (non-ecommerce) for architects, designers, builders, and homeowners to discover and request quotes for lighting solutions. It is designed to be mobile-first and high-performing.
+Beton is a precision architectural lighting brand based in Surat, Gujarat. The website serves as a catalogue and enquiry platform (non-ecommerce) for architects, designers, builders, and homeowners to discover and request quotes for lighting solutions. It is designed to be mobile-first and high-performing.
 
 ## Business Purpose
 To generate business enquiries, showcase the product catalogue clearly, and build brand credibility as an architectural lighting brand with in-house manufacturing capabilities. 
