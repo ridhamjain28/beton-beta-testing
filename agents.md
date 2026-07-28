@@ -478,7 +478,32 @@ Respect reduced-motion settings.
 
 ## 17. Technical Architecture
 
-The current project is structured and may be hosted on Wix, but code should remain portable where possible.
+### Hosting & Deployment
+
+- **Hosting**: Vercel (static site, free tier)
+- **Repository**: GitHub (`ridhamjain28/beton-beta-testing`)
+- **Domain**: betonlighting.com (or Vercel subdomain)
+- **Deployment**: Automatic on every push to `main` branch via Vercel
+- **Preview deployments**: Every push to `preview` branch gets its own preview URL
+
+### Tech Stack
+
+- **HTML**: Static pages in `src/` directory
+- **CSS**: Tailwind CSS v3, compiled via `npm run build` → `src/styles.css`
+- **JavaScript**: Vanilla JS inline in HTML files, no build step for JS
+- **Fonts**: Montserrat via Google Fonts
+- **Icons**: Iconify CDN
+- **Forms**: Web3Forms (no backend needed)
+- **Product CMS**: Contentful (free tier) — product data is managed via Contentful's web interface by family members
+- **Source CSS**: `src/input.css` → compiled to `src/styles.css`
+
+### Contentful CMS
+
+- Product data (name, specs, images, category, etc.) is stored in Contentful
+- Config is in `src/contentful-config.js` (Space ID and API token)
+- `src/products.html` and `src/product-details.html` fetch from Contentful CDN at page load
+- A fallback `src/products-data.js` exists with hardcoded data in case Contentful is unavailable
+- Family members log into **app.contentful.com** to add/edit/delete products — no developer needed for content updates
 
 ### Rules
 
@@ -486,22 +511,19 @@ The current project is structured and may be hosted on Wix, but code should rema
 - Reuse existing styles only when compatible with `design.md`.
 - Refactor incompatible styles instead of stacking overrides indefinitely.
 - Keep components modular.
-- Keep product data separate from presentation.
-- Avoid unnecessary Wix-specific dependencies.
-- Isolate platform-specific integrations.
-- Do not introduce a CMS unless required.
+- Keep product data separate from presentation (use Contentful, not hardcoded HTML).
+- Isolate Contentful API calls — keep them in dedicated script sections.
+- Isolate Web3Forms handling — keep it in dedicated script sections.
 - Do not introduce a new state-management library for simple UI state.
 - Do not introduce large animation libraries for minor effects.
+- When rebuilding Tailwind CSS, always run `npm run build` from project root.
 
 ### Platform portability
 
-Where possible:
-
-- use standard HTML, CSS, and JavaScript concepts;
-- isolate Web3Forms handling;
-- isolate Wix APIs;
-- store content in reusable data structures;
-- avoid tying product display logic to one hosting provider.
+- Use standard HTML, CSS, and JavaScript — no platform-specific build tools beyond Tailwind.
+- Keep Contentful integration isolated so the CMS can be swapped if needed.
+- Avoid tying product display logic to any specific hosting provider.
+- The compiled `src/styles.css` must always be committed — Vercel does not run the Tailwind build step.
 
 ---
 
@@ -582,8 +604,10 @@ A task is complete only when:
 
 ## 21. Git Branching Rules
 
-- **Target Branch**: All commits and pushes must go to the `preview` branch, NOT `main`, unless the user explicitly instructs otherwise.
-- **Push Reminders**: Keep track of the number of pushes. After every 3 to 5 pushes, explicitly remind the user in the chat that pushes are going to the `preview` branch and not to `main`.
+- **Default Target Branch**: Push to `preview` branch by default, unless the user explicitly says to push to `main`.
+- **Main branch**: The `main` branch is auto-deployed to production on Vercel. Only push here when changes are confirmed working on the preview URL.
+- **Push Reminders**: After every 3 to 5 pushes, remind the user in chat which branch is being targeted.
+- **Vercel previews**: Every push to any branch (including `preview`) gets a unique Vercel preview URL — use these to verify changes before merging to `main`.
 
 ---
 
