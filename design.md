@@ -149,25 +149,14 @@ colors:
 
 Use for:
 
-- navigation;
-- buttons;
+- headings & titles;
+- navigation & buttons;
 - body text;
 - captions;
 - technical labels;
 - product specifications.
 
-### Heading / Display typeface
-
-**Cormorant Garamond** (Serif)
-
-Use for:
-
-- primary section titles;
-- hero headings;
-- editorial and architectural callouts;
-- brand ethos headers.
-
-It restores the elegant serif aesthetic while pairing seamlessly with Montserrat for body text.
+Montserrat is used consistently across the entire site for all headings, body text, and interactive elements.
 
 ### Mobile-first type scale
 
