@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typography & Color Preview | Beton Lighting</title>
+    <title>Typography Composition Lab | Beton Lighting</title>
     <link rel="icon" href="favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
@@ -36,9 +36,19 @@
             background-color: #FEFEFE;
             color: #134095;
         }
-        /* Custom UI transitions */
-        .preview-box {
-            transition: background-color 0.3s ease;
+        /* Custom UI scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
         /* Custom sharp slider */
         input[type="range"] {
@@ -52,8 +62,8 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             background: #EF7F1A;
             cursor: pointer;
             border-radius: 0px;
@@ -66,7 +76,7 @@
         <div class="flex items-center gap-4">
             <a href="index.html"><img alt="Beton Logo" class="h-10 object-contain" src="Beton_logo.webp"/></a>
             <div class="h-6 w-[1px] bg-[#134095]/15"></div>
-            <h1 class="text-xs uppercase tracking-[0.3em] font-bold text-[#134095]">Typography Lab</h1>
+            <h1 class="text-xs uppercase tracking-[0.3em] font-bold text-[#134095]">Typography Composition Lab</h1>
         </div>
         <a href="products.html" class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#EF7F1A] hover:underline flex items-center gap-2">
             <iconify-icon icon="lucide:arrow-left"></iconify-icon> Back to Products
@@ -76,119 +86,63 @@
     <!-- Main Workspace -->
     <div class="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden">
         <!-- Settings Sidebar -->
-        <aside class="w-full lg:w-[380px] border-r border-[#134095]/15 bg-white p-6 overflow-y-auto shrink-0 flex flex-col gap-6 lg:max-h-[calc(100vh-80px)]">
-            <div>
-                <h2 class="text-[10px] uppercase tracking-widest text-[#134095]/50 font-bold mb-4">Interactive Controls</h2>
-                
-                <!-- Sample Text -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Sample Text</label>
-                    <input type="text" id="text-input" value="02 / EFFICIENCY" class="w-full border border-[#134095]/20 px-3 py-2 text-xs focus:border-[#EF7F1A] focus:outline-none" style="border-radius: 0px;">
-                    <div class="flex gap-2 mt-2">
-                        <button onclick="setSample('02 / EFFICIENCY')" class="text-[9px] uppercase tracking-wider px-2 py-1 bg-gray-100 text-[#134095] hover:bg-gray-200">Preset 1</button>
-                        <button onclick="setSample('EXISTING CHALLENGE')" class="text-[9px] uppercase tracking-wider px-2 py-1 bg-gray-100 text-[#134095] hover:bg-gray-200">Preset 2</button>
-                        <button onclick="setSample('LIGHTING RESPONSE')" class="text-[9px] uppercase tracking-wider px-2 py-1 bg-gray-100 text-[#134095] hover:bg-gray-200">Preset 3</button>
+        <aside class="w-full lg:w-[420px] border-r border-[#134095]/15 bg-white p-6 overflow-y-auto shrink-0 flex flex-col gap-6 lg:max-h-[calc(100vh-80px)]">
+            <div class="flex flex-col gap-6">
+                <!-- Header Control -->
+                <div class="flex items-center justify-between">
+                    <h2 class="text-[10px] uppercase tracking-widest text-[#134095]/50 font-bold">Text Blocks Configuration</h2>
+                    <button onclick="addNewBlock()" class="text-[9px] uppercase tracking-widest font-bold bg-[#EF7F1A] text-white px-3 py-1.5 flex items-center gap-1 hover:bg-[#134095] transition-colors">
+                        <iconify-icon icon="lucide:plus"></iconify-icon> Add Block
+                    </button>
+                </div>
+
+                <!-- Text Blocks Accordion list -->
+                <div id="blocks-accordion-container" class="flex flex-col gap-3">
+                    <!-- Dynamic blocks go here -->
+                </div>
+
+                <hr class="border-t border-[#134095]/10">
+
+                <!-- Global Spacing & Layout controls -->
+                <div class="space-y-4">
+                    <h3 class="text-[10px] uppercase tracking-widest text-[#134095]/50 font-bold">Global Layout Settings</h3>
+                    
+                    <!-- Stacking Gap -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80">Vertical Gap spacing</label>
+                            <span id="gap-val" class="text-xs font-bold text-[#EF7F1A]">16px</span>
+                        </div>
+                        <input type="range" id="gap-slider" min="0" max="64" value="16">
                     </div>
-                </div>
 
-                <!-- Font Family -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Font Family</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setFontFamily('font-sans')" id="btn-font-sans" class="font-sans border border-[#EF7F1A] text-[#EF7F1A] py-2 text-xs font-semibold text-center bg-[#EF7F1A]/5">Montserrat</button>
-                        <button onclick="setFontFamily('font-serif')" id="btn-font-serif" class="font-serif border border-gray-200 text-gray-500 py-2 text-xs font-semibold text-center hover:bg-gray-50">Cormorant</button>
+                    <!-- Alignment -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Text Alignment</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setGlobalAlign('items-start text-left')" id="btn-align-left" class="border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold">Left</button>
+                            <button onclick="setGlobalAlign('items-center text-center')" id="btn-align-center" class="border border-gray-200 text-gray-500 py-1 text-[10px] text-center">Center</button>
+                            <button onclick="setGlobalAlign('items-end text-right')" id="btn-align-right" class="border border-gray-200 text-gray-500 py-1 text-[10px] text-center">Right</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Font Size -->
-                <div class="space-y-2 mb-6">
-                    <div class="flex justify-between items-center">
-                        <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80">Font Size</label>
-                        <span id="size-val" class="text-xs font-bold text-[#EF7F1A]">10px</span>
+                    <!-- Background Contrast Toggle -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Contrast Background</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setBackground('bg-white')" class="border border-gray-300 py-1 text-[10px] text-center font-bold bg-white text-black">White</button>
+                            <button onclick="setBackground('bg-gray-50')" class="border border-gray-200 py-1 text-[10px] text-center bg-gray-50 text-black">Off-White</button>
+                            <button onclick="setBackground('bg-[#134095]')" class="border border-transparent py-1 text-[10px] text-center bg-[#134095] text-white">Navy Box</button>
+                        </div>
                     </div>
-                    <input type="range" id="size-slider" min="6" max="72" value="10">
-                    <div class="grid grid-cols-5 gap-1 mt-2">
-                        <button onclick="setSize(8)" class="text-[9px] p-1 bg-gray-100 hover:bg-gray-200">8px</button>
-                        <button onclick="setSize(10)" class="text-[9px] p-1 bg-gray-100 hover:bg-gray-200">10px</button>
-                        <button onclick="setSize(12)" class="text-[9px] p-1 bg-gray-100 hover:bg-gray-200">12px</button>
-                        <button onclick="setSize(16)" class="text-[9px] p-1 bg-gray-100 hover:bg-gray-200">16px</button>
-                        <button onclick="setSize(36)" class="text-[9px] p-1 bg-gray-100 hover:bg-gray-200">36px</button>
-                    </div>
-                </div>
 
-                <!-- Font Weight -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Font Weight</label>
-                    <select id="weight-select" class="w-full border border-[#134095]/20 px-3 py-2 text-xs focus:outline-none" style="border-radius: 0px;">
-                        <option value="font-light">Light (300)</option>
-                        <option value="font-normal" selected>Normal (400)</option>
-                        <option value="font-medium">Medium (500)</option>
-                        <option value="font-semibold">Semi-Bold (600)</option>
-                        <option value="font-bold">Bold (700)</option>
-                        <option value="font-black">Black (900)</option>
-                    </select>
-                </div>
-
-                <!-- Text Style / Italic -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Style / Transform</label>
-                    <div class="grid grid-cols-2 gap-2 mb-2">
-                        <button id="toggle-italic" onclick="toggleItalic()" class="border border-gray-200 text-gray-500 py-2 text-xs text-center hover:bg-gray-50 italic">Italic</button>
-                        <button id="toggle-uppercase" onclick="toggleUppercase()" class="border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-2 text-xs text-center font-bold">UPPERCASE</button>
-                    </div>
-                </div>
-
-                <!-- Letter Spacing (Tracking) -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Letter Spacing (Tracking)</label>
-                    <select id="tracking-select" class="w-full border border-[#134095]/20 px-3 py-2 text-xs focus:outline-none" style="border-radius: 0px;">
-                        <option value="tracking-normal">Normal (0)</option>
-                        <option value="tracking-wide">Wide (0.025em)</option>
-                        <option value="tracking-wider">Wider (0.05em)</option>
-                        <option value="tracking-widest">Widest (0.1em)</option>
-                        <option value="tracking-[0.2em]">0.2em (tracking-[0.2em])</option>
-                        <option value="tracking-[0.3em]">0.3em (tracking-[0.3em])</option>
-                        <option value="tracking-[0.4em]" selected>0.4em (tracking-[0.4em])</option>
-                    </select>
-                </div>
-
-                <!-- Color Palette -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Beton Colors</label>
-                    <div class="grid grid-cols-5 gap-2">
-                        <button onclick="setColor('#EF7F1A')" class="w-8 h-8 bg-[#EF7F1A] border-2 border-black" title="Carrot Orange"></button>
-                        <button onclick="setColor('#264796')" class="w-8 h-8 bg-[#264796] border border-gray-200" title="Deep Cobalt"></button>
-                        <button onclick="setColor('#134095')" class="w-8 h-8 bg-[#134095] border border-gray-200" title="Navy / Indigo"></button>
-                        <button onclick="setColor('#FECC00')" class="w-8 h-8 bg-[#FECC00] border border-gray-200" title="Sunburst Yellow"></button>
-                        <button onclick="setColor('#1A1A1A')" class="w-8 h-8 bg-[#1A1A1A] border border-gray-200" title="Dark Slate"></button>
-                    </div>
-                </div>
-
-                <!-- Color Opacity -->
-                <div class="space-y-2 mb-6">
-                    <div class="flex justify-between items-center">
-                        <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80">Opacity</label>
-                        <span id="opacity-val" class="text-xs font-bold text-[#EF7F1A]">100%</span>
-                    </div>
-                    <input type="range" id="opacity-slider" min="10" max="100" value="100" step="10">
-                </div>
-
-                <!-- Background Toggle -->
-                <div class="space-y-2 mb-6">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Contrast Background</label>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button onclick="setBackground('bg-white')" class="border border-gray-300 py-1.5 text-[10px] text-center font-bold bg-white text-black">White</button>
-                        <button onclick="setBackground('bg-gray-50')" class="border border-gray-200 py-1.5 text-[10px] text-center bg-gray-50 text-black">Off-White</button>
-                        <button onclick="setBackground('bg-[#134095]')" class="border border-transparent py-1.5 text-[10px] text-center bg-[#134095] text-white">Navy Box</button>
-                    </div>
-                </div>
-
-                <!-- Watermark Option -->
-                <div class="space-y-2">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Background Watermark</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="toggleWatermark(true)" id="btn-watermark-on" class="border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold">Show SVG</button>
-                        <button onclick="toggleWatermark(false)" id="btn-watermark-off" class="border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center">Hide SVG</button>
+                    <!-- Background Watermark Toggle -->
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Background Watermark</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="toggleWatermark(true)" id="btn-watermark-on" class="border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold">Show SVG</button>
+                            <button onclick="toggleWatermark(false)" id="btn-watermark-off" class="border border-gray-200 text-gray-500 py-1 text-[10px] text-center">Hide SVG</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,18 +155,18 @@
                 <!-- Watermark background visual indicator -->
                 <img id="bg-watermark" src="assets/images/beton-watermark.svg" class="absolute pointer-events-none opacity-[0.12] w-[95vw] max-w-[1400px] select-none" alt="Beton Watermark Vector" />
                 
-                <!-- PREVIEW TEXT CONTAINER -->
-                <div id="text-target" class="font-sans text-[10px] tracking-[0.4em] uppercase text-[#EF7F1A] transition-all max-w-full text-center break-words select-all z-10">
-                    02 / EFFICIENCY
+                <!-- PREVIEW STACK WRAPPER -->
+                <div id="preview-container" class="flex flex-col items-start gap-4 w-full max-w-3xl relative z-10">
+                    <!-- Dynamic text rendering happens inside here -->
                 </div>
             </div>
 
             <!-- Developer Output Console -->
-            <section class="h-[220px] bg-white p-6 flex flex-col shrink-0">
+            <section class="h-[250px] bg-white p-6 flex flex-col shrink-0">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-2">
                         <iconify-icon icon="lucide:terminal" class="text-sm text-[#EF7F1A]"></iconify-icon>
-                        <h3 class="text-[10px] uppercase tracking-widest font-bold text-[#134095]">Output Specifications</h3>
+                        <h3 class="text-[10px] uppercase tracking-widest font-bold text-[#134095]">Aggregated Output Specification</h3>
                     </div>
                     <button onclick="copyCode()" class="text-[9px] uppercase tracking-widest font-bold text-[#EF7F1A] hover:bg-[#EF7F1A]/5 border border-[#EF7F1A] px-3 py-1 flex items-center gap-1.5">
                         <iconify-icon icon="lucide:copy" id="copy-icon"></iconify-icon> <span id="copy-txt">Copy Code</span>
@@ -222,246 +176,463 @@
                 <!-- Code Box -->
                 <div class="flex-1 bg-slate-50 border border-slate-200 p-4 font-mono text-xs text-[#134095] overflow-auto select-all flex flex-col gap-2 relative">
                     <div>
-                        <span class="text-[10px] uppercase tracking-widest text-[#134095]/60 font-bold block mb-1">Tailwind CSS Classes</span>
-                        <code id="output-classes" class="text-[#EF7F1A] font-semibold">text-[10px] font-sans font-normal uppercase tracking-[0.4em] text-[#EF7F1A]</code>
-                    </div>
-                    <div class="mt-2 border-t border-slate-200 pt-2">
-                        <span class="text-[10px] uppercase tracking-widest text-[#134095]/60 font-bold block mb-1">HTML Code Snippet</span>
-                        <code id="output-html" class="text-[#134095]/80">&lt;span class="text-[10px] font-sans font-normal uppercase tracking-[0.4em] text-[#EF7F1A]"&gt;02 / EFFICIENCY&lt;/span&gt;</code>
+                        <span class="text-[10px] uppercase tracking-widest text-[#134095]/60 font-bold block mb-1">Tailwind CSS HTML Composition Output</span>
+                        <pre id="output-html" class="text-[#134095]/80 whitespace-pre-wrap break-all"></pre>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Interactive script -->
+    <!-- Interactive JS logic -->
     <script>
-        const textTarget = document.getElementById('text-target');
-        const textInput = document.getElementById('text-input');
-        const sizeSlider = document.getElementById('size-slider');
-        const sizeVal = document.getElementById('size-val');
-        const weightSelect = document.getElementById('weight-select');
-        const trackingSelect = document.getElementById('tracking-select');
-        const opacitySlider = document.getElementById('opacity-slider');
-        const opacityVal = document.getElementById('opacity-val');
-        const canvas = document.getElementById('preview-canvas');
+        // Core Database of Text Blocks
+        let blocks = [
+            {
+                id: 'block_0',
+                text: '02 / EFFICIENCY',
+                fontFamily: 'font-sans',
+                fontSize: 10,
+                fontWeight: 'font-normal',
+                italic: false,
+                uppercase: true,
+                tracking: 'tracking-[0.4em]',
+                color: '#EF7F1A',
+                opacity: 100,
+                isExpanded: true
+            },
+            {
+                id: 'block_1',
+                text: 'Commercial Clarity',
+                fontFamily: 'font-serif',
+                fontSize: 40,
+                fontWeight: 'font-normal',
+                italic: false,
+                uppercase: false,
+                tracking: 'tracking-normal',
+                color: '#134095',
+                opacity: 100,
+                isExpanded: false
+            },
+            {
+                id: 'block_2',
+                text: 'Commercial lighting needs efficiency, consistent output, and easy maintenance without making the space feel flat. Beton focuses on low-glare linear systems, controlled beam distribution, and clean integration for offices, showrooms, and shared workspaces.',
+                fontFamily: 'font-sans',
+                fontSize: 14,
+                fontWeight: 'font-normal',
+                italic: false,
+                uppercase: false,
+                tracking: 'tracking-normal',
+                color: '#134095',
+                opacity: 70,
+                isExpanded: false
+            }
+        ];
 
-        const classesOutput = document.getElementById('output-classes');
+        let globalGap = 16;
+        let globalAlign = 'items-start text-left';
+        let currentBackground = 'bg-white';
+        let showWatermark = true;
+
+        const accordionContainer = document.getElementById('blocks-accordion-container');
+        const previewContainer = document.getElementById('preview-container');
         const htmlOutput = document.getElementById('output-html');
+        const gapSlider = document.getElementById('gap-slider');
+        const gapVal = document.getElementById('gap-val');
 
-        let currentFontFamily = 'font-sans';
-        let isItalic = false;
-        let isUppercase = true;
-        let currentSize = 10;
-        let currentColor = '#EF7F1A';
-        let currentOpacity = 100;
+        // Dynamic ID incrementer
+        let idCounter = 3;
 
-        function updatePreview() {
-            // Apply text
-            textTarget.innerText = textInput.value || 'BETON';
-
-            // Reset fonts
-            textTarget.classList.remove('font-sans', 'font-serif');
-            textTarget.classList.add(currentFontFamily);
-
-            // Apply size
-            textTarget.style.fontSize = currentSize + 'px';
-            sizeVal.innerText = currentSize + 'px';
-
-            // Apply font weight
-            textTarget.classList.remove('font-light', 'font-normal', 'font-medium', 'font-semibold', 'font-bold', 'font-black');
-            textTarget.classList.add(weightSelect.value);
-
-            // Apply italic
-            if (isItalic) {
-                textTarget.classList.add('italic');
-            } else {
-                textTarget.classList.remove('italic');
-            }
-
-            // Apply uppercase
-            if (isUppercase) {
-                textTarget.classList.add('uppercase');
-                textTarget.classList.remove('normal-case');
-            } else {
-                textTarget.classList.remove('uppercase');
-                textTarget.classList.add('normal-case');
-            }
-
-            // Apply tracking
-            textTarget.classList.remove('tracking-normal', 'tracking-wide', 'tracking-wider', 'tracking-widest', 'tracking-[0.2em]', 'tracking-[0.3em]', 'tracking-[0.4em]');
-            textTarget.classList.add(trackingSelect.value);
-
-            // Apply color & opacity
-            textTarget.style.color = currentColor;
-            textTarget.style.opacity = currentOpacity / 100;
-            opacityVal.innerText = currentOpacity + '%';
-
-            // Generate Output specifications
+        // Render controls and target canvas
+        function render() {
+            renderControls();
+            renderPreview();
             generateSpecOutput();
         }
 
-        function generateSpecOutput() {
-            let twClasses = [];
-            
-            // Size
-            if (currentSize === 12) twClasses.push('text-xs');
-            else if (currentSize === 14) twClasses.push('text-sm');
-            else if (currentSize === 16) twClasses.push('text-base');
-            else if (currentSize === 18) twClasses.push('text-lg');
-            else if (currentSize === 20) twClasses.push('text-xl');
-            else if (currentSize === 24) twClasses.push('text-2xl');
-            else if (currentSize === 30) twClasses.push('text-3xl');
-            else if (currentSize === 36) twClasses.push('text-4xl');
-            else if (currentSize === 48) twClasses.push('text-5xl');
-            else if (currentSize === 60) twClasses.push('text-6xl');
-            else if (currentSize === 72) twClasses.push('text-7xl');
-            else twClasses.push(`text-[${currentSize}px]`);
+        // Render controls list in sidebar
+        function renderControls() {
+            accordionContainer.innerHTML = '';
+            blocks.forEach((block, idx) => {
+                const blockDiv = document.createElement('div');
+                blockDiv.className = `border ${block.isExpanded ? 'border-[#EF7F1A]' : 'border-gray-200'} bg-white flex flex-col`;
+                
+                // Block Header Bar
+                blockDiv.innerHTML = `
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b ${block.isExpanded ? 'border-[#EF7F1A]' : 'border-gray-100'} cursor-pointer" onclick="toggleExpand('${block.id}')">
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] font-bold text-[#134095]/40">#${idx + 1}</span>
+                            <span class="text-[10px] uppercase font-bold text-[#134095] truncate max-w-[180px]">${block.text || '(Empty text)'}</span>
+                        </div>
+                        <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                            <button onclick="deleteBlock('${block.id}')" class="text-xs text-gray-400 hover:text-red-500 p-1 flex items-center" title="Delete Block">
+                                <iconify-icon icon="lucide:trash-2"></iconify-icon>
+                            </button>
+                            <span class="text-xs text-gray-400 p-1 flex items-center" onclick="toggleExpand('${block.id}')">
+                                <iconify-icon icon="lucide:${block.isExpanded ? 'chevron-up' : 'chevron-down'}"></iconify-icon>
+                            </span>
+                        </div>
+                    </div>
+                `;
 
-            // Font family
-            twClasses.push(currentFontFamily);
+                // Collapsible controls wrapper
+                if (block.isExpanded) {
+                    const settingsDiv = document.createElement('div');
+                    settingsDiv.className = 'p-4 flex flex-col gap-4 text-xs';
+                    
+                    settingsDiv.innerHTML = `
+                        <!-- Text Input -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Text Content</label>
+                            <textarea oninput="updateBlockText('${block.id}', this.value)" rows="3" class="w-full border border-gray-200 p-2 text-xs focus:border-[#EF7F1A] focus:outline-none resize-y" style="border-radius:0px;">${block.text}</textarea>
+                        </div>
 
-            // Font weight
-            twClasses.push(weightSelect.value);
+                        <!-- Font Family -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Font Family</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="setBlockFont('${block.id}', 'font-sans')" class="py-1 text-[10px] border ${block.fontFamily === 'font-sans' ? 'border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 font-semibold' : 'border-gray-200 text-gray-500'}">Montserrat</button>
+                                <button onclick="setBlockFont('${block.id}', 'font-serif')" class="py-1 text-[10px] border ${block.fontFamily === 'font-serif' ? 'border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 font-semibold' : 'border-gray-200 text-gray-500'}">Cormorant</button>
+                            </div>
+                        </div>
 
-            // Italic
-            if (isItalic) twClasses.push('italic');
+                        <!-- Font Size -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center">
+                                <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80">Font Size</label>
+                                <span class="font-bold text-[#EF7F1A]">${block.fontSize}px</span>
+                            </div>
+                            <input type="range" min="6" max="72" value="${block.fontSize}" oninput="updateBlockSize('${block.id}', this.value)">
+                            <div class="grid grid-cols-5 gap-1 mt-1 text-[9px]">
+                                <button onclick="updateBlockSize('${block.id}', 10)" class="bg-gray-100 py-0.5 hover:bg-gray-200">10px</button>
+                                <button onclick="updateBlockSize('${block.id}', 12)" class="bg-gray-100 py-0.5 hover:bg-gray-200">12px</button>
+                                <button onclick="updateBlockSize('${block.id}', 14)" class="bg-gray-100 py-0.5 hover:bg-gray-200">14px</button>
+                                <button onclick="updateBlockSize('${block.id}', 16)" class="bg-gray-100 py-0.5 hover:bg-gray-200">16px</button>
+                                <button onclick="updateBlockSize('${block.id}', 40)" class="bg-gray-100 py-0.5 hover:bg-gray-200">40px</button>
+                            </div>
+                        </div>
 
-            // Uppercase
-            if (isUppercase) twClasses.push('uppercase');
+                        <!-- Font Weight -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Font Weight</label>
+                            <select onchange="updateBlockWeight('${block.id}', this.value)" class="w-full border border-gray-200 p-1.5 text-xs focus:outline-none" style="border-radius:0px;">
+                                <option value="font-light" ${block.fontWeight === 'font-light' ? 'selected' : ''}>Light (300)</option>
+                                <option value="font-normal" ${block.fontWeight === 'font-normal' ? 'selected' : ''}>Normal (400)</option>
+                                <option value="font-medium" ${block.fontWeight === 'font-medium' ? 'selected' : ''}>Medium (500)</option>
+                                <option value="font-semibold" ${block.fontWeight === 'font-semibold' ? 'selected' : ''}>Semi-Bold (600)</option>
+                                <option value="font-bold" ${block.fontWeight === 'font-bold' ? 'selected' : ''}>Bold (700)</option>
+                                <option value="font-black" ${block.fontWeight === 'font-black' ? 'selected' : ''}>Black (900)</option>
+                            </select>
+                        </div>
 
-            // Tracking
-            twClasses.push(trackingSelect.value);
+                        <!-- Text Style / Transform -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Style / Transform</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="toggleBlockItalic('${block.id}')" class="py-1 text-[10px] border ${block.italic ? 'border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 font-bold italic' : 'border-gray-200 text-gray-500 italic'}">Italic</button>
+                                <button onclick="toggleBlockUppercase('${block.id}')" class="py-1 text-[10px] border ${block.uppercase ? 'border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 font-bold' : 'border-gray-200 text-gray-500'}">UPPERCASE</button>
+                            </div>
+                        </div>
 
-            // Color and Opacity
-            let colorHex = currentColor.toUpperCase();
-            let colorClass = '';
-            if (colorHex === '#EF7F1A') colorClass = 'text-[#EF7F1A]';
-            else if (colorHex === '#264796') colorClass = 'text-[#264796]';
-            else if (colorHex === '#134095') colorClass = 'text-[#134095]';
-            else if (colorHex === '#FECC00') colorClass = 'text-[#FECC00]';
-            else if (colorHex === '#1A1A1A') colorClass = 'text-[#1A1A1A]';
-            else colorClass = `text-[${currentColor}]`;
+                        <!-- Tracking / Letter Spacing -->
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Letter Spacing (Tracking)</label>
+                            <select onchange="updateBlockTracking('${block.id}', this.value)" class="w-full border border-gray-200 p-1.5 text-xs focus:outline-none" style="border-radius:0px;">
+                                <option value="tracking-normal" ${block.tracking === 'tracking-normal' ? 'selected' : ''}>Normal (0)</option>
+                                <option value="tracking-wide" ${block.tracking === 'tracking-wide' ? 'selected' : ''}>Wide (0.025em)</option>
+                                <option value="tracking-wider" ${block.tracking === 'tracking-wider' ? 'selected' : ''}>Wider (0.05em)</option>
+                                <option value="tracking-widest" ${block.tracking === 'tracking-widest' ? 'selected' : ''}>Widest (0.1em)</option>
+                                <option value="tracking-[0.2em]" ${block.tracking === 'tracking-[0.2em]' ? 'selected' : ''}>0.2em</option>
+                                <option value="tracking-[0.3em]" ${block.tracking === 'tracking-[0.3em]' ? 'selected' : ''}>0.3em</option>
+                                <option value="tracking-[0.4em]" ${block.tracking === 'tracking-[0.4em]' ? 'selected' : ''}>0.4em</option>
+                            </select>
+                        </div>
 
-            if (currentOpacity < 100) {
-                colorClass += `/${currentOpacity}`;
-            }
-            twClasses.push(colorClass);
-
-            const finalClasses = twClasses.join(' ');
-            classesOutput.innerText = finalClasses;
-
-            // Generate HTML snippet
-            const escapedText = textTarget.innerText;
-            htmlOutput.innerText = `<span class="${finalClasses}">${escapedText}</span>`;
-        }
-
-        // Action Handlers
-        function setSample(str) {
-            textInput.value = str;
-            if (str === '02 / EFFICIENCY') {
-                setSize(10);
-                setColor('#EF7F1A');
-                setTracking('tracking-[0.4em]');
-                setUppercase(true);
-            } else if (str === 'EXISTING CHALLENGE') {
-                setSize(10);
-                setColor('#134095');
-                setOpacity(70);
-                setTracking('tracking-widest');
-                setUppercase(true);
-            } else if (str === 'LIGHTING RESPONSE') {
-                setSize(10);
-                setColor('#EF7F1A');
-                setOpacity(100);
-                setTracking('tracking-widest');
-                setUppercase(true);
-            }
-            updatePreview();
-        }
-
-        function setFontFamily(font) {
-            currentFontFamily = font;
-            document.getElementById('btn-font-sans').className = font === 'font-sans' ? 'font-sans border border-[#EF7F1A] text-[#EF7F1A] py-2 text-xs font-semibold text-center bg-[#EF7F1A]/5' : 'font-sans border border-gray-200 text-gray-500 py-2 text-xs font-semibold text-center hover:bg-gray-50';
-            document.getElementById('btn-font-serif').className = font === 'font-serif' ? 'font-serif border border-[#EF7F1A] text-[#EF7F1A] py-2 text-xs font-semibold text-center bg-[#EF7F1A]/5' : 'font-serif border border-gray-200 text-gray-500 py-2 text-xs font-semibold text-center hover:bg-gray-50';
-            updatePreview();
-        }
-
-        function setSize(px) {
-            currentSize = px;
-            sizeSlider.value = px;
-            updatePreview();
-        }
-
-        function setTracking(val) {
-            trackingSelect.value = val;
-            updatePreview();
-        }
-
-        function setUppercase(val) {
-            isUppercase = val;
-            const btn = document.getElementById('toggle-uppercase');
-            if (isUppercase) {
-                btn.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-2 text-xs text-center font-bold';
-            } else {
-                btn.className = 'border border-gray-200 text-gray-500 py-2 text-xs text-center';
-            }
-        }
-
-        function toggleItalic() {
-            isItalic = !isItalic;
-            const btn = document.getElementById('toggle-italic');
-            btn.className = isItalic ? 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-2 text-xs text-center italic font-bold' : 'border border-gray-200 text-gray-500 py-2 text-xs text-center hover:bg-gray-50 italic';
-            updatePreview();
-        }
-
-        function toggleUppercase() {
-            isUppercase = !isUppercase;
-            const btn = document.getElementById('toggle-uppercase');
-            btn.className = isUppercase ? 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-2 text-xs text-center font-bold' : 'border border-gray-200 text-gray-500 py-2 text-xs text-center hover:bg-gray-50';
-            updatePreview();
-        }
-
-        function setColor(hex) {
-            currentColor = hex;
-            // Highlight selected color button
-            document.querySelectorAll('[title]').forEach(btn => {
-                btn.classList.remove('border-black', 'scale-110');
-                btn.classList.add('border-gray-200');
+                        <!-- Color & Opacity -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80 block">Color</label>
+                                <select onchange="updateBlockColor('${block.id}', this.value)" class="w-full border border-gray-200 p-1.5 text-xs focus:outline-none" style="border-radius:0px;">
+                                    <option value="#EF7F1A" ${block.color === '#EF7F1A' ? 'selected' : ''}>Orange</option>
+                                    <option value="#264796" ${block.color === '#264796' ? 'selected' : ''}>Cobalt</option>
+                                    <option value="#134095" ${block.color === '#134095' ? 'selected' : ''}>Navy</option>
+                                    <option value="#FECC00" ${block.color === '#FECC00' ? 'selected' : ''}>Yellow</option>
+                                    <option value="#1A1A1A" ${block.color === '#1A1A1A' ? 'selected' : ''}>Slate</option>
+                                </select>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <label class="text-[9px] uppercase tracking-widest font-bold text-[#134095]/80">Opacity</label>
+                                    <span class="font-bold text-[#EF7F1A]">${block.opacity}%</span>
+                                </div>
+                                <input type="range" min="10" max="100" step="10" value="${block.opacity}" oninput="updateBlockOpacity('${block.id}', this.value)">
+                            </div>
+                        </div>
+                    `;
+                    blockDiv.appendChild(settingsDiv);
+                }
+                accordionContainer.appendChild(blockDiv);
             });
-            const targetBtn = document.querySelector(`[title][style*="${hex.toUpperCase()}"], [title][style*="${hex.toLowerCase()}"]`);
-            if (targetBtn) {
-                targetBtn.classList.remove('border-gray-200');
-                targetBtn.classList.add('border-black', 'scale-110');
-            }
-            updatePreview();
         }
 
-        function setOpacity(val) {
-            currentOpacity = val;
-            opacitySlider.value = val;
-            updatePreview();
+        // Render preview canvas target block elements
+        function renderPreview() {
+            previewContainer.innerHTML = '';
+            
+            // Adjust alignments
+            previewContainer.className = `flex flex-col ${globalAlign} w-full max-w-3xl relative z-10`;
+            previewContainer.style.gap = globalGap + 'px';
+
+            blocks.forEach(block => {
+                const textEl = document.createElement('div');
+                
+                // Build dynamic element configuration
+                textEl.innerText = block.text || '';
+                
+                // Add styling classes
+                textEl.classList.add(
+                    block.fontFamily,
+                    block.fontWeight,
+                    block.tracking,
+                    'whitespace-pre-wrap',
+                    'break-words',
+                    'max-w-full'
+                );
+
+                if (block.italic) textEl.classList.add('italic');
+                if (block.uppercase) textEl.classList.add('uppercase');
+
+                // Style sizing, color, opacity
+                textEl.style.fontSize = block.fontSize + 'px';
+                textEl.style.color = block.color;
+                textEl.style.opacity = block.opacity / 100;
+
+                previewContainer.appendChild(textEl);
+            });
+        }
+
+        // Generate Aggregated HTML snippet & classes documentation
+        function generateSpecOutput() {
+            let layoutTag = 'div';
+            let gapClass = '';
+            if (globalGap > 0) {
+                if (globalGap === 4) gapClass = ' gap-1';
+                else if (globalGap === 8) gapClass = ' gap-2';
+                else if (globalGap === 12) gapClass = ' gap-3';
+                else if (globalGap === 16) gapClass = ' gap-4';
+                else if (globalGap === 24) gapClass = ' gap-6';
+                else if (globalGap === 32) gapClass = ' gap-8';
+                else if (globalGap === 40) gapClass = ' gap-10';
+                else if (globalGap === 48) gapClass = ' gap-12';
+                else if (globalGap === 64) gapClass = ' gap-16';
+                else gapClass = ` gap-[${globalGap}px]`;
+            }
+
+            let alignClasses = '';
+            if (globalAlign.includes('items-start')) alignClasses = 'items-start text-left';
+            else if (globalAlign.includes('items-center')) alignClasses = 'items-center text-center';
+            else if (globalAlign.includes('items-end')) alignClasses = 'items-end text-right';
+
+            let output = `<div class="flex flex-col ${alignClasses}${gapClass}">\n`;
+
+            blocks.forEach(block => {
+                let twClasses = [];
+                
+                // Size conversion
+                if (block.fontSize === 10) twClasses.push('text-[10px]');
+                else if (block.fontSize === 12) twClasses.push('text-xs');
+                else if (block.fontSize === 14) twClasses.push('text-sm');
+                else if (block.fontSize === 16) twClasses.push('text-base');
+                else if (block.fontSize === 18) twClasses.push('text-lg');
+                else if (block.fontSize === 20) twClasses.push('text-xl');
+                else if (block.fontSize === 24) twClasses.push('text-2xl');
+                else if (block.fontSize === 36) twClasses.push('text-4xl');
+                else if (block.fontSize === 48) twClasses.push('text-5xl');
+                else twClasses.push(`text-[${block.fontSize}px]`);
+
+                // Family & Weight
+                twClasses.push(block.fontFamily);
+                twClasses.push(block.fontWeight);
+                if (block.italic) twClasses.push('italic');
+                if (block.uppercase) twClasses.push('uppercase');
+                if (block.tracking !== 'tracking-normal') twClasses.push(block.tracking);
+
+                // Opacity & colors
+                let colorHex = block.color.toUpperCase();
+                let colorClass = '';
+                if (colorHex === '#EF7F1A') colorClass = 'text-[#EF7F1A]';
+                else if (colorHex === '#264796') colorClass = 'text-[#264796]';
+                else if (colorHex === '#134095') colorClass = 'text-[#134095]';
+                else if (colorHex === '#FECC00') colorClass = 'text-[#FECC00]';
+                else if (colorHex === '#1A1A1A') colorClass = 'text-[#1A1A1A]';
+                else colorClass = `text-[${block.color}]`;
+
+                if (block.opacity < 100) {
+                    colorClass += `/${block.opacity}`;
+                }
+                twClasses.push(colorClass);
+                twClasses.push('whitespace-pre-wrap');
+
+                // Generate inner label tags based on semantic type
+                let tag = 'span';
+                if (block.fontSize >= 36) tag = 'h2';
+                else if (block.fontSize >= 18) tag = 'h3';
+                else if (block.fontSize === 14 && block.opacity < 100) tag = 'p';
+
+                output += `    <${tag} class="${twClasses.join(' ')}">${block.text}</${tag}>\n`;
+            });
+
+            output += `</div>`;
+            htmlOutput.innerText = output;
+        }
+
+        // Block Mutators
+        function addNewBlock() {
+            blocks.forEach(b => b.isExpanded = false);
+            blocks.push({
+                id: 'block_' + idCounter++,
+                text: 'New Paragraph or Label',
+                fontFamily: 'font-sans',
+                fontSize: 14,
+                fontWeight: 'font-normal',
+                italic: false,
+                uppercase: false,
+                tracking: 'tracking-normal',
+                color: '#134095',
+                opacity: 100,
+                isExpanded: true
+            });
+            render();
+        }
+
+        function deleteBlock(id) {
+            if (blocks.length === 1) {
+                alert("You must keep at least one text block in the workspace.");
+                return;
+            }
+            blocks = blocks.filter(b => b.id !== id);
+            render();
+        }
+
+        function toggleExpand(id) {
+            blocks.forEach(b => {
+                if (b.id === id) {
+                    b.isExpanded = !b.isExpanded;
+                } else {
+                    b.isExpanded = false;
+                }
+            });
+            renderControls();
+        }
+
+        function updateBlockText(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.text = val;
+                renderPreview();
+                generateSpecOutput();
+            }
+        }
+
+        function setBlockFont(id, font) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.fontFamily = font;
+                render();
+            }
+        }
+
+        function updateBlockSize(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.fontSize = parseInt(val);
+                render();
+            }
+        }
+
+        function updateBlockWeight(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.fontWeight = val;
+                renderPreview();
+                generateSpecOutput();
+            }
+        }
+
+        function toggleBlockItalic(id) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.italic = !b.italic;
+                render();
+            }
+        }
+
+        function toggleBlockUppercase(id) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.uppercase = !b.uppercase;
+                render();
+            }
+        }
+
+        function updateBlockTracking(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.tracking = val;
+                renderPreview();
+                generateSpecOutput();
+            }
+        }
+
+        function updateBlockColor(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.color = val;
+                renderPreview();
+                generateSpecOutput();
+            }
+        }
+
+        function updateBlockOpacity(id, val) {
+            const b = blocks.find(x => x.id === id);
+            if (b) {
+                b.opacity = parseInt(val);
+                render();
+            }
+        }
+
+        // Global Layout Actions
+        function setGlobalAlign(alignVal) {
+            globalAlign = alignVal;
+            document.getElementById('btn-align-left').className = alignVal.includes('items-start') ? 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold' : 'border border-gray-200 text-gray-500 py-1 text-[10px] text-center';
+            document.getElementById('btn-align-center').className = alignVal.includes('items-center') ? 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold' : 'border border-gray-200 text-gray-500 py-1 text-[10px] text-center';
+            document.getElementById('btn-align-right').className = alignVal.includes('items-end') ? 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold' : 'border border-gray-200 text-gray-500 py-1 text-[10px] text-center';
+            renderPreview();
+            generateSpecOutput();
         }
 
         function setBackground(bgClass) {
-            canvas.className = 'flex-1 flex items-center justify-center border-b border-[#134095]/15 p-12 overflow-auto relative ' + bgClass;
+            currentBackground = bgClass;
+            document.getElementById('preview-canvas').className = 'flex-1 flex items-center justify-center border-b border-[#134095]/15 p-12 overflow-auto relative ' + bgClass;
         }
 
         function toggleWatermark(show) {
+            showWatermark = show;
             const img = document.getElementById('bg-watermark');
             const btnOn = document.getElementById('btn-watermark-on');
             const btnOff = document.getElementById('btn-watermark-off');
             if (show) {
                 img.classList.remove('hidden');
-                btnOn.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold';
-                btnOff.className = 'border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center';
+                btnOn.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold';
+                btnOff.className = 'border border-gray-200 text-gray-500 py-1 text-[10px] text-center';
             } else {
                 img.classList.add('hidden');
-                btnOn.className = 'border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center';
-                btnOff.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold';
+                btnOn.className = 'border border-gray-200 text-gray-500 py-1 text-[10px] text-center';
+                btnOff.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1 text-[10px] text-center font-bold';
             }
         }
 
+        // Copy specs to clipboard
         function copyCode() {
             const range = document.createRange();
             range.selectNode(htmlOutput);
@@ -483,21 +654,16 @@
             window.getSelection().removeAllRanges();
         }
 
-        // Attach listeners
-        textInput.addEventListener('input', updatePreview);
-        sizeSlider.addEventListener('input', (e) => {
-            currentSize = parseInt(e.target.value);
-            updatePreview();
-        });
-        weightSelect.addEventListener('change', updatePreview);
-        trackingSelect.addEventListener('change', updatePreview);
-        opacitySlider.addEventListener('input', (e) => {
-            currentOpacity = parseInt(e.target.value);
-            updatePreview();
+        // Attach global listeners
+        gapSlider.addEventListener('input', (e) => {
+            globalGap = parseInt(e.target.value);
+            gapVal.innerText = globalGap + 'px';
+            renderPreview();
+            generateSpecOutput();
         });
 
-        // Initialize
-        updatePreview();
+        // Initial setup
+        render();
     </script>
 </body>
 </html>
