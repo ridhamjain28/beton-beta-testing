@@ -174,12 +174,21 @@
                 </div>
 
                 <!-- Background Toggle -->
-                <div class="space-y-2">
+                <div class="space-y-2 mb-6">
                     <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Contrast Background</label>
                     <div class="grid grid-cols-3 gap-2">
                         <button onclick="setBackground('bg-white')" class="border border-gray-300 py-1.5 text-[10px] text-center font-bold bg-white text-black">White</button>
                         <button onclick="setBackground('bg-gray-50')" class="border border-gray-200 py-1.5 text-[10px] text-center bg-gray-50 text-black">Off-White</button>
                         <button onclick="setBackground('bg-[#134095]')" class="border border-transparent py-1.5 text-[10px] text-center bg-[#134095] text-white">Navy Box</button>
+                    </div>
+                </div>
+
+                <!-- Watermark Option -->
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-[#134095]/80 block">Background Watermark</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="toggleWatermark(true)" id="btn-watermark-on" class="border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold">Show SVG</button>
+                        <button onclick="toggleWatermark(false)" id="btn-watermark-off" class="border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center">Hide SVG</button>
                     </div>
                 </div>
             </div>
@@ -190,12 +199,10 @@
             <!-- Center Canvas -->
             <div id="preview-canvas" class="flex-1 flex items-center justify-center bg-white border-b border-[#134095]/15 p-12 overflow-auto relative">
                 <!-- Watermark background visual indicator -->
-                <div class="absolute inset-0 pointer-events-none opacity-5 flex items-center justify-center select-none font-bold text-[120px] tracking-[0.2em] text-[#134095]">
-                    BETON
-                </div>
+                <img id="bg-watermark" src="assets/images/beton-watermark.svg" class="absolute pointer-events-none opacity-[0.12] w-[95vw] max-w-[1400px] select-none" alt="Beton Watermark Vector" />
                 
                 <!-- PREVIEW TEXT CONTAINER -->
-                <div id="text-target" class="font-sans text-[10px] tracking-[0.4em] uppercase text-[#EF7F1A] transition-all max-w-full text-center break-words select-all">
+                <div id="text-target" class="font-sans text-[10px] tracking-[0.4em] uppercase text-[#EF7F1A] transition-all max-w-full text-center break-words select-all z-10">
                     02 / EFFICIENCY
                 </div>
             </div>
@@ -438,6 +445,21 @@
 
         function setBackground(bgClass) {
             canvas.className = 'flex-1 flex items-center justify-center border-b border-[#134095]/15 p-12 overflow-auto relative ' + bgClass;
+        }
+
+        function toggleWatermark(show) {
+            const img = document.getElementById('bg-watermark');
+            const btnOn = document.getElementById('btn-watermark-on');
+            const btnOff = document.getElementById('btn-watermark-off');
+            if (show) {
+                img.classList.remove('hidden');
+                btnOn.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold';
+                btnOff.className = 'border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center';
+            } else {
+                img.classList.add('hidden');
+                btnOn.className = 'border border-gray-200 text-gray-500 py-1.5 text-[10px] text-center';
+                btnOff.className = 'border border-[#EF7F1A] text-[#EF7F1A] bg-[#EF7F1A]/5 py-1.5 text-[10px] text-center font-bold';
+            }
         }
 
         function copyCode() {
