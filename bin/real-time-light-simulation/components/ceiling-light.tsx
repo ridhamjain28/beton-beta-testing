@@ -42,7 +42,7 @@ export function CeilingLight({ light, bodyColor, selected, onSelect }: Props) {
   // brighter/punchier; wide beams spread and soften. Scale intensity mildly.
   const beamScale = THREE.MathUtils.clamp(36 / light.beamAngle, 0.65, 1.9)
   const spotIntensity = factor * 26 * beamScale
-  const fillIntensity = factor * 3.5
+  const fillIntensity = factor * 0.65
   const emissiveIntensity = light.on ? 0.3 + Math.min(factor, 2) * 2.4 : 0.02
 
   // THREE spotLight.angle is the half-angle from center, in radians.
@@ -92,11 +92,12 @@ export function CeilingLight({ light, bodyColor, selected, onSelect }: Props) {
       />
 
       {/* soft omni fill so the ceiling/walls near the fixture pick up bounce */}
-      <pointLight position={[x, y - 0.05, z]} color={color} intensity={fillIntensity} distance={5} decay={2} />
+      <pointLight position={[x, y - 0.12, z]} color={color} intensity={fillIntensity} distance={3} decay={2} />
 
       {/* ---- fixture body, built around the cup mouth at (x, y, z) ---- */}
       <group
         position={[x, y, z]}
+        scale={0.34}
         onClick={(e) => {
           e.stopPropagation()
           onSelect(light.id)

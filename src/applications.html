@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lighting Applications | Beton Lighting, Surat, Gujarat</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Applications | Beton Lighting</title>
+<link rel="icon" href="favicons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
@@ -19,7 +19,7 @@
     <meta property="og:locale" content="en_IN"/>
 <link rel="stylesheet" href="styles.css">
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <style>
         :root {
             --bg-cream: #FEFEFE;
@@ -82,6 +82,31 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+        .application-section {
+            scroll-margin-top: 148px;
+        }
+        .application-panel {
+            border-top: 1px solid var(--border-neutral);
+        }
+        .application-panel-card {
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-neutral);
+        }
+        .application-panel-card:last-child {
+            border-right: 0;
+        }
+        @media (max-width: 767px) {
+            .application-section {
+                scroll-margin-top: 126px;
+            }
+            .application-panel-card {
+                border-right: 0;
+                border-bottom: 1px solid var(--border-neutral);
+            }
+            .application-panel-card:last-child {
+                border-bottom: 0;
+            }
         }
     </style>
 </head>
@@ -146,9 +171,9 @@
 <!-- PAGE HERO -->
 <section class="pt-24 pb-16 px-8 lg:px-16 border-b border-[var(--border-neutral)]">
 <div class="max-w-4xl">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 mb-6 block fade-in">Application Spheres</span>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#134095]/90 fade-in">Application Spheres</span>
 <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.1] mb-8 fade-in stagger-1">
-                    Shaping <em class="italic font-light text-[#EF7F1A]">Atmosphere</em> <br/>Through Technical Precision.
+                    Shaping <span class="text-[#EF7F1A]">Atmosphere</span> <br/>Through Technical Precision.
                 </h1>
 <p class="text-lg text-[#134095]/70 leading-relaxed max-w-2xl fade-in stagger-2">
                     We collaborate with architects and designers to deliver lighting that integrates seamlessly into the architectural fabric, enhancing functionality while defining the aesthetic soul of every space.
@@ -165,11 +190,11 @@
 <a class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent hover:border-[#EF7F1A] transition-all whitespace-nowrap" href="#healthcare" id="tab-hea">06 Healthcare</a>
 </nav>
 <!-- RESIDENTIAL SECTION -->
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40" id="residential">
+<section class="application-section border-b border-[var(--border-neutral)]" id="residential">
 <div class="flex flex-col lg:flex-row">
 <div class="lg:w-1/2 p-16 lg:p-24 border-r border-[var(--border-neutral)]">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">01 / Sanctity</span>
-<h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight">Residential <br/><em class="italic">Environments</em></h2>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">01 / Sanctity</span>
+<h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight">Residential <br/>Environments</h2>
 <p class="text-sm text-[#134095]/70 leading-relaxed mb-12">
                         In residential spaces, lighting is the bridge between architecture and well-being. Beton focuses on high-CRI solutions that render textures beautifully while providing the warmth and comfort required for a sanctuary. From discrete recessed profiles to statement magnetic tracks.
                     </p>
@@ -210,26 +235,26 @@
 </div>
 </section>
 <!-- COMMERCIAL / OFFICE SECTION -->
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40" id="commercial">
+<section class="application-section border-b border-[var(--border-neutral)]" id="commercial">
 <div class="flex flex-col lg:flex-row-reverse">
-<div class="lg:w-1/2 p-16 lg:p-24 border-l border-[var(--border-neutral)]">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">02 / Efficiency</span>
-<h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight">Corporate <br/><em class="italic">Productivity</em></h2>
-<p class="text-sm text-[#134095]/70 leading-relaxed mb-12">
-                        Office lighting demands a careful balance of glare control (UGR&lt;19) and stimulating color temperatures. Beton's commercial range focuses on high-efficacy linear systems that provide uniform illumination for open offices while adding architectural depth to conference rooms.
+<div class="lg:w-1/2 p-10 lg:p-16 border-l border-[var(--border-neutral)]">
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">02 / Efficiency</span>
+<h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight">Commercial <br/>Clarity</h2>
+<p class="text-sm text-[#134095]/70 leading-relaxed mb-10">
+                        Commercial lighting needs efficiency, consistent output, and easy maintenance without making the space feel flat. Beton focuses on low-glare linear systems, controlled beam distribution, and clean integration for offices, showrooms, and shared workspaces.
                     </p>
-<div class="grid grid-cols-2 gap-8 mb-12 border-t border-[var(--border-neutral)] pt-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10 border-t border-[var(--border-neutral)] pt-8">
 <div>
 <h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Technical Specs</h4>
-<ul class="text-[11px] space-y-2 text-[#134095]/90 uppercase tracking-wider">
-<li>UGR &lt; 16 Efficiency</li>
-<li>DALI Intelligent Dimming</li>
-<li>4000K Focus Temp</li>
+<ul class="text-sm space-y-2 text-[#134095]/90">
+<li>Low-glare fixture selection</li>
+<li>DALI or phase-cut control options</li>
+<li>Neutral CCT for work clarity</li>
 </ul>
 </div>
 <div>
-<h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Standards</h4>
-<p class="text-[11px] leading-relaxed text-[#134095]/90 uppercase tracking-wider">Compliant with LEED and WELL building benchmarks.</p>
+<h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Design Focus</h4>
+<p class="text-sm leading-relaxed text-[#134095]/90">Uniformity, visual comfort, maintenance access, and reduced glare across long-use zones.</p>
 </div>
 </div>
 <a class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-[#EF7F1A] group" href="contact.html" id="cta-com-inquire">
@@ -238,27 +263,27 @@
 </a>
 </div>
 <div class="lg:w-1/2 relative bg-white flex flex-col">
-<div class="h-[60%] overflow-hidden">
+<div class="aspect-[16/10] overflow-hidden">
 <img alt="Commercial showroom lighting application" class="w-full h-full object-cover image-grayscale" loading="lazy" src="assets/images/applications/commercial-showroom.jpg"/>
 </div>
-<div class="h-[40%] grid grid-cols-2 border-t border-[var(--border-neutral)]">
-<div class="p-8 border-r border-[var(--border-neutral)]">
-<span class="text-[9px] uppercase tracking-widest text-[#134095]/90 block mb-2">Before</span>
-<p class="text-[11px] text-[#134095]/90 italic">Uneven light distribution, high glare, visual fatigue reported by staff.</p>
+<div class="application-panel grid grid-cols-1 md:grid-cols-2">
+<div class="application-panel-card">
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#134095]/70">Existing Challenge</span>
+<p class="text-sm text-[#134095]/90">Uneven light distribution, visible glare, and inconsistent task illumination.</p>
 </div>
-<div class="p-8 bg-[#134095]/5">
-<span class="text-[9px] uppercase tracking-widest text-[#EF7F1A] block mb-2">Beton Intervention</span>
-<p class="text-[11px] text-[#134095]/80 font-medium">Continuous linear profiles with prismatic diffusers and human-centric tunable white control.</p>
+<div class="application-panel-card bg-[#134095]/5">
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">Lighting Response</span>
+<p class="text-sm text-[#134095]/90 font-medium">Controlled linear profiles, diffused optics, and zone-based switching for practical everyday use.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40 bg-white" id="office">
+<section class="application-section border-b border-[var(--border-neutral)] bg-white" id="office">
 <div class="mobile-section-pad px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 <img alt="Office cabin lighting application" class="w-full aspect-[4/3] object-cover image-grayscale order-2 lg:order-1" loading="lazy" src="assets/images/applications/office-cabin.jpg"/>
 <div class="order-1 lg:order-2">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">03 / Productivity</span>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">03 / Productivity</span>
 <h2 class="text-3xl lg:text-5xl font-serif mb-6">Office</h2>
 <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Office lighting needs visual comfort, uniformity, and efficient task illumination for long working hours.</p>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
@@ -268,10 +293,10 @@
 </div>
 </div>
 </section>
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40 bg-[#FEFEFE]" id="retail">
+<section class="application-section border-b border-[var(--border-neutral)] bg-[#FEFEFE]" id="retail">
 <div class="mobile-section-pad px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 <div>
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">04 / Visual Focus</span>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">04 / Visual Focus</span>
 <h2 class="text-3xl lg:text-5xl font-serif mb-6">Retail</h2>
 <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Retail lighting should reveal colour, texture, and product detail while guiding attention through the space.</p>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
@@ -283,12 +308,12 @@
 </div>
 </section>
 <!-- HOSPITALITY SECTION -->
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40 bg-white" id="hospitality">
+<section class="application-section border-b border-[var(--border-neutral)] bg-white" id="hospitality">
 <div class="px-8 lg:px-16 py-12 md:py-24">
 <div class="flex flex-col lg:flex-row items-end justify-between mb-16">
 <div class="max-w-xl">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">05 / Experience</span>
-<h2 class="text-4xl lg:text-5xl font-serif mb-6">The Art of <em class="italic">Hospitality</em></h2>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">05 / Experience</span>
+<h2 class="text-4xl lg:text-5xl font-serif mb-6">Hospitality Atmosphere</h2>
 <p class="text-sm text-[#134095]/70 leading-relaxed">
                             In luxury hotels and fine dining, the lighting must be invisible yet transformative. We utilize narrow-beam accentuation to highlight artwork and table settings while maintaining a low-glare ambient environment.
                         </p>
@@ -317,10 +342,10 @@
 </div>
 </div>
 </section>
-<section class="border-b border-[var(--border-neutral)] scroll-mt-40 bg-[#FEFEFE]" id="healthcare">
+<section class="application-section border-b border-[var(--border-neutral)] bg-[#FEFEFE]" id="healthcare">
 <div class="mobile-section-pad px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 <div>
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">06 / Reliability</span>
+<span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">06 / Reliability</span>
 <h2 class="text-3xl lg:text-5xl font-serif mb-6">Healthcare</h2>
 <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Healthcare environments need dependable, comfortable lighting that supports clarity, movement, and task visibility.</p>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
@@ -337,7 +362,7 @@
 <iconify-icon class="text-[8rem] lg:text-[30rem] lg:-translate-y-20 lg:translate-x-20" icon="ri:lightbulb-flash-line"></iconify-icon>
 </div>
 <div class="relative z-10 max-w-3xl">
-<h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Bring <em class="italic text-[#EF7F1A]">Eternity</em> to Your Next Development.</h2>
+<h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Bring <span class="text-[#EF7F1A]">lasting clarity</span> to your next development.</h2>
 <p class="text-lg text-white/70 mb-12 max-w-xl">Whether it is a single boutique residence or a large-scale commercial development, our goal is to deliver lighting solutions that combine performance, elegance, and reliability.</p>
 <div class="flex flex-wrap gap-8">
 <a class="px-5 md:px-10 py-5 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-white hover:text-[#134095] transition-all duration-500" href="contact.html" id="cta-footer-project">Start Project Contact</a>
@@ -352,9 +377,10 @@
 <p class="text-xs leading-relaxed text-[#FEFEFE]/90 max-w-xs mb-4">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
 <p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
 <div class="flex gap-6">
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="LinkedIn"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
 </div>
 </div>
 <div>
@@ -378,18 +404,22 @@
 <div>
 <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
 <p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<div class="relative flex border-b border-[#EF7F1A]/30 pb-2">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
-<button class="text-[#EF7F1A] hover:text-[#EF7F1A]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</div>
+<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="subject" value="New Newsletter Subscription">
+<input type="hidden" name="from_name" value="Beton Website Newsletter">
+<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
+<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</form>
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Legal</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
 </div>
 </div>
 </footer></div>
@@ -397,6 +427,56 @@
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
+<script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+</script>
+
+<script>
+    // Newsletter Form AJAX handler
+    document.querySelectorAll('#newsletter-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const button = form.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            const messageInput = form.querySelector('#newsletter-message');
+            messageInput.value = `for newsletter - ${emailInput.value}`;
+            
+            button.disabled = true;
+            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed successfully!';
+                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                } else {
+                    emailInput.placeholder = 'Please try again';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }
+                setTimeout(() => {
+                    emailInput.placeholder = 'Email address';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 3000);
+            })
+            .catch(() => {
+                emailInput.placeholder = 'Submission failed';
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            });
+        });
+    });
+</script>
 </body>
 </html>
 

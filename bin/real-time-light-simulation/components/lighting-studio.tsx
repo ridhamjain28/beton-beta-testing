@@ -1,7 +1,8 @@
 "use client"
 
-import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei"
+import { ContactShadows, Environment, Html, OrbitControls, PerspectiveCamera, useProgress } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
+import { Bloom, EffectComposer, N8AO, Vignette } from "@react-three/postprocessing"
 import { Suspense, useMemo, useState } from "react"
 import * as THREE from "three"
 import { LightControls } from "./light-controls"
@@ -48,44 +49,69 @@ export function LightingStudio() {
   }
 
   return (
-    <main className="flex h-screen w-full flex-col overflow-hidden bg-neutral-950 lg:flex-row">
+    <main className="flex h-screen min-w-[1100px] overflow-hidden bg-neutral-950">
       {/* 3D viewport */}
       <div className="relative min-h-0 flex-1">
         <Canvas
-          shadows
-          gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
-          dpr={[1, 2]}
+          shadows={{ type: THREE.PCFSoftShadowMap }}
+          gl={{
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 0.88,
+            outputColorSpace: THREE.SRGBColorSpace,
+          }}
+          dpr={[1, 1.75]}
+          camera={{ near: 0.1, far: 80 }}
         >
           <color attach="background" args={[day.backgroundColor]} />
-          <PerspectiveCamera makeDefault position={[0, 1.5, 3.4]} fov={62} />
+          <PerspectiveCamera makeDefault position={[3.15, 1.58, 3.5]} fov={55} />
           <OrbitControls
-            target={[0, 1.1, -1.5]}
+            target={[0, 1.15, -1.15]}
             enablePan={false}
-            minDistance={1.5}
-            maxDistance={6}
-            maxPolarAngle={Math.PI / 2 - 0.05}
-            minPolarAngle={0.2}
+            minDistance={4.2}
+            maxDistance={6.1}
+            minAzimuthAngle={-0.3}
+            maxAzimuthAngle={1.28}
+            maxPolarAngle={Math.PI / 2 - 0.12}
+            minPolarAngle={0.72}
           />
 
           {/* faint ambient so a fully-dark room still shows silhouettes */}
           <ambientLight intensity={day.ambientIntensity} />
 
-          <Suspense fallback={null}>
+          <Suspense fallback={<SceneLoader />}>
             {/* the world outside the windows: sky, sun, moon, stars */}
             <OutdoorEnvironment day={day} />
             {/* interior reflections for PBR materials, brightness follows daylight */}
             <Environment preset="apartment" environmentIntensity={day.envIntensity} />
             <RoomScene lights={lights} bodyColor={bodyColor} selectedId={selectedId} onSelect={setSelectedId} />
+            <ContactShadows
+              position={[0, 0.018, -0.8]}
+              scale={8}
+              opacity={0.28}
+              blur={2.6}
+              far={3.2}
+              resolution={1024}
+              color="#241b16"
+            />
           </Suspense>
+          <EffectComposer multisampling={4} enableNormalPass>
+            <N8AO aoRadius={0.55} intensity={0.75} distanceFalloff={0.65} color="#17120f" />
+            <Bloom luminanceThreshold={1.35} luminanceSmoothing={0.3} intensity={0.09} mipmapBlur />
+            <Vignette offset={0.38} darkness={0.24} eskil={false} />
+          </EffectComposer>
         </Canvas>
 
-        <div className="pointer-events-none absolute left-4 top-4 rounded-lg bg-black/50 px-3 py-1.5 text-xs text-neutral-300 backdrop-blur">
-          Modern Living Room · {day.label} · real-time relight
+        <div className="pointer-events-none absolute left-5 top-5 border border-white/15 bg-black/55 px-4 py-2 text-xs font-medium tracking-wide text-neutral-200 backdrop-blur-sm">
+          Residence 01 · Living room · {day.label}
+        </div>
+        <div className="pointer-events-none absolute bottom-5 left-5 max-w-sm border-l-2 border-brand-orange bg-black/55 px-4 py-3 text-xs leading-relaxed text-neutral-300 backdrop-blur-sm">
+          Visual preview only. Perceived brightness varies by room finish, fixture specification and screen calibration.
         </div>
       </div>
 
       {/* control panel */}
-      <aside className="h-[52vh] w-full shrink-0 border-t border-brand-hairline bg-brand-white lg:h-full lg:w-[340px] lg:border-l lg:border-t-0">
+      <aside className="h-full w-[360px] shrink-0 border-l border-brand-hairline bg-brand-white">
         <LightControls
           lights={lights}
           selectedId={selectedId}
@@ -103,5 +129,16 @@ export function LightingStudio() {
         />
       </aside>
     </main>
+  )
+}
+
+function SceneLoader() {
+  const { progress } = useProgress()
+  return (
+    <Html center>
+      <div className="w-52 border border-white/15 bg-black/70 p-4 text-center text-xs uppercase tracking-[0.14em] text-white">
+        Preparing room {Math.round(progress)}%
+      </div>
+    </Html>
   )
 }

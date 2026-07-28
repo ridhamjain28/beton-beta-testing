@@ -1,6 +1,7 @@
 1:"$Sreact.fragment"
-2:I[29195,["/light-simulation-992x/_next/static/chunks/04.om6zh15hdw.js","/light-simulation-992x/_next/static/chunks/0s2dol14lrfmb.js","/light-simulation-992x/_next/static/chunks/0qq~8~c~upu9q.js"],"LightingStudio"]
-3:I[35240,["/light-simulation-992x/_next/static/chunks/04.om6zh15hdw.js","/light-simulation-992x/_next/static/chunks/0s2dol14lrfmb.js"],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/light-simulation-992x/_next/static/chunks/0qq~8~c~upu9q.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"jKjB5l8rNRA75uyCbc3nx"}
-5:null
+2:I[44248,["/light-simulation-992x/_next/static/chunks/17fg_~9pswfy-.js","/light-simulation-992x/_next/static/chunks/0udxw67rqhszv.js"],"AccessGate"]
+3:I[39063,["/light-simulation-992x/_next/static/chunks/17fg_~9pswfy-.js","/light-simulation-992x/_next/static/chunks/0udxw67rqhszv.js"],"LightingStudio"]
+4:I[60549,["/light-simulation-992x/_next/static/chunks/17fg_~9pswfy-.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"children":["$","$L3",null,{}]}],[["$","script","script-0",{"src":"/light-simulation-992x/_next/static/chunks/0udxw67rqhszv.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"73lvB1FqD0IjS6XHoLAxZ"}
+6:null

@@ -1,8 +1,14 @@
 # AGENTS.md — Beton Website
 
+## Project Access Scope
+
+For this project, only access files inside `D:\Github Repos\Beton-Website-folder`. Do not read, write, search, or inspect files outside this directory unless the user explicitly changes this rule.
+
+---
+
 ## 1. Project Mission
 
-Build and maintain a mobile-first website for Beton, a premium architectural lighting brand serving Gujarat.
+Build and maintain a mobile-first website for Beton, a precision architectural lighting brand serving Gujarat.
 
 The website is a catalogue and enquiry platform. It is not an e-commerce store.
 
@@ -37,7 +43,7 @@ Do not invent brand facts, specifications, certifications, project details, or s
 
 Always present Beton as:
 
-> A premium architectural lighting brand with in-house manufacturing, assembly, testing, and quality control capability.
+> A precision architectural lighting brand with in-house manufacturing, assembly, testing, and quality control capability.
 
 Do not present Beton as only a factory or commodity lighting manufacturer.
 
@@ -578,3 +584,15 @@ A task is complete only when:
 
 - **Target Branch**: All commits and pushes must go to the `preview` branch, NOT `main`, unless the user explicitly instructs otherwise.
 - **Push Reminders**: Keep track of the number of pushes. After every 3 to 5 pushes, explicitly remind the user in the chat that pushes are going to the `preview` branch and not to `main`.
+
+---
+
+## 22. File Deletion Policy
+
+**Never permanently delete files.** Instead, move them to the `bin/` folder at the project root.
+
+- When instructed to delete a file, move it to `bin/` preserving its relative path where useful.
+- Example: deleting `src/foo.html` means moving it to `bin/src/foo.html` (or a descriptive subfolder under `bin/`).
+- This applies to all files: HTML, CSS, JS, images, docs, and any other assets.
+- The `bin/` folder acts as a recycle bin — files there are excluded from the live site but remain in version history.
+

@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Contact Beton Lighting | Lighting Manufacturer in Surat, Gujarat</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Contact | Beton Lighting</title>
+<link rel="icon" href="favicons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
@@ -19,7 +19,7 @@
     <meta property="og:locale" content="en_IN"/>
 <link rel="stylesheet" href="styles.css">
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <style>
         :root {
             --bg-cream: #FEFEFE;
@@ -42,10 +42,15 @@
             padding: 1rem 0;
             width: 100%;
             transition: border-color 0.3s ease;
-            outline: none;
+            outline: none !important;
+            box-shadow: none !important;
         }
-        .form-input:focus {
+        .form-input:focus,
+        .form-input:focus-visible,
+        .form-input:active {
             border-bottom-color: var(--accent-orange);
+            outline: none !important;
+            box-shadow: none !important;
         }
         .checkbox-custom {
             appearance: none;
@@ -157,7 +162,7 @@
 <div class="contact-intro-panel lg:w-1/3 p-12 lg:p-24 border-r border-[rgba(19,64,149,0.15)]">
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 block mb-6">Collaborate</span>
 <h1 class="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-serif leading-[1.1] mb-12 animate-slide-up">
-                        Start your <br/><em class="italic font-light text-[#EF7F1A]">Journey.</em>
+                        Start your <br/><span class="text-[#EF7F1A]">Project.</span>
 </h1>
 <div class="space-y-8 animate-slide-up" style="animation-delay: 0.2s">
 <p class="text-sm text-[#134095]/70 leading-relaxed">
@@ -191,6 +196,8 @@
 <div class="contact-form-panel lg:w-2/3 p-12 lg:p-24 bg-white">
 <form action="https://api.web3forms.com/submit" method="POST" class="max-w-2xl animate-slide-up" id="wizard-form" style="animation-delay: 0.3s">
 <input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="product_ref" id="hidden-product-ref" value="">
+<input type="hidden" name="enquiry_type" id="hidden-enquiry-type" value="">
 <!-- STEP 1 -->
 <div class="wizard-step hidden opacity-0 transition-all duration-500 transform translate-x-4" data-step="1">
 <h3 class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 mb-12 border-b border-[rgba(19,64,149,0.15)] pb-4">01. Discovery</h3>
@@ -477,6 +484,40 @@
     document.addEventListener('DOMContentLoaded', () => {
         showStep(1);
 
+        // Prepopulate from URL parameters if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        const type = urlParams.get('type');
+        
+        if (ref) {
+            const refField = document.getElementById('hidden-product-ref');
+            if (refField) refField.value = ref;
+            
+            const messageTextarea = document.querySelector('textarea[name="message"]');
+            if (messageTextarea) {
+                let typeStr = type ? ` (${type})` : '';
+                messageTextarea.value = `I am interested in product reference: ${ref}${typeStr}.\n\n`;
+            }
+            
+            // Add a product badge at the top of the discovery step
+            const firstStep = document.querySelector('.wizard-step[data-step="1"]');
+            if (firstStep) {
+                const header = firstStep.querySelector('h3');
+                const badge = document.createElement('div');
+                badge.className = 'mb-6 p-4 bg-[#134095]/10 border-l-4 border-[#EF7F1A] text-xs uppercase tracking-widest font-semibold flex justify-between items-center';
+                badge.innerHTML = `<span>Inquiring about Product: <strong class="text-[#EF7F1A]">${ref}</strong></span>`;
+                if (header) {
+                    header.after(badge);
+                } else {
+                    firstStep.insertBefore(badge, firstStep.firstChild);
+                }
+            }
+        }
+        if (type) {
+            const typeField = document.getElementById('hidden-enquiry-type');
+            if (typeField) typeField.value = type;
+        }
+
         const form = document.getElementById('wizard-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -541,26 +582,21 @@
 </div>
 </section>
 <section class="grid grid-cols-1 lg:grid-cols-3 border-b border-[rgba(19,64,149,0.15)]">
-<div class="beton-contact-card p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
+<div class="p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:calendar"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">Call / WhatsApp</h4>
-<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">
-<a class="contact-data-link" href="tel:+919909912897">+91 9909912897</a><br/>
-<a class="contact-data-link" href="tel:+919898845091">+91 9898845091</a>
-</p>
+<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">+91 9909912897<br/>+91 9898845091</p>
 </div>
-<div class="beton-contact-card p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
+<div class="p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:mail"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">E-Mail</h4>
-<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">
-<a class="contact-data-link" href="mailto:info@betonlighting.com">info@betonlighting.com</a>
-</p>
+<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">info@betonlighting.com</p>
 </div>
-<a class="beton-contact-card p-12 flex flex-col justify-center items-center text-center" href="https://maps.app.goo.gl/NxYqVcxjW7hCbFXd9" target="_blank" rel="noopener">
+<div class="p-12 flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:map-pin"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">Visit Us</h4>
 <p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">Surat, Gujarat</p>
-</a>
+</div>
 </section>
 </main>
 <footer class="py-12 md:py-24 px-8 lg:px-16 bg-[#134095] text-[#FEFEFE]">
@@ -570,9 +606,10 @@
 <p class="text-xs leading-relaxed text-[#FEFEFE]/90 max-w-xs mb-4">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
 <p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
 <div class="flex gap-6">
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="LinkedIn"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
 </div>
 </div>
 <div>
@@ -596,18 +633,22 @@
 <div>
 <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
 <p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<div class="relative flex border-b border-[#EF7F1A]/30 pb-2">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
-<button class="text-[#EF7F1A] hover:text-[#EF7F1A]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</div>
+<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="subject" value="New Newsletter Subscription">
+<input type="hidden" name="from_name" value="Beton Website Newsletter">
+<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
+<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</form>
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Legal</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
 </div>
 </div>
 </footer></div>
@@ -615,6 +656,56 @@
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
+<script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+</script>
+
+<script>
+    // Newsletter Form AJAX handler
+    document.querySelectorAll('#newsletter-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const button = form.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            const messageInput = form.querySelector('#newsletter-message');
+            messageInput.value = `for newsletter - ${emailInput.value}`;
+            
+            button.disabled = true;
+            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed successfully!';
+                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                } else {
+                    emailInput.placeholder = 'Please try again';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }
+                setTimeout(() => {
+                    emailInput.placeholder = 'Email address';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 3000);
+            })
+            .catch(() => {
+                emailInput.placeholder = 'Submission failed';
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            });
+        });
+    });
+</script>
 </body>
 </html>
 

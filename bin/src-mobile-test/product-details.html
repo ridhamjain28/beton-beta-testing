@@ -20,7 +20,6 @@
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
 </nav>
 <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors hidden" href="javascript:void(0)">Search</a>
 <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
 <!-- Mobile Hamburger Icon -->
@@ -71,9 +70,10 @@
 <p class="text-xs leading-relaxed text-[#FEFEFE]/90 max-w-xs mb-4">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
 <p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
 <div class="flex gap-6">
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="LinkedIn"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
 </div>
 </div>
 <div>
@@ -97,24 +97,553 @@
 <div>
 <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
 <p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<div class="relative flex border-b border-[#EF7F1A]/30 pb-2">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
-<button class="text-[#EF7F1A] hover:text-[#EF7F1A]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</div>
+<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="subject" value="New Newsletter Subscription">
+<input type="hidden" name="from_name" value="Beton Website Newsletter">
+<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
+<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</form>
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
 <p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Legal</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
 </div>
 </div>
 </footer></div><div class="beton-sticky-enquiry" aria-label="Quick enquiry actions">
 <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
 <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
+
+<script>
+    // Newsletter Form AJAX handler
+    document.querySelectorAll('#newsletter-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const button = form.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            const messageInput = form.querySelector('#newsletter-message');
+            messageInput.value = `for newsletter - ${emailInput.value}`;
+            
+            button.disabled = true;
+            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed successfully!';
+                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                } else {
+                    emailInput.placeholder = 'Please try again';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }
+                setTimeout(() => {
+                    emailInput.placeholder = 'Email address';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 3000);
+            })
+            .catch(() => {
+                emailInput.placeholder = 'Submission failed';
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            });
+        });
+    });
+</script>
+<script>
+const PRODUCTS_DB = {
+  "B-204": {
+    "ref": "B-204",
+    "name": "Apex Recessed Downlight",
+    "category": "Indoor Downlights",
+    "description": "A deep-recessed architectural luminaire featuring precision optical lenses for maximum visual comfort and minimal glare design. Ideal for premium residential and commercial spaces.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "12W - 20W",
+      "Luminous Flux": "1100 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "15° / 24° / 36°",
+      "Material": "Die-Cast Aluminium",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "M-992": {
+    "ref": "M-992",
+    "name": "Mag-Track Linear Pro",
+    "category": "Magnetic Track Systems",
+    "description": "Modular 48V low voltage magnetic track system featuring tool-free clip-in positioning. Designed for high flexibility and seamless architectural integration in luxury interiors.",
+    "image": "assets/images/products/render-1.webp",
+    "specs": {
+      "Input Voltage": "48V DC Low Voltage",
+      "Luminous Flux": "1200 lm/m",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "120° Diffused",
+      "Material": "Extruded Aluminium 6063",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "S-441": {
+    "ref": "S-441",
+    "name": "Zenith Surface 150",
+    "category": "Surface Cylinders",
+    "description": "A minimalist surface-mounted cylinder luminaire equipped with integrated high-output drivers, high-efficiency reflectors, and black anti-glare louvers for premium accent illumination.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "15W",
+      "Luminous Flux": "1350 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "15° / 24° / 36°",
+      "Material": "CNC Machined Aluminium",
+      "Finish": "Textured Black / White"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "P-102": {
+    "ref": "P-102",
+    "name": "Flux Dali-2 Driver",
+    "category": "Control Gear",
+    "description": "Universal DALI-2 dimmable driver module designed for flicker-free lighting control and smooth architectural dimming curves down to 0.1%. Fully compliant with international standards.",
+    "image": "assets/images/products/render-4.webp",
+    "specs": {
+      "Input Voltage": "220-240V AC",
+      "Output Voltage": "48V DC",
+      "Max Power": "150W",
+      "Control Protocol": "DALI-2 / PUSH-Dim",
+      "Efficiency": "> 92%",
+      "Material": "Flame-Retardant Polycarbonate",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "L-550": {
+    "ref": "L-550",
+    "name": "Matrix 20 Profile",
+    "category": "Linear Profiles",
+    "description": "Slim extruded anodized aluminum profile designed for high-density LED strips, featuring uniform opal diffusers for continuous dot-free linear illumination.",
+    "image": "assets/images/products/render-2.webp",
+    "specs": {
+      "Width": "20mm",
+      "Height": "15mm",
+      "Length": "Custom Max 3m",
+      "Diffuser": "High-Efficiency Opal PMMA",
+      "Mounting": "Recessed / Surface / Suspended",
+      "Material": "Anodized Aluminium 6063-T5"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "W-881": {
+    "ref": "W-881",
+    "name": "Titan Flood Washer",
+    "category": "Outdoor Luminaires",
+    "description": "Robust IP67-rated exterior wall washer with asymmetric optics designed for high-performance facade illumination and landscape lighting. Engineered for architectural longevity.",
+    "image": "assets/images/products/innova.webp",
+    "specs": {
+      "Wattage": "36W",
+      "Luminous Flux": "3200 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "3000K / 4000K / 5000K",
+      "CRI": "85+ (Ra)",
+      "Beam Angle": "15° x 45° Asymmetric",
+      "Material": "CNC Aluminum & Tempered Glass",
+      "Ingress Protection": "IP67 Waterproof"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "B-205": {
+    "ref": "B-205",
+    "name": "Apex Recessed Round",
+    "category": "Indoor Downlights",
+    "description": "Round deep-recessed architectural downlight with interchangeable bezels. Perfect for creating subtle, high-comfort accent lighting in modern galleries and residences.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "10W - 15W",
+      "Luminous Flux": "950 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "24° / 36° / 55°",
+      "Material": "Die-Cast Aluminium",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "M-993": {
+    "ref": "M-993",
+    "name": "Mag-Track Spot Pro",
+    "category": "Magnetic Track Systems",
+    "description": "Adjustable magnetic track spotlight with integrated precision optics and driver. Allows for full 360-degree rotation and 90-degree tilt for flexible commercial lighting design.",
+    "image": "assets/images/products/render-1.webp",
+    "specs": {
+      "Wattage": "8W - 12W",
+      "Luminous Flux": "750 lm",
+      "Input Voltage": "48V DC Low Voltage",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "15° / 24° / 36°",
+      "Material": "CNC Machined Aluminium",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "S-442": {
+    "ref": "S-442",
+    "name": "Zenith Surface 200",
+    "category": "Surface Cylinders",
+    "description": "Medium-sized surface cylinder with a sleek seamless profile. Delivering highly uniform illumination with advanced heat sink design for enhanced architectural lifespan.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "20W",
+      "Luminous Flux": "1800 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "15° / 24° / 36° / 50°",
+      "Material": "CNC Machined Aluminium",
+      "Finish": "Textured Black / White"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "P-103": {
+    "ref": "P-103",
+    "name": "Flux Dali-2 Mini",
+    "category": "Control Gear",
+    "description": "Compact DALI-2 driver designed for small architectural ceiling voids and tight mounting setups. Provides smooth dimming and high power efficiency in a micro form-factor.",
+    "image": "assets/images/products/render-4.webp",
+    "specs": {
+      "Input Voltage": "220-240V AC",
+      "Output Voltage": "48V DC",
+      "Max Power": "75W",
+      "Control Protocol": "DALI-2 / PUSH-Dim",
+      "Efficiency": "> 91%",
+      "Material": "Flame-Retardant Polycarbonate",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "L-551": {
+    "ref": "L-551",
+    "name": "Matrix 40 Profile",
+    "category": "Linear Profiles",
+    "description": "Mid-sized linear profile extrusion designed for higher wattage strip configurations and seamless wide-beam lighting layout.",
+    "image": "assets/images/products/render-2.webp",
+    "specs": {
+      "Width": "40mm",
+      "Height": "35mm",
+      "Length": "Custom Max 3m",
+      "Diffuser": "High-Efficiency Opal PMMA",
+      "Mounting": "Recessed / Surface / Suspended",
+      "Material": "Anodized Aluminium 6063-T5"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "W-882": {
+    "ref": "W-882",
+    "name": "Titan Mini Washer",
+    "category": "Outdoor Lighting",
+    "description": "Compact exterior LED wall washer with IP67 protection, designed for detailed facade sculpting and structural highlighting of pillars, arches, and garden elements.",
+    "image": "assets/images/products/innova.webp",
+    "specs": {
+      "Wattage": "18W",
+      "Luminous Flux": "1600 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "3000K / 4000K",
+      "CRI": "85+ (Ra)",
+      "Beam Angle": "24° x 45° Asymmetric",
+      "Material": "CNC Aluminum & Tempered Glass",
+      "Ingress Protection": "IP67 Waterproof"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "B-206": {
+    "ref": "B-206",
+    "name": "Apex Recessed Trimless",
+    "category": "Indoor Downlights",
+    "description": "Trimless recessed plaster-in downlight that blends completely into ceilings for clean plaster lines and seamless modern architectural luxury views.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "12W",
+      "Luminous Flux": "1100 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "15° / 24° / 36°",
+      "Material": "Die-Cast Aluminium",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "M-994": {
+    "ref": "M-994",
+    "name": "Mag-Track Linear Mini",
+    "category": "Magnetic Track Systems",
+    "description": "Micro-profile low voltage magnetic track. With a visible track opening width of only 15mm, it delivers clean accent lighting without visual clutter.",
+    "image": "assets/images/products/render-1.webp",
+    "specs": {
+      "Input Voltage": "48V DC Low Voltage",
+      "Luminous Flux": "600 lm/m",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "110° Diffused",
+      "Material": "Extruded Aluminium 6063",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "S-443": {
+    "ref": "S-443",
+    "name": "Zenith Surface 300",
+    "category": "Surface Cylinders",
+    "description": "Extra-long architectural surface cylinder designed to make a design statement in double-height lobbies, reception spaces, and luxury residences.",
+    "image": "assets/images/products/sys-01.webp",
+    "specs": {
+      "Wattage": "30W",
+      "Luminous Flux": "2700 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "2700K / 3000K / 4000K",
+      "CRI": "90+ (Ra)",
+      "Beam Angle": "24° / 36° / 55°",
+      "Material": "CNC Machined Aluminium",
+      "Finish": "Textured Black / White"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "P-104": {
+    "ref": "P-104",
+    "name": "Flux Dali-2 Pro",
+    "category": "Control Gear",
+    "description": "High-capacity DALI-2 driver designed for large magnetic track layouts and master control loops. Features robust short-circuit protection and advanced thermal monitoring.",
+    "image": "assets/images/products/render-4.webp",
+    "specs": {
+      "Input Voltage": "220-240V AC",
+      "Output Voltage": "48V DC",
+      "Max Power": "240W",
+      "Control Protocol": "DALI-2 / PUSH-Dim / 0-10V",
+      "Efficiency": "> 93%",
+      "Material": "Flame-Retardant Polycarbonate",
+      "Ingress Protection": "IP20"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "L-552": {
+    "ref": "L-552",
+    "name": "Matrix 60 Profile",
+    "category": "Linear Profiles",
+    "description": "Wide architectural aluminum profile designed for large scale corporate, hospitality, and residential linear projects. Supports multi-row LED layout.",
+    "image": "assets/images/products/render-2.webp",
+    "specs": {
+      "Width": "60mm",
+      "Height": "50mm",
+      "Length": "Custom Max 3m",
+      "Diffuser": "High-Efficiency Opal PMMA",
+      "Mounting": "Recessed / Surface / Suspended",
+      "Material": "Anodized Aluminium 6063-T5"
+    },
+    "delivery": "2-3 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  },
+  "W-883": {
+    "ref": "W-883",
+    "name": "Titan Flood Max",
+    "category": "Outdoor Lighting",
+    "description": "High-output, premium IP67 architectural flood light engineered for skyscraper facade illumination, large bridge structures, and public monument detailing.",
+    "image": "assets/images/products/innova.webp",
+    "specs": {
+      "Wattage": "72W",
+      "Luminous Flux": "6400 lm",
+      "Input Voltage": "220-240V AC",
+      "CCT Options": "3000K / 4000K",
+      "CRI": "85+ (Ra)",
+      "Beam Angle": "10° x 30° Facade Washer",
+      "Material": "CNC Aluminum & Tempered Glass",
+      "Ingress Protection": "IP67 Waterproof"
+    },
+    "delivery": "3-4 Weeks",
+    "origin": "Surat, Gujarat",
+    "warranty": "5 Years Limited"
+  }
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Get query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get('ref') || 'M-992'; // fallback to Mag-Track Linear Pro (M-992)
+    
+    const product = PRODUCTS_DB[ref] || PRODUCTS_DB['M-992'];
+    
+    // Page Title
+    document.title = `${product.name} | Beton Lighting`;
+    
+    // Category Label
+    const catLabel = document.querySelector('main span.text-\\[10px\\].uppercase.tracking-\\[0.4em\\]');
+    if (catLabel) {
+        catLabel.textContent = product.category;
+    }
+    
+    // Product Name Header
+    const nameHeader = document.querySelector('main h1.text-4xl');
+    if (nameHeader) {
+        const words = product.name.split(' ');
+        if (words.length > 2) {
+            const first = words.slice(0, words.length - 2).join(' ');
+            const italic = words.slice(words.length - 2).join(' ');
+            nameHeader.innerHTML = `${first} <br/><em class="italic font-light text-[#EF7F1A]">${italic}.</em>`;
+        } else if (words.length === 2) {
+            nameHeader.innerHTML = `${words[0]} <br/><em class="italic font-light text-[#EF7F1A]">${words[1]}.</em>`;
+        } else {
+            nameHeader.innerHTML = `<em class="italic font-light text-[#EF7F1A]">${product.name}.</em>`;
+        }
+    }
+    
+    // Reference and Subtitle
+    const refContainer = document.querySelector('main div.flex.items-center.gap-4.text-\\[10px\\]');
+    if (refContainer) {
+        refContainer.innerHTML = `<span>Ref. ${product.ref}</span><span class="w-1 h-1 bg-[#EF7F1A] rounded-full"></span><span>Architectural Grade</span>`;
+    }
+    
+    // Description text
+    const descEl = document.querySelector('main div.prose.prose-sm p');
+    if (descEl) {
+        descEl.textContent = product.description;
+    }
+    
+    // Main image
+    const mainImg = document.querySelector('main img.w-full.h-auto.object-contain');
+    if (mainImg) {
+        mainImg.src = product.image;
+        mainImg.alt = product.name;
+    }
+    
+    // Gallery thumbnails
+    const thumbnails = document.querySelectorAll('main div.grid-cols-3 img');
+    thumbnails.forEach((thumb, idx) => {
+        thumb.src = product.image;
+        thumb.alt = `${product.name} View ${idx + 1}`;
+        
+        const parent = thumb.parentElement;
+        if (parent) {
+            parent.addEventListener('click', () => {
+                if (mainImg) mainImg.src = thumb.src;
+                document.querySelectorAll('main div.grid-cols-3 div').forEach(d => {
+                    d.classList.remove('border-[#EF7F1A]');
+                    d.classList.add('border-transparent');
+                });
+                parent.classList.remove('border-transparent');
+                parent.classList.add('border-[#EF7F1A]');
+            });
+        }
+    });
+    
+    // Specifications list table
+    const specsContainer = document.querySelector('main div.space-y-4');
+    if (specsContainer) {
+        specsContainer.innerHTML = '';
+        for (const [key, value] of Object.entries(product.specs)) {
+            const row = document.createElement('div');
+            row.className = 'flex justify-between border-b border-[var(--border-neutral)] pb-3';
+            row.innerHTML = `<span class="text-xs text-[#134095]/90">${key}</span><span class="text-xs font-medium">${value}</span>`;
+            specsContainer.appendChild(row);
+        }
+    }
+    
+    // Meta values
+    const metaContainer = document.querySelector('main div.flex.items-center.gap-8.py-6');
+    if (metaContainer) {
+        metaContainer.innerHTML = `
+            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Delivery</span><span class="text-xs font-medium">${product.delivery}</span></div>
+            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Origin</span><span class="text-xs font-medium">${product.origin}</span></div>
+            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Warranty</span><span class="text-xs font-medium">${product.warranty}</span></div>
+        `;
+    }
+    
+    // Dynamic Ingress Protection (CE box)
+    const ipLabel = document.querySelector('main section bg-\\[\\#134095\\] span.text-3xl:has(+ span)'); // let's find the IP20 text specifically
+    // We can loop over the cert blocks
+    const certContainers = document.querySelectorAll('main div.flex.flex-col:has(span.text-3xl)');
+    certContainers.forEach(container => {
+        const titleSpan = container.querySelector('span.text-3xl');
+        const descSpan = container.querySelector('span.text-\\[10px\\]');
+        if (titleSpan && descSpan && descSpan.textContent.includes('Ingress Protection')) {
+            titleSpan.textContent = product.specs['Ingress Protection'] || 'IP20';
+        }
+    });
+
+    // Contact button query param injection
+    const ctaBtn = document.getElementById('cta-project-inquiry');
+    if (ctaBtn) {
+        ctaBtn.href = `contact.html?ref=${product.ref}&type=quotation`;
+    }
+    
+    // Datasheet button - catalogue PDF trigger
+    const datasheetBtn = document.getElementById('download-datasheet');
+    if (datasheetBtn) {
+        datasheetBtn.href = 'assets/docs/BETON_Catalogue.pdf';
+        datasheetBtn.setAttribute('download', 'BETON_Catalogue.pdf');
+    }
+    
+    // IES button - redirect to contact form
+    const iesBtn = document.getElementById('download-ies');
+    if (iesBtn) {
+        iesBtn.href = `contact.html?ref=${product.ref}&type=ies`;
+    }
+});
+</script>
+
 </body></html>
 
 

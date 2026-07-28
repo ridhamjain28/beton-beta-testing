@@ -1,14 +1,14 @@
 ---
 version: 1.0
 name: Beton Design System
-description: A mobile-first design system for Beton, a premium architectural lighting brand serving Gujarat. The system combines minimal architectural layouts, industrial precision, luxury editorial restraint, and modern commercial usability. It is built for a catalogue-and-enquiry website where 95% of traffic is expected on mobile. The experience must help expert visitors move quickly while guiding non-expert visitors toward suitable lighting products.
+description: A mobile-first design system for Beton, a precision architectural lighting brand serving Gujarat. The system combines minimal architectural layouts, industrial precision, luxury editorial restraint, and modern commercial usability. It is built for a catalogue-and-enquiry website where 95% of traffic is expected on mobile. The experience must help expert visitors move quickly while guiding non-expert visitors toward suitable lighting products.
 ---
 
 # Beton Design System
 
 ## 1. Brand Overview
 
-Beton is a premium architectural lighting brand with in-house manufacturing capability. The website must present Beton as a trusted design-led lighting brand first, and manufacturing as supporting proof of quality, control, and reliability.
+Beton is a precision architectural lighting brand with in-house manufacturing capability. The website must present Beton as a trusted design-led lighting brand first, and manufacturing as supporting proof of quality, control, and reliability.
 
 ### Official tagline
 
@@ -149,23 +149,14 @@ colors:
 
 Use for:
 
-- navigation;
-- buttons;
+- headings & titles;
+- navigation & buttons;
 - body text;
 - captions;
 - technical labels;
 - product specifications.
 
-### Optional display typeface
-
-A second heading typeface may be introduced only if it improves the premium architectural character and remains highly readable on mobile. Suitable options include:
-
-- Manrope;
-- Sora;
-- Plus Jakarta Sans;
-- Inter Tight.
-
-If no second typeface clearly improves the design, use Montserrat throughout.
+Montserrat is used consistently across the entire site for all headings, body text, and interactive elements.
 
 ### Mobile-first type scale
 
@@ -882,7 +873,7 @@ Avoid:
 
 Preferred:
 
-> Beton is a premium architectural lighting brand supported by in-house manufacturing, assembly, testing, and quality control.
+> Beton is a precision architectural lighting brand supported by in-house manufacturing, assembly, testing, and quality control.
 
 Avoid:
 
@@ -925,7 +916,7 @@ A page is acceptable only if:
 - product specifications are readable;
 - no prices are displayed;
 - no direct-sale language appears;
-- Beton is presented as a premium architectural lighting brand;
+- Beton is presented as a precision architectural lighting brand;
 - colors remain within the brand palette;
 - the site remains light theme only;
 - mobile performance is treated as a first-class requirement.

@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>About Beton Lighting | Architectural Lighting Experts in Surat</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
+<title>About | Beton Lighting</title>
+<link rel="icon" href="favicons/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
@@ -19,7 +19,7 @@
     <meta property="og:locale" content="en_IN"/>
 <link rel="stylesheet" href="styles.css">
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <style>
         :root {
             --bg-cream: #FEFEFE;
@@ -98,12 +98,47 @@
         ::-webkit-scrollbar-thumb {
             background: var(--navy-primary);
         }
+
+        @media (max-width: 767px) {
+            .about-site-header .about-logo-link,
+            .about-site-header .about-mobile-menu-shell {
+                transition: opacity 0.35s ease, transform 0.35s ease;
+            }
+
+            .about-site-header {
+                transition: transform 0.28s ease, box-shadow 0.28s ease;
+                will-change: transform;
+            }
+
+            .about-site-header.is-header-hidden {
+                transform: translateY(-100%);
+            }
+
+            .about-site-header.is-logo-hidden .about-logo-link {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .about-site-header.is-logo-hidden .about-mobile-menu-shell {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                justify-content: center;
+                width: 56px;
+                z-index: 2;
+            }
+
+            .about-site-header.is-logo-visible .about-logo-link {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]"><header class="about-site-header sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between" id="site-header">
 <div class="flex-1">
-<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
+<a class="about-logo-link flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
 </div>
 <nav class="hidden lg:flex items-center gap-12 flex-none">
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
@@ -117,7 +152,7 @@
 <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
 <!-- Mobile Hamburger Icon -->
-<div class="flex-1 flex lg:hidden justify-end items-center">
+<div class="about-mobile-menu-shell flex-1 flex lg:hidden justify-end items-center">
 <button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn"  aria-label="Open Menu">
 <iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
 </button>
@@ -160,17 +195,23 @@
 </script>
 <!-- REUSABLE HEADER -->
 <!-- HERO / MANIFESTO -->
-<section class="relative pt-40 pb-32 px-8 lg:px-16 text-center border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
+<section class="relative pt-32 pb-24 px-8 lg:px-16 text-center border-b border-[var(--border-navy)] overflow-hidden" data-watermark-section>
 <img src="assets/images/beton-watermark.svg" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1400px] opacity-10 z-0 pointer-events-none select-none hidden md:block" alt="" />
 <div class="relative max-w-4xl mx-auto z-10 flex flex-col items-center">
 <div class="block md:hidden mb-8 fade-in">
     <img src="Beton_logo.webp" alt="Beton Logo" class="h-16 object-contain rounded">
 </div>
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block fade-in">The Philosophy</span>
-<h1 class="text-4xl lg:text-5xl font-serif leading-tight mb-8 fade-in stagger-1">
-                    Lighting <span class="text-[#EF7F1A]">Beyond</span> <em class="italic font-light">Eternity.</em>
+<span class="text-[20px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 md:-mt-8 md:mb-14 block fade-in">The Philosophy</span>
+<br class="hidden md:block"/>
+<br class="hidden md:block"/>
+<h1 class="text-4xl lg:text-5xl font-serif leading-tight mb-8 fade-in stagger-1 max-w-[18rem] sm:max-w-none">
+                    Lighting <span class="text-[#EF7F1A]">Beyond</span> Eternity.
 </h1>
-<p class="text-lg text-[#134095]/70 leading-relaxed font-light fade-in stagger-2">
+<br class="hidden md:block"/>
+<br class="hidden md:block"/>
+<br class="hidden md:block"/>
+<br class="hidden md:block"/>
+<p class="text-lg text-[#134095]/70 leading-relaxed font-light fade-in stagger-2 max-w-[19rem] sm:max-w-2xl mx-auto">
                     At Beton, we believe lighting is more than illumination - it is an essential part of architecture that shapes experiences, enhances spaces, and brings ideas to life.
                 </p>
 </div>
@@ -185,7 +226,7 @@
 <div class="lg:w-1/2 p-12 lg:p-24 border-r border-[var(--border-navy)] flex flex-col justify-center">
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block">Our Identity</span>
 <h2 class="text-2xl lg:text-3xl font-serif mb-8 leading-relaxed">
-                        Forged in the industrial heart of Bardoli, Surat, <em class="italic text-[#EF7F1A]">Beton Lighting</em> crafts fixtures that resonate with the permanence of concrete and the precision of steel.
+                        Based in Surat, <span class="text-[#EF7F1A]">Beton Lighting</span> crafts fixtures that combine architectural restraint with technical precision.
                     </h2>
 <div class="space-y-6 text-sm text-[#134095]/70 leading-relaxed font-light">
 <p>We are architects of the unseen. Our Gujarat-based studio specializes in high-end technical lighting solutions that integrate seamlessly into brutalist and modern architectural landscapes.</p>
@@ -204,9 +245,6 @@
 <img alt="Beton Manufacturing Precision" class="w-full h-full object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
 </div>
 <div class="lg:w-1/2 p-12 lg:p-24 border-l border-[var(--border-navy)] flex flex-col justify-center order-1 lg:order-2">
-<div class="block lg:hidden mb-6 self-center">
-    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
-</div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Origin</span>
 <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold mb-4 text-center lg:text-left">Founding Principles</h3>
 <p class="text-sm text-[#134095]/70 leading-relaxed mb-8">
@@ -221,9 +259,6 @@
 <!-- VISION & MISSION SPLIT -->
 <section class="relative grid grid-cols-1 lg:grid-cols-2 border-b border-[var(--border-navy)] overflow-hidden">
 <div class="relative z-10 p-12 lg:p-24 border-r border-[var(--border-navy)] flex flex-col">
-<div class="block lg:hidden mb-6 self-center">
-    <img src="Beton_logo.webp" alt="Beton Logo" class="h-12 object-contain rounded">
-</div>
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-6 block text-center lg:text-left">The Vision</span>
 <p class="text-lg lg:text-xl font-serif leading-relaxed text-[#134095]/80">
                     To be the global benchmark for technical architectural lighting in luxury environments. Defining the future of luxury spaces by harmonizing industrial durability with sophisticated optical engineering.
@@ -239,54 +274,54 @@
 <!-- GUIDING PRINCIPLES GRID -->
 <section class="mobile-section-pad py-12 md:py-24 px-8 lg:px-16 border-b border-[var(--border-navy)]">
 <div class="text-center mb-20">
-<span class="text-[10px] uppercase tracking-[0.4em] text-[#EF7F1A] mb-4 block">Guiding Principles</span>
-<h2 class="text-3xl font-serif">The Beton DNA</h2>
+<h2 class="text-4xl lg:text-5xl font-serif text-[#134095]">The 6 Ps of BETON</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-y-20 md:gap-x-12">
-<!-- Principle 1 -->
+<!-- Principle 1: Precision -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
-<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:workspace-premium-outline"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Excellence</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">Workspace Premium</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">A standard of absolute precision in every weld, every lens, and every finished surface.</p>
+<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:precision-manufacturing-outline"></iconify-icon></div>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Precision</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Engineered to the Finest Detail</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Every BETON product is designed with meticulous attention to detail, ensuring accuracy, reliability, and consistent performance.</p>
 </div>
-<!-- Principle 2 -->
+<!-- Principle 2: Purpose -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
 <div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="ic:outline-architecture"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Innovation</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">Architecture First</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Developing proprietary optical systems that push the boundaries of what light can achieve in space.</p>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Purpose</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Designed with Intent</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">We create lighting solutions that enhance architecture, improve functionality, and elevate the experience of every space.</p>
 </div>
-<!-- Principle 3 -->
+<!-- Principle 3: Performance -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
-<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="ic:outline-foundation"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Integrity</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">Solid Foundation</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Honesty in materials. We use real stone, concrete, and metals to ensure authenticity in every touch.</p>
+<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:speed-outline"></iconify-icon></div>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Performance</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Built to Deliver</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Our products are engineered for efficiency, durability, and dependable performance across every application.</p>
 </div>
-<!-- Principle 4 -->
+<!-- Principle 4: Perfection -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
-<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:verified-outline"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Quality</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">Verified Performance</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Rigorous stress testing ensures our lighting performs in the most demanding environments for decades.</p>
+<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:workspace-premium-outline"></iconify-icon></div>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Perfection</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Crafted Without Compromise</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">We pursue excellence in every detail, delivering premium quality through superior craftsmanship and uncompromising standards.</p>
 </div>
-<!-- Principle 5 -->
+<!-- Principle 5: Partnership -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
 <div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:handshake-outline"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Commitment</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">The Handshake</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Providing architects with deep technical support from concept through to final installation on-site.</p>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Partnership</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Growing Together</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">We build lasting relationships with architects, designers, dealers, and builders through trust, collaboration, and dedicated support.</p>
 </div>
-<!-- Principle 6 -->
+<!-- Principle 6: Pioneering -->
 <div class="group border border-[rgba(19,64,149,0.16)] bg-white p-5 md:border-0 md:p-0">
-<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:eco-outline"></iconify-icon></div>
-<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Sustainability</h4>
-<h3 class="text-2xl font-serif mb-4 text-[#134095]">Eco Systems</h3>
-<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">Sustainability through longevity. We build products that are repaired, not replaced, for a circular economy.</p>
+<div class="mb-6 flex h-12 w-12 items-center justify-center border border-[#EF7F1A]/40 bg-[#EF7F1A]/5 text-[#EF7F1A]"><iconify-icon class="text-3xl" icon="material-symbols:explore-outline"></iconify-icon></div>
+<h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-[#134095]/90 mb-2">Pioneering</h4>
+<h3 class="text-2xl font-serif mb-4 text-[#134095]">Shaping the Future of Lighting</h3>
+<p class="text-sm md:text-xs leading-relaxed text-[#134095]/90">We continuously embrace innovation, advanced technology, and forward-thinking design to create lighting solutions for tomorrow.</p>
 </div>
 </div>
 </section>
+
 <!-- LARGE AMBIENT VISUAL -->
 <section class="relative h-[800px] overflow-hidden">
 <img alt="Architectural Light Showcase" class="w-full h-full object-cover image-grayscale" src="assets/images/temporary/beton-product-render.webp"/>
@@ -296,7 +331,7 @@
 <h2 class="text-4xl lg:text-5xl font-serif text-white mb-8 border-y border-white/20 py-8 uppercase tracking-tighter">
                         Our Unyielding <br/>Promise of Quality
                     </h2>
-<a class="inline-block px-5 md:px-10 py-5 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-white hover:text-[#134095] transition-all duration-500" href="products.html" id="about-cta-products">View Technical Collection</a>
+<a class="inline-block px-5 md:px-10 py-5 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-white hover:text-[#134095] transition-all duration-500" href="products.html" id="about-cta-products">Explore Product Lineup</a>
 </div>
 </div>
 </section>
@@ -308,9 +343,10 @@
 <p class="text-xs leading-relaxed text-[#FEFEFE]/90 max-w-xs mb-4">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
 <p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
 <div class="flex gap-6">
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="LinkedIn"><iconify-icon class="text-xl" icon="mdi:linkedin"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="javascript:void(0)"  aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
 </div>
 </div>
 <div>
@@ -334,18 +370,22 @@
 <div>
 <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
 <p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<div class="relative flex border-b border-[#EF7F1A]/30 pb-2">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
-<button class="text-[#EF7F1A] hover:text-[#EF7F1A]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</div>
+<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="subject" value="New Newsletter Subscription">
+<input type="hidden" name="from_name" value="Beton Website Newsletter">
+<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
+<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</form>
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© 2024 Beton Lighting. All Rights Reserved.</p>
+<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
 <div class="flex gap-10">
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Privacy</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="javascript:void(0)">Legal</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
+<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
 </div>
 </div>
 </footer></div>
@@ -355,44 +395,97 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const header = document.getElementById('site-header');
         const logoLink = document.querySelector('header a img[alt="Beton"]')?.closest('a');
-        if (!logoLink) return;
-        
-        logoLink.style.transition = 'opacity 0.5s ease';
-        
-        const observer = new IntersectionObserver((entries) => {
+        const hero = document.querySelector('[data-watermark-section]');
+        if (!header || !logoLink || !hero) return;
+        let lastScrollY = window.scrollY;
+
+        const setHeaderState = () => {
             if (window.innerWidth >= 768) {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
+                header.classList.remove('is-header-hidden');
+                header.classList.remove('is-logo-hidden');
+                header.classList.add('is-logo-visible');
+                lastScrollY = window.scrollY;
                 return;
             }
-            
-            let anyIntersecting = false;
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    anyIntersecting = true;
-                }
-            });
-            
-            if (anyIntersecting) {
-                logoLink.style.opacity = '0';
-                logoLink.style.pointerEvents = 'none';
-            } else {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
-            }
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('[data-watermark-section]').forEach(section => {
-            observer.observe(section);
-        });
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                logoLink.style.opacity = '1';
-                logoLink.style.pointerEvents = 'auto';
+            const currentY = window.scrollY;
+            const delta = currentY - lastScrollY;
+            const isAtTop = currentY < 24;
+
+            if (isAtTop) {
+                header.classList.remove('is-header-hidden');
+                header.classList.add('is-logo-hidden');
+                header.classList.remove('is-logo-visible');
+                lastScrollY = currentY;
+                return;
             }
-        }, { passive: true });
+
+            if (delta < -8) {
+                header.classList.remove('is-header-hidden');
+                header.classList.remove('is-logo-hidden');
+                header.classList.add('is-logo-visible');
+            } else if (delta > 8 && currentY > 140) {
+                header.classList.add('is-header-hidden');
+            }
+
+            lastScrollY = currentY;
+        };
+
+        setHeaderState();
+        window.addEventListener('scroll', setHeaderState, { passive: true });
+        window.addEventListener('resize', setHeaderState, { passive: true });
+    });
+</script>
+<script>
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+        node.textContent = new Date().getFullYear();
+    });
+</script>
+
+<script>
+    // Newsletter Form AJAX handler
+    document.querySelectorAll('#newsletter-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const button = form.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            const messageInput = form.querySelector('#newsletter-message');
+            messageInput.value = `for newsletter - ${emailInput.value}`;
+            
+            button.disabled = true;
+            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed successfully!';
+                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                } else {
+                    emailInput.placeholder = 'Please try again';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }
+                setTimeout(() => {
+                    emailInput.placeholder = 'Email address';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 3000);
+            })
+            .catch(() => {
+                emailInput.placeholder = 'Submission failed';
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            });
+        });
     });
 </script>
 </body>
