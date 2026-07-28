@@ -42,10 +42,15 @@
             padding: 1rem 0;
             width: 100%;
             transition: border-color 0.3s ease;
-            outline: none;
+            outline: none !important;
+            box-shadow: none !important;
         }
-        .form-input:focus {
+        .form-input:focus,
+        .form-input:focus-visible,
+        .form-input:active {
             border-bottom-color: var(--accent-orange);
+            outline: none !important;
+            box-shadow: none !important;
         }
         .checkbox-custom {
             appearance: none;
