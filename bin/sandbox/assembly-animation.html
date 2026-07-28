@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Assembly Animation Prototype</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            border: 2px dashed #ccc;
+            overflow: hidden;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #264796;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #1a326b;
+        }
+
+        /* Light Parts */
+        .part {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        /* 1. Base */
+        .base {
+            bottom: -50px; /* starts offscreen */
+            width: 120px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* 2. Stem */
+        .stem {
+            bottom: 60px;
+            width: 12px;
+            height: 150px; /* starts at 0 scale or offscreen */
+            background-color: #555;
+        }
+
+        /* 3. Bulb Holder */
+        .holder {
+            bottom: 210px;
+            width: 30px;
+            height: 25px;
+            background-color: #444;
+            border-radius: 4px;
+        }
+
+        /* 4. Bulb */
+        .bulb {
+            bottom: 235px;
+            width: 50px;
+            height: 50px;
+            background-color: #FECC00;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(254, 204, 0, 0); /* will animate glow */
+        }
+
+        /* 5. Shade */
+        .shade {
+            bottom: 215px; /* drops from above */
+            width: 140px;
+            height: 70px;
+            background-color: #264796;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Parts -->
+        <div class="part base" id="base"></div>
+        <div class="part stem" id="stem"></div>
+        <div class="part holder" id="holder"></div>
+        <div class="part bulb" id="bulb"></div>
+        <div class="part shade" id="shade"></div>
+
+        <div class="controls">
+            <button id="assembleBtn">Assemble Light</button>
+        </div>
+    </div>
+
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <script>
+        // Initial setup for starting positions
+        anime.set('#base', { translateY: 100, opacity: 0 });
+        anime.set('#stem', { scaleY: 0, transformOrigin: 'bottom center', opacity: 0 });
+        anime.set('#holder', { translateY: -50, opacity: 0 });
+        anime.set('#bulb', { scale: 0, opacity: 0 });
+        anime.set('#shade', { translateY: -150, opacity: 0 });
+
+        let animationTimeline = null;
+
+        document.getElementById('assembleBtn').addEventListener('click', () => {
+            // Reset if already playing or played
+            if (animationTimeline) {
+                animationTimeline.pause();
+            }
+
+            // Reset starting values
+            anime.set('.part', { clearProps: 'all' });
+            anime.set('#base', { translateY: 100, opacity: 0 });
+            anime.set('#stem', { scaleY: 0, transformOrigin: 'bottom center', opacity: 1 });
+            anime.set('#holder', { translateY: -50, opacity: 0 });
+            anime.set('#bulb', { scale: 0, opacity: 0 });
+            anime.set('#shade', { translateY: -150, opacity: 0 });
+
+            // Create timeline
+            animationTimeline = anime.timeline({
+                easing: 'easeOutExpo',
+                duration: 800
+            });
+
+            animationTimeline
+            .add({
+                targets: '#base',
+                translateY: [-100, -40], // Base slides up from bottom
+                opacity: [0, 1],
+                duration: 600
+            })
+            .add({
+                targets: '#stem',
+                scaleY: [0, 1], // Stem grows upwards
+                duration: 600
+            }, '-=200')
+            .add({
+                targets: '#holder',
+                translateY: [-30, 0], // Holder snaps into place
+                opacity: [0, 1],
+                duration: 400
+            }, '-=200')
+            .add({
+                targets: '#bulb',
+                scale: [0, 1], // Bulb scales up
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeOutElastic(1, .6)'
+            })
+            .add({
+                targets: '#shade',
+                translateY: [-150, 0], // Shade drops from top
+                opacity: [0, 1],
+                duration: 700,
+                easing: 'easeOutBounce'
+            }, '-=300')
+            .add({
+                targets: '#bulb',
+                boxShadow: ['0 0 0px 0px rgba(254, 204, 0, 0)', '0 0 40px 10px rgba(254, 204, 0, 0.6)'],
+                backgroundColor: ['#b39000', '#FECC00'],
+                duration: 1000,
+                easing: 'easeInOutSine'
+            });
+        });
+    </script>
+</body>
+</html>

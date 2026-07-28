@@ -118,20 +118,6 @@
     display: none;
   }
 
-  .font-serif,
-  .font-mono {
-    font-family: var(--font-sans) !important;
-  }
-
-  .font-light {
-    font-weight: 400 !important;
-  }
-
-  .italic,
-  em {
-    font-style: normal !important;
-  }
-
   .font-bold,
   strong,
   b {
@@ -423,11 +409,6 @@
     .tracking-\[0\.2em\],
     .tracking-\[0\.6em\] {
       letter-spacing: 0.09em !important;
-    }
-
-    .font-serif {
-      font-family: var(--font-sans) !important;
-      letter-spacing: 0 !important;
     }
 
     .text-center {

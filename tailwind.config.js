@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Montserrat", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
-        serif: ["Montserrat", "system-ui", "sans-serif"],
-        mono: ["Montserrat", "system-ui", "sans-serif"],
+        serif: ["Cormorant Garamond", "Georgia", "serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       fontSize: {
         "display-xl": ["3.5rem", { lineHeight: "1.08", fontWeight: "600", letterSpacing: "0" }],

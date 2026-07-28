@@ -215,11 +215,6 @@
       letter-spacing: 0.09em !important;
     }
 
-    .font-serif {
-      font-family: 'Montserrat', system-ui, sans-serif !important;
-      letter-spacing: -0.025em;
-    }
-
     .text-center {
       text-align: left !important;
     }

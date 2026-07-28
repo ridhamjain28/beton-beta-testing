@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Light Assembly Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #EFEFEF;
+            --stroke-color: #333;
+            --fill-1: #2B2B2B;
+            --fill-2: #4A4A4A;
+            --fill-3: #1A1A1A;
+            --fill-accent: #FECC00;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            overflow: visible;
+        }
+
+        .st0 {
+            fill: none;
+            stroke: var(--stroke-color);
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .fill-shape {
+            opacity: 0;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            border-color: #aaa;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --stroke-color: #fff;
+        }
+        body.dark-mode button {
+            background: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            bottom: -100px;
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #FECC00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- SVG representing a premium architectural spotlight -->
+        <svg viewBox="0 0 1000 400" id="light-svg">
+            
+            <!-- Part 1: Mount -->
+            <g class="part" id="part-mount" transform="translate(150, 200)">
+                <!-- Fill -->
+                <rect class="fill-shape" x="-30" y="-80" width="60" height="160" rx="10" fill="var(--fill-1)" />
+                <rect class="fill-shape" x="30" y="-40" width="20" height="80" fill="var(--fill-2)" />
+                
+                <!-- Stroke -->
+                <rect class="st0" x="-30" y="-80" width="60" height="160" rx="10" />
+                <rect class="st0" x="30" y="-40" width="20" height="80" />
+            </g>
+
+            <!-- Part 2: Pivot Arm -->
+            <g class="part" id="part-arm" transform="translate(350, 200)">
+                <path class="fill-shape" d="M-20,-30 L20,-30 L30,0 L20,30 L-20,30 Z" fill="var(--fill-3)" />
+                <circle class="fill-shape" cx="5" cy="0" r="10" fill="var(--bg-color)" />
+                
+                <path class="st0" d="M-20,-30 L20,-30 L30,0 L20,30 L-20,30 Z" />
+                <circle class="st0" cx="5" cy="0" r="10" />
+            </g>
+
+            <!-- Part 3: Main Cylinder Body -->
+            <g class="part" id="part-body" transform="translate(550, 200)">
+                <rect class="fill-shape" x="-40" y="-60" width="80" height="120" rx="4" fill="var(--fill-1)" />
+                <!-- Heat sink grooves -->
+                <line class="fill-shape st0" x1="-20" y1="-60" x2="-20" y2="60" stroke="#000" stroke-width="2"/>
+                <line class="fill-shape st0" x1="0" y1="-60" x2="0" y2="60" stroke="#000" stroke-width="2"/>
+                <line class="fill-shape st0" x1="20" y1="-60" x2="20" y2="60" stroke="#000" stroke-width="2"/>
+                
+                <rect class="st0" x="-40" y="-60" width="80" height="120" rx="4" />
+                <line class="st0" x1="-20" y1="-60" x2="-20" y2="60" />
+                <line class="st0" x1="0" y1="-60" x2="0" y2="60" />
+                <line class="st0" x1="20" y1="-60" x2="20" y2="60" />
+            </g>
+
+            <!-- Part 4: LED Lens & Bezel -->
+            <g class="part" id="part-lens" transform="translate(750, 200)">
+                <path class="fill-shape" d="M-20,-60 L10,-60 L20,-50 L20,50 L10,60 L-20,60 Z" fill="var(--fill-2)" />
+                <ellipse class="fill-shape" cx="15" cy="0" rx="8" ry="40" fill="var(--fill-accent)" />
+                
+                <path class="st0" d="M-20,-60 L10,-60 L20,-50 L20,50 L10,60 L-20,60 Z" />
+                <ellipse class="st0" cx="15" cy="0" rx="8" ry="40" />
+            </g>
+            
+        </svg>
+
+        <div class="controls">
+            <button id="playBtn">Play Assembly</button>
+            <button id="reverseBtn">Explode</button>
+            <button id="themeBtn">Toggle Theme</button>
+        </div>
+        
+        <div class="timeline-progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Setup initial stroke length for drawing
+        const pathEls = document.querySelectorAll('.st0');
+        pathEls.forEach(el => {
+            const length = el.getTotalLength ? el.getTotalLength() : 500;
+            el.style.strokeDasharray = length;
+            el.style.strokeDashoffset = length;
+        });
+
+        // Calculate assembly center (around x=500)
+        // Original positions: 150, 350, 550, 750
+        // Target positions to connect them:
+        // Mount: 430
+        // Arm: 480
+        // Body: 530
+        // Lens: 590
+        
+        let tl = anime.timeline({
+            autoplay: false,
+            update: function(anim) {
+                document.getElementById('progressBar').style.width = anim.progress + '%';
+            }
+        });
+
+        // 1. Draw strokes
+        tl.add({
+            targets: '.st0',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'easeInOutSine',
+            duration: 1500,
+            delay: function(el, i) { return i * 100 }
+        })
+        
+        // 2. Fade in fills and fade out strokes
+        .add({
+            targets: '.fill-shape',
+            opacity: [0, 1],
+            easing: 'linear',
+            duration: 800
+        }, '-=500')
+        .add({
+            targets: '.st0',
+            opacity: [1, 0.2], // keep a faint outline for technical look
+            easing: 'linear',
+            duration: 800
+        }, '-=800')
+
+        // 3. Assemble components (Translate X to form the complete light)
+        .add({
+            targets: '#part-mount',
+            translateX: 430,
+            easing: 'easeOutElastic(1, .8)',
+            duration: 1200
+        }, '+=200')
+        .add({
+            targets: '#part-arm',
+            translateX: 480,
+            easing: 'easeOutElastic(1, .8)',
+            duration: 1200
+        }, '-=1000')
+        .add({
+            targets: '#part-body',
+            translateX: 530,
+            easing: 'easeOutElastic(1, .8)',
+            duration: 1200
+        }, '-=1000')
+        .add({
+            targets: '#part-lens',
+            translateX: 590,
+            easing: 'easeOutElastic(1, .8)',
+            duration: 1200
+        }, '-=1000')
+        
+        // 4. Final rotation/floating effect of the entire assembly
+        .add({
+            targets: '#light-svg',
+            rotate: '2deg',
+            translateY: -10,
+            easing: 'easeInOutSine',
+            duration: 2000,
+            direction: 'alternate',
+            loop: true
+        });
+
+        document.getElementById('playBtn').onclick = () => {
+            if(tl.reversed) {
+                tl.reverse();
+            }
+            tl.play();
+        };
+
+        document.getElementById('reverseBtn').onclick = () => {
+            if(!tl.reversed) {
+                tl.reverse();
+            }
+            tl.play();
+        };
+
+        document.getElementById('themeBtn').onclick = () => {
+            document.body.classList.toggle('dark-mode');
+        };
+
+        // Auto-play on load
+        setTimeout(() => tl.play(), 500);
+
+    </script>
+</body>
+</html>

@@ -156,16 +156,18 @@ Use for:
 - technical labels;
 - product specifications.
 
-### Optional display typeface
+### Heading / Display typeface
 
-A second heading typeface may be introduced only if it improves the premium architectural character and remains highly readable on mobile. Suitable options include:
+**Cormorant Garamond** (Serif)
 
-- Manrope;
-- Sora;
-- Plus Jakarta Sans;
-- Inter Tight.
+Use for:
 
-If no second typeface clearly improves the design, use Montserrat throughout.
+- primary section titles;
+- hero headings;
+- editorial and architectural callouts;
+- brand ethos headers.
+
+It restores the elegant serif aesthetic while pairing seamlessly with Montserrat for body text.
 
 ### Mobile-first type scale
 
