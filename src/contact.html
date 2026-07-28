@@ -191,6 +191,8 @@
 <div class="contact-form-panel lg:w-2/3 p-12 lg:p-24 bg-white">
 <form action="https://api.web3forms.com/submit" method="POST" class="max-w-2xl animate-slide-up" id="wizard-form" style="animation-delay: 0.3s">
 <input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="product_ref" id="hidden-product-ref" value="">
+<input type="hidden" name="enquiry_type" id="hidden-enquiry-type" value="">
 <!-- STEP 1 -->
 <div class="wizard-step hidden opacity-0 transition-all duration-500 transform translate-x-4" data-step="1">
 <h3 class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 mb-12 border-b border-[rgba(19,64,149,0.15)] pb-4">01. Discovery</h3>
@@ -476,6 +478,40 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         showStep(1);
+
+        // Prepopulate from URL parameters if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        const type = urlParams.get('type');
+        
+        if (ref) {
+            const refField = document.getElementById('hidden-product-ref');
+            if (refField) refField.value = ref;
+            
+            const messageTextarea = document.querySelector('textarea[name="message"]');
+            if (messageTextarea) {
+                let typeStr = type ? ` (${type})` : '';
+                messageTextarea.value = `I am interested in product reference: ${ref}${typeStr}.\n\n`;
+            }
+            
+            // Add a product badge at the top of the discovery step
+            const firstStep = document.querySelector('.wizard-step[data-step="1"]');
+            if (firstStep) {
+                const header = firstStep.querySelector('h3');
+                const badge = document.createElement('div');
+                badge.className = 'mb-6 p-4 bg-[#134095]/10 border-l-4 border-[#EF7F1A] text-xs uppercase tracking-widest font-semibold flex justify-between items-center';
+                badge.innerHTML = `<span>Inquiring about Product: <strong class="text-[#EF7F1A]">${ref}</strong></span>`;
+                if (header) {
+                    header.after(badge);
+                } else {
+                    firstStep.insertBefore(badge, firstStep.firstChild);
+                }
+            }
+        }
+        if (type) {
+            const typeField = document.getElementById('hidden-enquiry-type');
+            if (typeField) typeField.value = type;
+        }
 
         const form = document.getElementById('wizard-form');
         form.addEventListener('submit', function(e) {
