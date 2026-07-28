@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Applications Styling Playground | Beton Lighting</title>
+    <link rel="icon" href="favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+    <link rel="manifest" href="favicons/manifest.webmanifest">
+    <meta name="description" content="Explore the diverse lighting applications by Beton Lighting. We provide architectural lighting for various settings, manufactured in Surat, Gujarat."/>
+    
+    <!-- Load styles.css first for production layout -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Load Tailwind CDN and Iconify for interactive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+    <!-- Load Montserrat and Cormorant Garamond Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Montserrat", "system-ui", "sans-serif"],
+                        serif: ["Cormorant Garamond", "Georgia", "serif"],
+                    },
+                    colors: {
+                        cobalt: '#264796',
+                        navy: '#134095',
+                        orange: '#EF7F1A',
+                        yellow: '#FECC00',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-cream: #FEFEFE;
+            --border-neutral: rgba(19, 64, 149, 0.15);
+            --text-primary: #134095;
+            --accent-orange: #EF7F1A;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-cream);
+            overflow-x: hidden;
+            padding-bottom: 260px; /* Leave space for floating bottom toolbar */
+        }
+        .image-grayscale {
+            filter: grayscale(20%);
+            transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .image-grayscale:hover {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+        .underline-hover {
+            position: relative;
+        }
+        .underline-hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+        .underline-hover:hover::after {
+            width: 100%;
+        }
+        .underline-hover:hover {
+            color: var(--accent-orange);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s ease forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stagger-1 { animation-delay: 0.2s; }
+        .stagger-2 { animation-delay: 0.4s; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .application-section {
+            scroll-margin-top: 148px;
+        }
+        .application-panel {
+            border-top: 1px solid var(--border-neutral);
+        }
+        .application-panel-card {
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-neutral);
+        }
+        .application-panel-card:last-child {
+            border-right: 0;
+        }
+        @media (max-width: 767px) {
+            .application-section {
+                scroll-margin-top: 126px;
+            }
+            .application-panel-card {
+                border-right: 0;
+                border-bottom: 1px solid var(--border-neutral);
+            }
+            .application-panel-card:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        /* Playground styles */
+        .editable-text {
+            position: relative;
+            transition: outline 0.15s ease;
+        }
+        .editable-text:hover {
+            outline: 1px dashed #EF7F1A !important;
+            outline-offset: 4px;
+            cursor: pointer;
+        }
+        .selected-target {
+            outline: 2px solid #EF7F1A !important;
+            outline-offset: 4px;
+        }
+        .custom-span {
+            display: inline-block;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]">
+    <header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between select-none pointer-events-none opacity-80">
+        <div class="flex-1">
+            <div class="flex items-center"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></div>
+        </div>
+        <nav class="hidden lg:flex items-center gap-12 flex-none">
+            <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#134095]">Home</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#134095]">About</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#134095]">Products</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#EF7F1A] italic">Applications</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#134095]">Projects</span>
+        </nav>
+        <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+            <span class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em]">Contact Us</span>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="pt-24 pb-16 px-8 lg:px-16 border-b border-[var(--border-neutral)]">
+        <div class="max-w-4xl">
+            <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#134095]/90 fade-in">Application Spheres</span>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif leading-[1.1] mb-8 fade-in stagger-1 text-[#134095]">
+                Shaping <span class="text-[#EF7F1A]">Atmosphere</span> <br/>Through Technical Precision.
+            </h1>
+            <p class="text-lg text-[#134095]/70 leading-relaxed max-w-2xl fade-in stagger-2">
+                We collaborate with architects and designers to deliver lighting that integrates seamlessly into the architectural fabric, enhancing functionality while defining the aesthetic soul of every space.
+            </p>
+        </div>
+    </section>
+
+    <!-- CATEGORY NAVIGATION -->
+    <nav class="sticky top-20 z-40 bg-[#FEFEFE]/95 backdrop-blur-md border-b border-[var(--border-neutral)] flex px-8 lg:px-16 overflow-x-auto no-scrollbar select-none pointer-events-none">
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">01 Residential</span>
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">02 Commercial</span>
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">03 Office</span>
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">04 Retail</span>
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">05 Hospitality</span>
+        <span class="py-6 px-6 text-[10px] uppercase tracking-[0.2em] font-semibold border-b-2 border-transparent text-[#134095] whitespace-nowrap">06 Healthcare</span>
+    </nav>
+
+    <!-- RESIDENTIAL SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)]" id="residential">
+        <div class="flex flex-col lg:flex-row">
+            <div class="lg:w-1/2 p-16 lg:p-24 border-r border-[var(--border-neutral)]">
+                <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">01 / Sanctity</span>
+                <h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight text-[#134095]">Residential <br/>Environments</h2>
+                <p class="text-sm text-[#134095]/70 leading-relaxed mb-12">
+                    In residential spaces, lighting is the bridge between architecture and well-being. Beton focuses on high-CRI solutions that render textures beautifully while providing the warmth and comfort required for a sanctuary. From discrete recessed profiles to statement magnetic tracks.
+                </p>
+                <div class="grid grid-cols-2 gap-8 mb-12 border-t border-[var(--border-neutral)] pt-8">
+                    <div>
+                        <h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Key Fixtures</h4>
+                        <ul class="text-[11px] space-y-2 text-[#134095]/90 uppercase tracking-wider">
+                            <li>Apex Downlights</li>
+                            <li>Mag-Track Slim</li>
+                            <li>Cove Linear Pro</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Outcome</h4>
+                        <p class="text-[11px] leading-relaxed text-[#134095]/90 uppercase tracking-wider">Visual comfort, seamless integration, emotional warmth.</p>
+                    </div>
+                </div>
+                <span class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-[#EF7F1A]">
+                    Discuss Your Residence <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                </span>
+            </div>
+            <div class="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 bg-white select-none">
+                <div class="aspect-square relative overflow-hidden border-b border-[var(--border-neutral)] border-r bg-gray-50 flex items-center justify-center">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Residential dining image</span>
+                    <div class="absolute bottom-4 left-4 text-[9px] uppercase tracking-widest text-gray-600">Residential Dining</div>
+                </div>
+                <div class="aspect-square relative overflow-hidden border-b border-[var(--border-neutral)] bg-gray-50 flex items-center justify-center">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Bedroom Ambience image</span>
+                    <div class="absolute bottom-4 left-4 text-[9px] uppercase tracking-widest text-gray-600">Bedroom Ambience</div>
+                </div>
+                <div class="col-span-2 p-12 flex flex-col justify-center items-center text-center bg-[#FEFEFE]">
+                    <iconify-icon class="text-3xl text-[#EF7F1A] mb-4" icon="ri:lightbulb-line"></iconify-icon>
+                    <h4 class="text-sm uppercase tracking-[0.2em] font-bold mb-2">Installation Insight</h4>
+                    <p class="text-xs text-[#134095]/90 max-w-sm">Utilizing 2700K warm-dim technology to mimic natural circadian rhythms throughout living areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMERCIAL SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)]" id="commercial">
+        <div class="flex flex-col lg:flex-row-reverse">
+            <div class="lg:w-1/2 p-10 lg:p-16 border-l border-[var(--border-neutral)]">
+                <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">02 / Efficiency</span>
+                <h2 class="text-4xl lg:text-5xl font-serif mb-8 leading-tight text-[#134095]">Commercial <br/>Clarity</h2>
+                <p class="text-sm text-[#134095]/70 leading-relaxed mb-10">
+                    Commercial lighting needs efficiency, consistent output, and easy maintenance without making the space feel flat. Beton focuses on low-glare linear systems, controlled beam distribution, and clean integration for offices, showrooms, and shared workspaces.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10 border-t border-[var(--border-neutral)] pt-8">
+                    <div>
+                        <h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Technical Specs</h4>
+                        <ul class="text-sm space-y-2 text-[#134095]/90">
+                            <li>Low-glare fixture selection</li>
+                            <li>DALI or phase-cut control options</li>
+                            <li>Neutral CCT for work clarity</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] uppercase tracking-widest font-bold mb-2">Design Focus</h4>
+                        <p class="text-sm leading-relaxed text-[#134095]/90">Uniformity, visual comfort, maintenance access, and reduced glare across long-use zones.</p>
+                    </div>
+                </div>
+                <span class="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-[#EF7F1A]">
+                    Optimize Your Workspace <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                </span>
+            </div>
+            <div class="lg:w-1/2 relative bg-white flex flex-col">
+                <div class="aspect-[16/10] overflow-hidden bg-gray-50 flex items-center justify-center border-b border-[var(--border-neutral)] select-none">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Commercial showroom image</span>
+                </div>
+                <div class="application-panel grid grid-cols-1 md:grid-cols-2">
+                    <div class="application-panel-card">
+                        <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#134095]/70">Existing Challenge</span>
+                        <p class="text-sm text-[#134095]/90">Uneven light distribution, visible glare, and inconsistent task illumination.</p>
+                    </div>
+                    <div class="application-panel-card bg-[#134095]/5">
+                        <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">Lighting Response</span>
+                        <p class="text-sm text-[#134095]/90 font-medium">Controlled linear profiles, diffused optics, and zone-based switching for practical everyday use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OFFICE SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)] bg-white" id="office">
+        <div class="px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div class="aspect-[4/3] bg-gray-50 flex items-center justify-center border border-[#134095]/10 select-none">
+                <span class="text-xs uppercase tracking-widest text-gray-400">Office Cabin image</span>
+            </div>
+            <div>
+                <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">03 / Productivity</span>
+                <h2 class="text-3xl lg:text-5xl font-serif mb-6 text-[#134095]">Office</h2>
+                <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Office lighting needs visual comfort, uniformity, and efficient task illumination for long working hours.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
+                    <p><strong>Recommended:</strong> linear profiles, panel systems, low-glare downlights.</p>
+                    <p><strong>Consider:</strong> glare control, uniformity, desk layouts, energy efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RETAIL SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)] bg-[#FEFEFE]" id="retail">
+        <div class="px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div>
+                <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">04 / Visual Focus</span>
+                <h2 class="text-3xl lg:text-5xl font-serif mb-6 text-[#134095]">Retail</h2>
+                <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Retail lighting should reveal colour, texture, and product detail while guiding attention through the space.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
+                    <p><strong>Recommended:</strong> track lights, recessed spotlights, wall washers.</p>
+                    <p><strong>Consider:</strong> colour rendering, beam angle, display contrast, maintenance access.</p>
+                </div>
+            </div>
+            <div class="aspect-[4/3] bg-gray-50 flex items-center justify-center border border-[#134095]/10 select-none">
+                <span class="text-xs uppercase tracking-widest text-gray-400">Retail workspace image</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOSPITALITY SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)] bg-white" id="hospitality">
+        <div class="px-8 lg:px-16 py-12 md:py-24">
+            <div class="flex flex-col lg:flex-row items-end justify-between mb-16">
+                <div class="max-w-xl">
+                    <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">05 / Experience</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif mb-6 text-[#134095]">Hospitality Atmosphere</h2>
+                    <p class="text-sm text-[#134095]/70 leading-relaxed">
+                        In luxury hotels and fine dining, the lighting must be invisible yet transformative. We utilize narrow-beam accentuation to highlight artwork and table settings while maintaining a low-glare ambient environment.
+                    </p>
+                </div>
+                <span class="text-[10px] uppercase tracking-[0.2em] font-bold border-b border-[#EF7F1A] pb-1 text-[#EF7F1A]">Consult on Project</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1 select-none">
+                <div class="aspect-[3/4] bg-gray-50 flex items-center justify-center border">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Hospitality Bar</span>
+                </div>
+                <div class="aspect-[3/4] bg-gray-50 flex items-center justify-center border">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Layered Lounge</span>
+                </div>
+                <div class="aspect-[3/4] bg-gray-50 flex items-center justify-center border">
+                    <span class="text-xs uppercase tracking-widest text-gray-400">Warm Retreat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEALTHCARE SECTION -->
+    <section class="application-section border-b border-[var(--border-neutral)] bg-[#FEFEFE]" id="healthcare">
+        <div class="px-8 lg:px-16 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div>
+                <span class="uppercase tracking-[0.4em] mb-6 block text-[21px] text-[#EF7F1A]">06 / Reliability</span>
+                <h2 class="text-3xl lg:text-5xl font-serif mb-6 text-[#134095]">Healthcare</h2>
+                <p class="text-base md:text-sm text-[#134095]/70 leading-relaxed mb-8">Healthcare environments need dependable, comfortable lighting that supports clarity, movement, and task visibility.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#134095]/90">
+                    <p><strong>Recommended:</strong> sealed luminaires, linear systems, task lighting.</p>
+                    <p><strong>Consider:</strong> visual comfort, reliability, cleanability, task zones.</p>
+                </div>
+            </div>
+            <div class="aspect-[4/3] bg-gray-50 flex items-center justify-center border border-[#134095]/10 select-none">
+                <span class="text-xs uppercase tracking-widest text-gray-400">Healthcare image</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER REPLICA -->
+    <footer class="py-12 bg-[#134095] text-white opacity-80 pointer-events-none select-none">
+        <div class="text-center text-[10px] uppercase tracking-widest">© 2026 Beton Lighting. Styling Workbench Environment.</div>
+    </footer>
+</div>
+
+<!-- BOTTOM FIXED STYLE SELECTION TOOLBAR -->
+<div id="style-toolbar" class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900 border-t border-slate-700 text-slate-100 flex flex-col font-sans transition-all duration-300 translate-y-0 shadow-[0_-10px_25px_rgba(0,0,0,0.3)]">
+    
+    <!-- Toolbar header panel -->
+    <div class="h-10 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 select-none shrink-0">
+        <div class="flex items-center gap-3">
+            <span class="w-2.5 h-2.5 bg-orange rounded-full animate-pulse"></span>
+            <span class="text-[10px] uppercase tracking-widest font-bold text-slate-300">Aesthetic Formatting Dashboard</span>
+            <div id="selection-badge" class="hidden bg-[#EF7F1A] text-white text-[9px] px-2 py-0.5 font-bold uppercase tracking-wider rounded-sm">
+                Active selection: <span id="active-tag" class="font-mono">SPAN</span>
+            </div>
+        </div>
+
+        <!-- Toggle Controls -->
+        <button onclick="toggleToolbar()" class="text-slate-400 hover:text-white flex items-center gap-1 text-[10px] uppercase tracking-widest font-bold">
+            <iconify-icon icon="lucide:chevrons-down-up" id="toolbar-toggle-icon"></iconify-icon> <span id="toolbar-toggle-txt">Minimize</span>
+        </button>
+    </div>
+
+    <!-- Toolbar controls body -->
+    <div id="toolbar-body" class="p-5 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6 h-[220px] overflow-y-auto bg-slate-900 select-none">
+        
+        <!-- Column 1: Selection Info & Reset -->
+        <div class="flex flex-col justify-between h-full border-r border-slate-800 pr-4">
+            <div class="space-y-2">
+                <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Selected Content</span>
+                <div id="selection-preview" class="text-xs bg-slate-950 p-2.5 text-slate-300 font-medium line-clamp-3 italic h-[72px] overflow-y-auto border border-slate-800">
+                    Highlight text with cursor or click any block to style.
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="resetStyle()" class="flex-1 py-2 text-[10px] uppercase tracking-wider font-bold bg-slate-850 border border-slate-700 hover:bg-slate-800 text-center transition-colors">
+                    Reset
+                </button>
+                <button id="add-text-btn" onclick="addNewSpanWrapper()" class="hidden flex-1 py-2 text-[10px] uppercase tracking-wider font-bold bg-[#EF7F1A] hover:bg-[#EF7F1A]/85 text-white text-center transition-colors">
+                    Wrap Selection
+                </button>
+            </div>
+        </div>
+
+        <!-- Column 2: Family & Font Size -->
+        <div class="flex flex-col gap-3 border-r border-slate-800 pr-4">
+            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Typography</span>
+            <div class="space-y-1">
+                <label class="text-[9px] uppercase font-bold text-slate-400 block">Font Family</label>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button onclick="applyStyle('family', 'font-sans')" id="font-btn-sans" class="py-1 text-[9px] border border-slate-700 bg-slate-850 hover:bg-slate-800 rounded-sm">Montserrat</button>
+                    <button onclick="applyStyle('family', 'font-serif')" id="font-btn-serif" class="py-1 text-[9px] border border-slate-700 bg-slate-850 hover:bg-slate-800 rounded-sm">Cormorant</button>
+                </div>
+            </div>
+            <div class="space-y-1">
+                <div class="flex justify-between items-center text-[9px] font-bold text-slate-400">
+                    <span>Font Size</span>
+                    <span id="label-size" class="text-orange">16px</span>
+                </div>
+                <input type="range" id="slider-size" min="6" max="120" value="16" oninput="applyStyle('size', this.value)">
+            </div>
+        </div>
+
+        <!-- Column 3: Weights & Styling -->
+        <div class="flex flex-col gap-3 border-r border-slate-800 pr-4">
+            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Weight & Transform</span>
+            <div class="space-y-1">
+                <label class="text-[9px] uppercase font-bold text-slate-400 block">Weight</label>
+                <select id="select-weight" onchange="applyStyle('weight', this.value)" class="w-full bg-slate-950 border border-slate-800 text-[10px] p-1.5 focus:outline-none rounded-sm">
+                    <option value="font-light">Light (300)</option>
+                    <option value="font-normal">Normal (400)</option>
+                    <option value="font-medium">Medium (500)</option>
+                    <option value="font-semibold">Semi-Bold (600)</option>
+                    <option value="font-bold">Bold (700)</option>
+                    <option value="font-black">Black (900)</option>
+                </select>
+            </div>
+            <div class="space-y-1">
+                <label class="text-[9px] uppercase font-bold text-slate-400 block">Transform Styles</label>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button onclick="toggleTransform('uppercase')" id="btn-uppercase" class="py-1 text-[9px] border border-slate-700 hover:bg-slate-800 rounded-sm">UPPERCASE</button>
+                    <button onclick="toggleTransform('italic')" id="btn-italic" class="py-1 text-[9px] border border-slate-700 hover:bg-slate-800 italic rounded-sm">Italic</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 4: Letter Spacing & Opacity -->
+        <div class="flex flex-col gap-3 border-r border-slate-800 pr-4">
+            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Tracking & Opacity</span>
+            <div class="space-y-1">
+                <label class="text-[9px] uppercase font-bold text-slate-400 block">Letter Spacing</label>
+                <select id="select-tracking" onchange="applyStyle('tracking', this.value)" class="w-full bg-slate-950 border border-slate-800 text-[10px] p-1.5 focus:outline-none rounded-sm">
+                    <option value="tracking-normal">Normal (0)</option>
+                    <option value="tracking-wide">Wide (0.025em)</option>
+                    <option value="tracking-wider">Wider (0.05em)</option>
+                    <option value="tracking-widest">Widest (0.1em)</option>
+                    <option value="tracking-[0.2em]">0.2em</option>
+                    <option value="tracking-[0.3em]">0.3em</option>
+                    <option value="tracking-[0.4em]">0.4em</option>
+                </select>
+            </div>
+            <div class="space-y-1">
+                <div class="flex justify-between items-center text-[9px] font-bold text-slate-400">
+                    <span>Opacity</span>
+                    <span id="label-opacity" class="text-orange">100%</span>
+                </div>
+                <input type="range" id="slider-opacity" min="10" max="100" step="10" value="100" oninput="applyStyle('opacity', this.value)">
+            </div>
+        </div>
+
+        <!-- Column 5: Brand Colors -->
+        <div class="flex flex-col gap-3 border-r border-slate-800 pr-4">
+            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold block">Theme Palette</span>
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="applyStyle('color', 'text-[#EF7F1A]')" class="w-full h-8 bg-[#EF7F1A] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Carrot Orange"></button>
+                <button onclick="applyStyle('color', 'text-[#134095]')" class="w-full h-8 bg-[#134095] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Navy Blue"></button>
+                <button onclick="applyStyle('color', 'text-[#264796]')" class="w-full h-8 bg-[#264796] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Cobalt Blue"></button>
+                <button onclick="applyStyle('color', 'text-[#FECC00]')" class="w-full h-8 bg-[#FECC00] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Sunburst Yellow"></button>
+                <button onclick="applyStyle('color', 'text-[#1A1A1A]')" class="w-full h-8 bg-[#1A1A1A] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Dark Slate"></button>
+                <button onclick="applyStyle('color', 'text-[#FEFEFE]')" class="w-full h-8 bg-[#FEFEFE] border border-slate-700 hover:scale-105 transition-transform rounded-sm" title="Pure White"></button>
+            </div>
+        </div>
+
+        <!-- Column 6: Live Code Console -->
+        <div class="flex flex-col gap-2 h-full">
+            <div class="flex items-center justify-between">
+                <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold">Generated Tag Code</span>
+                <button onclick="copyOutput()" class="text-[8px] font-bold text-orange uppercase tracking-wider flex items-center gap-1 hover:underline">
+                    <iconify-icon icon="lucide:copy" id="btn-copy-icon"></iconify-icon> <span id="btn-copy-text">Copy Code</span>
+                </button>
+            </div>
+            <div class="flex-1 bg-slate-950 p-2.5 font-mono text-[10px] text-orange border border-slate-800 overflow-auto select-all leading-normal max-h-[140px] whitespace-pre-wrap break-all animate-fade" id="code-output">
+                Select an element to see compiled code.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentTarget = null;
+    let isMinimized = false;
+
+    const selectionBadge = document.getElementById('selection-badge');
+    const activeTag = document.getElementById('active-tag');
+    const selectionPreview = document.getElementById('selection-preview');
+    const codeOutput = document.getElementById('code-output');
+
+    const fontBtnSans = document.getElementById('font-btn-sans');
+    const fontBtnSerif = document.getElementById('font-btn-serif');
+    const selectWeight = document.getElementById('select-weight');
+    const btnUppercase = document.getElementById('btn-uppercase');
+    const btnItalic = document.getElementById('btn-italic');
+    const selectTracking = document.getElementById('select-tracking');
+    const sliderSize = document.getElementById('slider-size');
+    const labelSize = document.getElementById('label-size');
+    const sliderOpacity = document.getElementById('slider-opacity');
+    const labelOpacity = document.getElementById('label-opacity');
+
+    // Selection mouseup listeners
+    document.addEventListener('mouseup', handleTextSelection);
+
+    // Dynamic editable element hookups on load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Select all text elements in the layout to dynamically allow editing
+        const editableTags = document.querySelectorAll('h1, h2, h3, h4, p, span, li, a, em');
+        editableTags.forEach(el => {
+            if (!el.closest('#style-toolbar')) {
+                el.classList.add('editable-text');
+            }
+        });
+    });
+
+    // Handle click to target entire elements
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#style-toolbar')) return;
+
+        const editable = e.target.closest('.editable-text');
+        if (editable) {
+            e.preventDefault();
+            e.stopPropagation();
+            selectElement(editable);
+        }
+    });
+
+    // Detect highlight text selection
+    function handleTextSelection() {
+        const selection = window.getSelection();
+        const text = selection.toString().trim();
+        
+        if (text.length > 0) {
+            const range = selection.getRangeAt(0);
+            let container = range.commonAncestorContainer;
+            if (container.nodeType === Node.TEXT_NODE) {
+                container = container.parentNode;
+            }
+            if (container.closest('#style-toolbar')) return;
+
+            document.getElementById('add-text-btn').classList.remove('hidden');
+            selectionPreview.innerHTML = `<span class="text-orange font-bold">[Selected Text]:</span> "${text}"`;
+        } else {
+            if (!currentTarget) {
+                document.getElementById('add-text-btn').classList.add('hidden');
+            }
+        }
+    }
+
+    // Wrap highlighted subset in inline styleable span
+    function addNewSpanWrapper() {
+        const selection = window.getSelection();
+        const text = selection.toString().trim();
+        if (text.length === 0) return;
+
+        const range = selection.getRangeAt(0);
+        const span = document.createElement('span');
+        span.className = 'custom-span font-sans text-base text-[#134095] editable-text';
+        span.innerText = text;
+        
+        try {
+            range.deleteContents();
+            range.insertNode(span);
+            window.getSelection().removeAllRanges();
+            selectElement(span);
+            document.getElementById('add-text-btn').classList.add('hidden');
+        } catch (e) {
+            alert("Could not wrap text. Try highlighting selection within a single text block.");
+        }
+    }
+
+    // Load formatting stats into toolbar
+    function selectElement(el) {
+        if (currentTarget) {
+            currentTarget.classList.remove('selected-target');
+        }
+
+        currentTarget = el;
+        currentTarget.classList.add('selected-target');
+
+        // Capture initial values for reset safety
+        if (!el.dataset.originalSaved) {
+            el.dataset.originalClasses = el.className;
+            el.dataset.originalStyles = el.style.cssText;
+            el.dataset.originalHtml = el.innerHTML;
+            el.dataset.originalSaved = "true";
+        }
+
+        selectionBadge.classList.remove('hidden');
+        activeTag.innerText = el.tagName;
+        selectionPreview.innerText = el.innerText || '(Empty element)';
+
+        // Read computed values to sync sliders/buttons
+        const computed = window.getComputedStyle(el);
+        
+        const sizePx = Math.round(parseFloat(computed.fontSize));
+        sliderSize.value = sizePx;
+        labelSize.innerText = sizePx + 'px';
+
+        const opVal = Math.round(parseFloat(computed.opacity) * 100);
+        sliderOpacity.value = opVal;
+        labelOpacity.innerText = opVal + '%';
+
+        const family = computed.fontFamily;
+        if (family.includes('Cormorant') || el.classList.contains('font-serif')) {
+            setFamilyButtons('font-serif');
+        } else {
+            setFamilyButtons('font-sans');
+        }
+
+        const wt = computed.fontWeight;
+        let wtClass = 'font-normal';
+        if (wt <= 300) wtClass = 'font-light';
+        else if (wt == 500) wtClass = 'font-medium';
+        else if (wt == 600) wtClass = 'font-semibold';
+        else if (wt == 700) wtClass = 'font-bold';
+        else if (wt >= 900) wtClass = 'font-black';
+        selectWeight.value = wtClass;
+
+        if (computed.fontStyle === 'italic' || el.classList.contains('italic')) {
+            setToggleState(btnItalic, true);
+        } else {
+            setToggleState(btnItalic, false);
+        }
+        if (computed.textTransform === 'uppercase' || el.classList.contains('uppercase')) {
+            setToggleState(btnUppercase, true);
+        } else {
+            setToggleState(btnUppercase, false);
+        }
+
+        let tracking = 'tracking-normal';
+        const classes = Array.from(el.classList);
+        const foundTrack = classes.find(c => c.startsWith('tracking-'));
+        if (foundTrack) {
+            tracking = foundTrack;
+        }
+        selectTracking.value = tracking;
+
+        updateOutputConsole();
+    }
+
+    // Apply specific classes
+    function applyStyle(category, val) {
+        if (!currentTarget) return;
+
+        const families = ['font-sans', 'font-serif'];
+        const weights = ['font-light', 'font-normal', 'font-medium', 'font-semibold', 'font-bold', 'font-black'];
+        const trackings = ['tracking-normal', 'tracking-wide', 'tracking-wider', 'tracking-widest', 'tracking-[0.2em]', 'tracking-[0.3em]', 'tracking-[0.4em]'];
+        const opacities = ['opacity-10', 'opacity-20', 'opacity-30', 'opacity-40', 'opacity-50', 'opacity-60', 'opacity-70', 'opacity-80', 'opacity-90', 'opacity-100'];
+
+        if (category === 'family') {
+            families.forEach(f => currentTarget.classList.remove(f));
+            currentTarget.classList.add(val);
+            setFamilyButtons(val);
+        }
+
+        if (category === 'size') {
+            Array.from(currentTarget.classList).forEach(c => {
+                if (c.startsWith('text-') && (c.includes('[') || c === 'text-xs' || c === 'text-sm' || c === 'text-base' || c === 'text-lg' || c === 'text-xl' || c === 'text-2xl' || c === 'text-3xl' || c === 'text-4xl' || c === 'text-5xl' || c === 'text-6xl' || c === 'text-7xl')) {
+                    currentTarget.classList.remove(c);
+                }
+            });
+            currentTarget.classList.add(`text-[${val}px]`);
+            labelSize.innerText = val + 'px';
+        }
+
+        if (category === 'weight') {
+            weights.forEach(w => currentTarget.classList.remove(w));
+            currentTarget.classList.add(val);
+        }
+
+        if (category === 'tracking') {
+            trackings.forEach(t => currentTarget.classList.remove(t));
+            currentTarget.classList.add(val);
+        }
+
+        if (category === 'color') {
+            Array.from(currentTarget.classList).forEach(c => {
+                if (c.startsWith('text-[#') || c === 'text-white' || c === 'text-black' || c.startsWith('text-slate-') || c.startsWith('text-gray-') || c.startsWith('text-orange-') || c.startsWith('text-navy-') || c.startsWith('text-cobalt-')) {
+                    currentTarget.classList.remove(c);
+                }
+            });
+            currentTarget.classList.add(val);
+        }
+
+        if (category === 'opacity') {
+            opacities.forEach(o => currentTarget.classList.remove(o));
+            currentTarget.classList.add('opacity-' + val);
+            labelOpacity.innerText = val + '%';
+        }
+
+        updateOutputConsole();
+    }
+
+    // Toggle Uppercase / Italics
+    function toggleTransform(type) {
+        if (!currentTarget) return;
+
+        if (type === 'uppercase') {
+            const active = currentTarget.classList.toggle('uppercase');
+            setToggleState(btnUppercase, active);
+        } else if (type === 'italic') {
+            const active = currentTarget.classList.toggle('italic');
+            setToggleState(btnItalic, active);
+        }
+
+        updateOutputConsole();
+    }
+
+    // Sync button styling indicators
+    function setFamilyButtons(activeFamily) {
+        if (activeFamily === 'font-serif') {
+            fontBtnSerif.className = 'py-1 text-[9px] border border-orange bg-[#EF7F1A]/10 text-orange font-bold rounded-sm';
+            fontBtnSans.className = 'py-1 text-[9px] border border-slate-700 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-sm';
+        } else {
+            fontBtnSans.className = 'py-1 text-[9px] border border-orange bg-[#EF7F1A]/10 text-orange font-bold rounded-sm';
+            fontBtnSerif.className = 'py-1 text-[9px] border border-slate-700 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-sm';
+        }
+    }
+
+    function setToggleState(btn, active) {
+        if (active) {
+            btn.className = 'py-1 text-[9px] border border-orange bg-[#EF7F1A]/10 text-orange font-bold rounded-sm';
+        } else {
+            btn.className = 'py-1 text-[9px] border border-slate-700 bg-slate-850 hover:bg-slate-800 text-slate-300 rounded-sm';
+        }
+    }
+
+    // Reset element styles
+    function resetStyle() {
+        if (!currentTarget) return;
+
+        if (currentTarget.dataset.originalSaved === "true") {
+            currentTarget.className = currentTarget.dataset.originalClasses;
+            currentTarget.style.cssText = currentTarget.dataset.originalStyles;
+            currentTarget.innerHTML = currentTarget.dataset.originalHtml;
+            currentTarget.classList.add('selected-target');
+            selectElement(currentTarget);
+        }
+    }
+
+    // Compile element html & export code
+    function updateOutputConsole() {
+        if (!currentTarget) return;
+
+        const clone = currentTarget.cloneNode(true);
+        clone.classList.remove('selected-target');
+        clone.classList.remove('editable-text');
+        
+        if (clone.classList.length === 0) clone.removeAttribute('class');
+        if (clone.getAttribute('style') === '') clone.removeAttribute('style');
+
+        clone.removeAttribute('data-original-classes');
+        clone.removeAttribute('data-original-styles');
+        clone.removeAttribute('data-original-html');
+        clone.removeAttribute('data-original-saved');
+        clone.removeAttribute('data-editable');
+
+        let html = clone.outerHTML;
+        html = html.replace(/&amp;/g, '&');
+        codeOutput.innerText = html;
+    }
+
+    // Copy element code to clipboard
+    function copyOutput() {
+        const range = document.createRange();
+        range.selectNode(codeOutput);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+            document.execCommand('copy');
+            const icon = document.getElementById('btn-copy-icon');
+            const txt = document.getElementById('btn-copy-text');
+            icon.setAttribute('icon', 'lucide:check');
+            txt.innerText = 'Copied!';
+            setTimeout(() => {
+                icon.setAttribute('icon', 'lucide:copy');
+                txt.innerText = 'Copy Code';
+            }, 2000);
+        } catch (err) {
+            alert('Selection copied. Paste into document.');
+        }
+        window.getSelection().removeAllRanges();
+    }
+
+    // Toggle minimize toolbar view
+    function toggleToolbar() {
+        const toolbar = document.getElementById('style-toolbar');
+        const body = document.getElementById('toolbar-body');
+        const icon = document.getElementById('toolbar-toggle-icon');
+        const txt = document.getElementById('toolbar-toggle-txt');
+
+        if (isMinimized) {
+            body.classList.remove('hidden');
+            icon.setAttribute('icon', 'lucide:chevrons-down-up');
+            txt.innerText = 'Minimize';
+            toolbar.style.transform = 'translateY(0)';
+        } else {
+            body.classList.add('hidden');
+            icon.setAttribute('icon', 'lucide:chevrons-up-down');
+            txt.innerText = 'Expand';
+            toolbar.style.transform = 'translateY(220px)';
+        }
+        isMinimized = !isMinimized;
+    }
+</script>
+</body>
+</html>
