@@ -340,6 +340,8 @@
 <p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
 <div class="flex gap-6">
 <a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
+<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
 <a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
 </div>
 </div>
@@ -364,10 +366,14 @@
 <div>
 <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
 <p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<div class="relative flex border-b border-[#EF7F1A]/30 pb-2">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email"/>
-<button class="text-[#EF7F1A] hover:text-[#EF7F1A]/80"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</div>
+<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
+<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
+<input type="hidden" name="subject" value="New Newsletter Subscription">
+<input type="hidden" name="from_name" value="Beton Website Newsletter">
+<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
+<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
+<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
+</form>
 </div>
 </div>
 <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -431,6 +437,51 @@
 <script>
     document.querySelectorAll('[data-current-year]').forEach((node) => {
         node.textContent = new Date().getFullYear();
+    });
+</script>
+
+<script>
+    // Newsletter Form AJAX handler
+    document.querySelectorAll('#newsletter-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const button = form.querySelector('button');
+            const originalContent = button.innerHTML;
+            
+            const messageInput = form.querySelector('#newsletter-message');
+            messageInput.value = `for newsletter - ${emailInput.value}`;
+            
+            button.disabled = true;
+            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+            
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    emailInput.value = '';
+                    emailInput.placeholder = 'Subscribed successfully!';
+                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                } else {
+                    emailInput.placeholder = 'Please try again';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }
+                setTimeout(() => {
+                    emailInput.placeholder = 'Email address';
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
+                }, 3000);
+            })
+            .catch(() => {
+                emailInput.placeholder = 'Submission failed';
+                button.innerHTML = originalContent;
+                button.disabled = false;
+            });
+        });
     });
 </script>
 </body>
