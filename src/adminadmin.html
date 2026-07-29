@@ -7,358 +7,218 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f3f4f6;
-            color: #111827;
-            font-size: 14px;
-        }
-
-        /* ── Login ─────────────────────────────────── */
+        /* ── LOGIN ───────────────────────────────────────── */
         #login-page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f3f4f6;
+            min-height: 100vh; display: flex;
+            align-items: center; justify-content: center; background: #f0f2f5;
         }
         .login-box {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 2.5rem 2rem;
-            width: 100%;
-            max-width: 380px;
+            background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
+            padding: 2.5rem 2.25rem; width: 100%; max-width: 380px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
         }
-        .login-box h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #134095;
-            margin-bottom: 0.25rem;
+        .login-box h1 { font-size: 1.3rem; font-weight: 700; color: #134095; margin-bottom: 0.2rem; }
+        .login-box p  { color: #6b7280; font-size: 0.82rem; margin-bottom: 1.75rem; }
+        .lfield { margin-bottom: 1rem; }
+        .lfield label { display: block; font-weight: 500; font-size: 0.8rem; color: #374151; margin-bottom: 0.35rem; }
+        .lfield input {
+            width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #d1d5db;
+            border-radius: 6px; font-size: 0.9rem; font-family: 'Inter', sans-serif; color: #111827;
         }
-        .login-box p {
-            color: #6b7280;
-            font-size: 0.85rem;
-            margin-bottom: 1.75rem;
+        .lfield input:focus { outline: none; border-color: #134095; box-shadow: 0 0 0 3px rgba(19,64,149,0.1); }
+        .btn-login {
+            width: 100%; padding: 0.7rem; background: #134095; color: #fff;
+            font-weight: 600; font-size: 0.9rem; border: none; border-radius: 6px;
+            cursor: pointer; font-family: 'Inter', sans-serif; margin-top: 0.25rem;
         }
-        .field { margin-bottom: 1rem; }
-        .field label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.8rem;
-            color: #374151;
-            margin-bottom: 0.35rem;
-        }
-        .field input {
-            width: 100%;
-            padding: 0.6rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
-            color: #111827;
-            background: #fff;
-            transition: border-color 0.15s;
-        }
-        .field input:focus {
-            outline: none;
-            border-color: #134095;
-            box-shadow: 0 0 0 3px rgba(19,64,149,0.1);
-        }
-        .btn-primary {
-            width: 100%;
-            padding: 0.65rem;
-            background: #134095;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            font-family: 'Inter', sans-serif;
-            transition: background 0.15s;
-        }
-        .btn-primary:hover { background: #0f3278; }
-        #login-error {
-            color: #dc2626;
-            font-size: 0.8rem;
-            margin-top: 0.75rem;
-            text-align: center;
-            display: none;
-        }
+        .btn-login:hover { background: #0f3278; }
+        #login-error { color: #dc2626; font-size: 0.8rem; margin-top: 0.65rem; text-align: center; display: none; }
 
-        /* ── Dashboard ─────────────────────────────── */
+        /* ── DASHBOARD ───────────────────────────────────── */
         #dashboard-page { display: none; }
 
         .topbar {
-            background: #fff;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 0.9rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background: #fff; border-bottom: 1px solid #e0e0e0;
+            padding: 0.85rem 1.75rem; display: flex; align-items: center; justify-content: space-between;
         }
-        .topbar-left h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #111827;
+        .topbar-left h2 { font-size: 1rem; font-weight: 700; color: #111827; }
+        .topbar-left p  { font-size: 0.78rem; color: #6b7280; margin-top: 1px; }
+        .topbar-right   { display: flex; gap: 0.5rem; }
+        .btn-topbar-outline {
+            padding: 0.42rem 1rem; background: transparent; border: 1px solid #d1d5db;
+            border-radius: 6px; font-size: 0.82rem; font-weight: 500; color: #374151;
+            cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none;
+            display: inline-flex; align-items: center;
         }
-        .topbar-left span {
-            font-size: 0.8rem;
-            color: #6b7280;
-        }
-        .topbar-right { display: flex; gap: 0.5rem; }
-
-        .btn-outline {
-            padding: 0.45rem 1rem;
-            background: transparent;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #374151;
-            cursor: pointer;
+        .btn-topbar-outline:hover { background: #f9fafb; }
+        .btn-topbar-primary {
+            padding: 0.42rem 1rem; background: #134095; color: #fff; border: none;
+            border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
             font-family: 'Inter', sans-serif;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            transition: background 0.15s;
         }
-        .btn-outline:hover { background: #f9fafb; }
-        .btn-sm {
-            padding: 0.45rem 1rem;
-            background: #134095;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            transition: background 0.15s;
-        }
-        .btn-sm:hover { background: #0f3278; }
+        .btn-topbar-primary:hover { background: #0f3278; }
 
-        .main { padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+        .main { padding: 1.5rem; max-width: 1000px; margin: 0 auto; }
 
         /* Tabs */
         .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
         .tab-btn {
-            padding: 0.5rem 1.25rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            background: #fff;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.15s;
+            padding: 0.48rem 1.25rem; border: 1px solid #d1d5db; border-radius: 6px;
+            background: #fff; font-size: 0.875rem; font-weight: 500; color: #374151;
+            cursor: pointer; font-family: 'Inter', sans-serif;
         }
-        .tab-btn.active {
-            background: #134095;
-            color: #fff;
-            border-color: #134095;
-        }
-
+        .tab-btn.active { background: #134095; color: #fff; border-color: #134095; }
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
 
-        /* Card */
+        /* ── CARD ─────────────────────────────────────── */
         .card {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
+            background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
+            margin-bottom: 1.25rem; overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid #e5e7eb;
+        .card-title-row {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 1.1rem 1.5rem 1rem; border-bottom: 1px solid #e9ecef;
         }
-        .card-header h3 { font-size: 0.95rem; font-weight: 600; }
+        .card-title-row .plus-icon { color: #134095; font-size: 1.1rem; font-weight: 700; }
+        .card-title-row h3 { font-size: 1rem; font-weight: 700; color: #111827; }
 
-        /* Table */
-        table { width: 100%; border-collapse: collapse; }
-        thead th {
-            padding: 0.65rem 1.25rem;
-            text-align: left;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        tbody td {
-            padding: 0.85rem 1.25rem;
-            font-size: 0.875rem;
-            border-bottom: 1px solid #f3f4f6;
-            vertical-align: middle;
-        }
-        tbody tr:last-child td { border-bottom: none; }
-        tbody tr:hover { background: #f9fafb; }
+        /* ── FORM ─────────────────────────────────────── */
+        .form-body { padding: 1.25rem 1.5rem 0.5rem; }
 
-        .action-btn {
-            padding: 0.3rem 0.65rem;
-            font-size: 0.78rem;
-            font-weight: 500;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            border: 1px solid transparent;
-            transition: all 0.15s;
-        }
-        .action-edit { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
-        .action-edit:hover { background: #e5e7eb; }
-        .action-delete { background: #fef2f2; color: #dc2626; border-color: #fecaca; margin-left: 0.35rem; }
-        .action-delete:hover { background: #fee2e2; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin-bottom: 1rem; }
+        .form-row.single { grid-template-columns: 1fr; }
 
-        .empty-row td { text-align: center; padding: 2rem; color: #9ca3af; font-style: italic; }
-
-        /* Modal Overlay */
-        .overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-        }
-        .overlay.open { display: flex; }
-
-        .modal {
-            background: #fff;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 540px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.1rem 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            z-index: 1;
-        }
-        .modal-header h3 { font-size: 1rem; font-weight: 600; }
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: #9ca3af;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0.2rem;
-        }
-        .close-btn:hover { color: #374151; }
-
-        .modal-body { padding: 1.5rem; }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .form-grid .full { grid-column: 1 / -1; }
-
-        .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
-        .form-field label {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #374151;
-        }
+        .form-field { display: flex; flex-direction: column; gap: 0.3rem; }
+        .form-field label { font-size: 0.8rem; font-weight: 500; color: #374151; }
         .form-field label .req { color: #dc2626; margin-left: 2px; }
         .form-field input,
         .form-field select,
         .form-field textarea {
-            padding: 0.6rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
-            color: #111827;
-            background: #fff;
-            transition: border-color 0.15s;
+            padding: 0.55rem 0.75rem; border: 1px solid #d1d5db; border-radius: 6px;
+            font-size: 0.875rem; font-family: 'Inter', sans-serif; color: #111827; background: #fff;
         }
         .form-field input:focus,
         .form-field select:focus,
         .form-field textarea:focus {
-            outline: none;
-            border-color: #134095;
-            box-shadow: 0 0 0 3px rgba(19,64,149,0.1);
+            outline: none; border-color: #134095; box-shadow: 0 0 0 3px rgba(19,64,149,0.1);
         }
-        .form-field textarea { resize: vertical; min-height: 80px; }
+        .form-field textarea { resize: vertical; min-height: 90px; }
 
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 0.5rem;
+        .form-save-row { padding: 1rem 1.5rem 1.25rem; }
+        .btn-save {
+            width: 100%; padding: 0.75rem; background: #134095; color: #fff;
+            font-weight: 600; font-size: 0.9rem; border: none; border-radius: 6px;
+            cursor: pointer; font-family: 'Inter', sans-serif; display: flex;
+            align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-save:hover { background: #0f3278; }
+        .btn-save svg { width: 16px; height: 16px; }
+
+        /* ── PRODUCTS TABLE ───────────────────────────── */
+        .table-card-header {
+            padding: 1rem 1.5rem; border-bottom: 1px solid #e9ecef;
+        }
+        .table-card-header h3 { font-size: 1rem; font-weight: 700; color: #111827; }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            padding: 0.7rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700;
+            color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em;
+            border-bottom: 2px solid #e9ecef; background: #fafafa;
+        }
+        thead th:first-child { padding-left: 1.5rem; }
+        thead th:last-child  { padding-right: 1.5rem; text-align: right; }
+
+        tbody td {
+            padding: 0.9rem 1rem; font-size: 0.875rem;
+            border-bottom: 1px solid #f3f4f6; vertical-align: middle;
+        }
+        tbody td:first-child { padding-left: 1.5rem; }
+        tbody td:last-child  { padding-right: 1.5rem; text-align: right; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #f9fafb; }
+
+        .product-name { font-weight: 600; color: #111827; font-size: 0.875rem; }
+        .product-meta { font-size: 0.75rem; color: #6b7280; margin-top: 2px; }
+        .ref-badge {
+            display: inline-block; background: #eff6ff; color: #1d4ed8;
+            padding: 0.18rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 600;
+        }
+        .category-text { color: #6b7280; font-size: 0.82rem; }
+
+        .action-icon {
+            background: none; border: none; cursor: pointer; padding: 0.3rem;
+            border-radius: 4px; display: inline-flex; align-items: center;
+        }
+        .action-icon:hover { background: #f3f4f6; }
+        .action-icon svg { width: 16px; height: 16px; }
+        .icon-edit  { color: #3b82f6; }
+        .icon-delete { color: #ef4444; }
+
+        .empty-row td { text-align: center; padding: 2.5rem; color: #9ca3af; font-style: italic; }
+
+        /* Editing state highlight */
+        #form-card { transition: box-shadow 0.2s; }
+        #form-card.editing { box-shadow: 0 0 0 2px #134095, 0 4px 16px rgba(19,64,149,0.12); }
+        #editing-banner {
+            display: none; background: #eff6ff; border-bottom: 1px solid #bfdbfe;
+            padding: 0.6rem 1.5rem; font-size: 0.8rem; color: #1d4ed8; font-weight: 500;
+            align-items: center; justify-content: space-between;
+        }
+        #editing-banner.visible { display: flex; }
+        #cancel-edit-btn {
+            background: none; border: 1px solid #93c5fd; color: #1d4ed8;
+            padding: 0.2rem 0.65rem; border-radius: 4px; cursor: pointer;
+            font-size: 0.78rem; font-family: 'Inter', sans-serif;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
+        /* Inquiries */
+        .inq-date { white-space: nowrap; color: #6b7280; font-size: 0.8rem; }
+        .inq-name { font-weight: 600; }
+        .inq-email a { color: #134095; text-decoration: none; }
+        .inq-msg   { max-width: 320px; color: #374151; font-size: 0.82rem; }
     </style>
 </head>
 <body>
 
-<!-- ══ LOGIN PAGE ══════════════════════════════════════════ -->
+<!-- ══ LOGIN ═══════════════════════════════════════════════ -->
 <div id="login-page">
     <div class="login-box">
         <h1>BETON LIGHTING</h1>
         <p>Admin Portal — sign in to continue</p>
         <form id="login-form" autocomplete="off">
-            <div class="field">
+            <div class="lfield">
                 <label>Email</label>
                 <input type="email" id="login-email" placeholder="admin@betonlighting.com" required>
             </div>
-            <div class="field">
+            <div class="lfield">
                 <label>Password</label>
                 <input type="password" id="login-password" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn-primary">Log In</button>
+            <button type="submit" class="btn-login">Log In</button>
             <p id="login-error">Invalid email or password.</p>
         </form>
     </div>
 </div>
 
-<!-- ══ DASHBOARD PAGE ══════════════════════════════════════ -->
+<!-- ══ DASHBOARD ════════════════════════════════════════════ -->
 <div id="dashboard-page">
 
-    <!-- Top Bar -->
     <div class="topbar">
         <div class="topbar-left">
             <h2>Admin Dashboard</h2>
-            <span>Manage products and view inquiries.</span>
+            <p>Manage products and view inquiries.</p>
         </div>
         <div class="topbar-right">
-            <a href="index.html" class="btn-outline" target="_blank">View Site</a>
-            <button class="btn-sm" id="logout-btn">Log Out</button>
+            <a href="index.html" class="btn-topbar-outline" target="_blank">View Site</a>
+            <button class="btn-topbar-primary" id="logout-btn">Log Out</button>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main">
 
         <!-- Tabs -->
@@ -367,18 +227,66 @@
             <button class="tab-btn" onclick="switchTab('inquiries', this)">Inquiries</button>
         </div>
 
-        <!-- Products Tab -->
+        <!-- ── PRODUCTS TAB ─────────────────────────── -->
         <div id="tab-products" class="tab-pane active">
+
+            <!-- Add / Edit Form -->
+            <div class="card" id="form-card">
+                <div id="editing-banner">
+                    <span>✏️ Editing product — <span id="editing-ref"></span></span>
+                    <button id="cancel-edit-btn" onclick="cancelEdit()">Cancel</button>
+                </div>
+                <div class="card-title-row">
+                    <span class="plus-icon" id="form-icon">+</span>
+                    <h3 id="form-title">Add New Product</h3>
+                </div>
+                <div class="form-body">
+                    <input type="hidden" id="p-id">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Reference <span class="req">*</span></label>
+                            <input type="text" id="p-ref" placeholder="e.g. B-204">
+                        </div>
+                        <div class="form-field">
+                            <label>Category <span class="req">*</span></label>
+                            <input type="text" id="p-category" placeholder="e.g. Indoor Lighting">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Product Name <span class="req">*</span></label>
+                            <input type="text" id="p-name" placeholder="e.g. Apex Recessed Downlight">
+                        </div>
+                        <div class="form-field">
+                            <label>Image URL</label>
+                            <input type="text" id="p-image" placeholder="assets/images/products/sys-01.webp">
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-field">
+                            <label>Short Description</label>
+                            <textarea id="p-short-desc" placeholder="Brief product description…"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-save-row">
+                    <button class="btn-save" onclick="saveProduct()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                        <span id="save-btn-text">Save Product</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Table -->
             <div class="card">
-                <div class="card-header">
+                <div class="table-card-header">
                     <h3>All Products</h3>
-                    <button class="btn-sm" onclick="openModal()">+ Add Product</button>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Ref</th>
-                            <th>Name</th>
+                            <th>Product Details</th>
                             <th>Category</th>
                             <th>Actions</th>
                         </tr>
@@ -388,12 +296,13 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
 
-        <!-- Inquiries Tab -->
+        <!-- ── INQUIRIES TAB ────────────────────────── -->
         <div id="tab-inquiries" class="tab-pane">
             <div class="card">
-                <div class="card-header">
+                <div class="table-card-header">
                     <h3>Recent Inquiries</h3>
                 </div>
                 <table>
@@ -412,68 +321,24 @@
             </div>
         </div>
 
-    </div><!-- /main -->
-</div><!-- /dashboard -->
-
-<!-- ══ PRODUCT MODAL ═══════════════════════════════════════ -->
-<div class="overlay" id="product-overlay">
-    <div class="modal">
-        <div class="modal-header">
-            <h3 id="modal-title">Add Product</h3>
-            <button class="close-btn" onclick="closeModal()">✕</button>
-        </div>
-        <div class="modal-body">
-            <form id="product-form">
-                <input type="hidden" id="p-id">
-                <div class="form-grid">
-                    <div class="form-field">
-                        <label>Reference <span class="req">*</span></label>
-                        <input type="text" id="p-ref" placeholder="e.g. B-204" required>
-                    </div>
-                    <div class="form-field">
-                        <label>Category <span class="req">*</span></label>
-                        <input type="text" id="p-category" placeholder="e.g. Downlights" required>
-                    </div>
-                    <div class="form-field full">
-                        <label>Product Name <span class="req">*</span></label>
-                        <input type="text" id="p-name" placeholder="e.g. Slim Panel Light" required>
-                    </div>
-                    <div class="form-field full">
-                        <label>Image URL</label>
-                        <input type="text" id="p-image" placeholder="assets/images/products/...">
-                    </div>
-                    <div class="form-field full">
-                        <label>Short Description</label>
-                        <textarea id="p-short-desc" placeholder="Brief product description…"></textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-outline" onclick="closeModal()">Cancel</button>
-            <button class="btn-sm" onclick="saveProduct()">Save Product</button>
-        </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // Initialize Supabase directly — avoids window.supabase conflict
+    // ── Supabase init ─────────────────────────────────────
     const _db = supabase.createClient(
         'https://kageeyipltwnsuuhkwfm.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck'
     );
-</script>
-<script>
-    // ── Hardcoded auth (base64 encoded) ──────────────────
+
+    // ── Hardcoded auth ────────────────────────────────────
     const _u = atob('YWRtaW5AYmV0b25saWdodGluZy5jb20=');
     const _p = atob('QmV0b25AMjAyNg==');
 
-    // ── Auth ─────────────────────────────────────────────
     function checkAuth() {
         if (sessionStorage.getItem('bl_admin') === '1') showDashboard();
     }
-
     function showDashboard() {
         document.getElementById('login-page').style.display = 'none';
         document.getElementById('dashboard-page').style.display = 'block';
@@ -509,7 +374,7 @@
         if (name === 'inquiries') loadInquiries();
     }
 
-    // ── Products ──────────────────────────────────────────
+    // ── Load Products ─────────────────────────────────────
     async function loadProducts() {
         const tbody = document.getElementById('products-tbody');
         tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading…</td></tr>';
@@ -517,29 +382,36 @@
             const { data, error } = await _db.from('products').select('*').order('ref', { ascending: true });
             if (error) throw error;
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No products yet. Click + Add Product to get started.</td></tr>';
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No products yet — add one above.</td></tr>';
                 return;
             }
             tbody.innerHTML = '';
             data.forEach(p => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><span class="badge">${p.ref || '—'}</span></td>
-                    <td>${p.name || '—'}</td>
-                    <td>${p.category || '—'}</td>
+                    <td><span class="ref-badge">${p.ref || '—'}</span></td>
                     <td>
-                        <button class="action-btn action-edit" onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Edit</button>
-                        <button class="action-btn action-delete" onclick="deleteProduct('${p.id}')">Delete</button>
+                        <div class="product-name">${p.name || '—'}</div>
+                        <div class="product-meta">${p.short_description ? p.short_description.substring(0, 70) + (p.short_description.length > 70 ? '…' : '') : 'No description'}</div>
+                    </td>
+                    <td><span class="category-text">${p.category || '—'}</span></td>
+                    <td>
+                        <button class="action-icon icon-edit" title="Edit" onclick='startEdit(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        </button>
+                        <button class="action-icon icon-delete" title="Delete" onclick="deleteProduct('${p.id}', '${p.ref}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         } catch (err) {
-            tbody.innerHTML = `<tr class="empty-row"><td colspan="4">Error loading products: ${err.message}</td></tr>`;
+            tbody.innerHTML = `<tr class="empty-row"><td colspan="4">Error: ${err.message}</td></tr>`;
         }
     }
 
-    // ── Inquiries ─────────────────────────────────────────
+    // ── Load Inquiries ────────────────────────────────────
     async function loadInquiries() {
         const tbody = document.getElementById('inquiries-tbody');
         tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading…</td></tr>';
@@ -554,39 +426,50 @@
             data.forEach(i => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="white-space:nowrap">${new Date(i.created_at).toLocaleDateString('en-IN')}</td>
-                    <td>${i.name || '—'}</td>
-                    <td><a href="mailto:${i.email}" style="color:#134095;text-decoration:none;">${i.email || '—'}</a></td>
-                    <td style="max-width:320px;white-space:pre-wrap;">${i.message || '—'}</td>
+                    <td class="inq-date">${new Date(i.created_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' })}</td>
+                    <td class="inq-name">${i.name || '—'}</td>
+                    <td class="inq-email"><a href="mailto:${i.email}">${i.email || '—'}</a></td>
+                    <td class="inq-msg">${i.message || '—'}</td>
                 `;
                 tbody.appendChild(tr);
             });
         } catch (err) {
-            tbody.innerHTML = `<tr class="empty-row"><td colspan="4">Error loading inquiries: ${err.message}</td></tr>`;
+            tbody.innerHTML = `<tr class="empty-row"><td colspan="4">Error: ${err.message}</td></tr>`;
         }
     }
 
-    // ── Modal ─────────────────────────────────────────────
-    function openModal() {
-        document.getElementById('product-form').reset();
+    // ── Form Logic ────────────────────────────────────────
+    function clearForm() {
         document.getElementById('p-id').value = '';
-        document.getElementById('modal-title').textContent = 'Add Product';
-        document.getElementById('product-overlay').classList.add('open');
+        document.getElementById('p-ref').value = '';
+        document.getElementById('p-name').value = '';
+        document.getElementById('p-category').value = '';
+        document.getElementById('p-image').value = '';
+        document.getElementById('p-short-desc').value = '';
+        document.getElementById('form-title').textContent = 'Add New Product';
+        document.getElementById('form-icon').textContent = '+';
+        document.getElementById('save-btn-text').textContent = 'Save Product';
+        document.getElementById('form-card').classList.remove('editing');
+        document.getElementById('editing-banner').classList.remove('visible');
     }
 
-    function closeModal() {
-        document.getElementById('product-overlay').classList.remove('open');
-    }
+    function cancelEdit() { clearForm(); }
 
-    function editProduct(p) {
-        document.getElementById('p-id').value        = p.id || '';
-        document.getElementById('p-ref').value       = p.ref || '';
-        document.getElementById('p-name').value      = p.name || '';
-        document.getElementById('p-category').value  = p.category || '';
-        document.getElementById('p-image').value     = p.image_url || '';
-        document.getElementById('p-short-desc').value= p.short_description || '';
-        document.getElementById('modal-title').textContent = 'Edit Product';
-        document.getElementById('product-overlay').classList.add('open');
+    function startEdit(p) {
+        document.getElementById('p-id').value         = p.id || '';
+        document.getElementById('p-ref').value        = p.ref || '';
+        document.getElementById('p-name').value       = p.name || '';
+        document.getElementById('p-category').value   = p.category || '';
+        document.getElementById('p-image').value      = p.image_url || '';
+        document.getElementById('p-short-desc').value = p.short_description || '';
+        document.getElementById('form-title').textContent = 'Edit Product';
+        document.getElementById('form-icon').textContent = '✏️';
+        document.getElementById('save-btn-text').textContent = 'Update Product';
+        document.getElementById('form-card').classList.add('editing');
+        document.getElementById('editing-banner').classList.add('visible');
+        document.getElementById('editing-ref').textContent = p.ref;
+        // Scroll to form
+        document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     async function saveProduct() {
@@ -600,9 +483,13 @@
         };
 
         if (!payload.ref || !payload.name || !payload.category) {
-            alert('Please fill in Ref, Name and Category.');
+            alert('Please fill in Reference, Product Name and Category.');
             return;
         }
+
+        const btn = document.querySelector('.btn-save');
+        btn.disabled = true;
+        document.getElementById('save-btn-text').textContent = 'Saving…';
 
         try {
             let result;
@@ -612,28 +499,26 @@
                 result = await _db.from('products').insert([payload]);
             }
             if (result.error) throw result.error;
-            closeModal();
-            loadProducts();
+            clearForm();
+            await loadProducts();
         } catch (err) {
             alert('Error saving product: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            document.getElementById('save-btn-text').textContent = id ? 'Update Product' : 'Save Product';
         }
     }
 
-    async function deleteProduct(id) {
-        if (!confirm('Delete this product? This cannot be undone.')) return;
+    async function deleteProduct(id, ref) {
+        if (!confirm(`Delete "${ref}"? This cannot be undone.`)) return;
         try {
             const { error } = await _db.from('products').delete().eq('id', id);
             if (error) throw error;
-            loadProducts();
+            await loadProducts();
         } catch (err) {
-            alert('Error deleting product: ' + err.message);
+            alert('Error deleting: ' + err.message);
         }
     }
-
-    // Close overlay on backdrop click
-    document.getElementById('product-overlay').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
 
     // ── Init ──────────────────────────────────────────────
     checkAuth();
