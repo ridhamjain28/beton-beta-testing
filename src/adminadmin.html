@@ -101,12 +101,6 @@
                     <label>Password</label>
                     <input type="password" id="login-password" required placeholder="••••••••">
                 </div>
-                <div class="auth-links">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 500; color: var(--color-text-muted);">
-                        <input type="checkbox" style="width: auto; margin: 0;"> Remember me
-                    </label>
-                    <a href="#" onclick="alert('Please contact the system administrator to reset your password.')">Forgot Password?</a>
-                </div>
                 <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1.75rem; padding: 0.75rem; font-size: 1rem;">Log In</button>
                 <p id="login-error" style="color: #ef4444; margin-top: 1rem; text-align: center; display: none;"></p>
             </form>
@@ -225,52 +219,42 @@
             if (tabName === 'inquiries') loadInquiries();
         }
 
-        // Auth Logic
-        async function checkAuth() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('dashboard-section').style.display = 'block';
-                loadProducts();
-            } else {
-                document.getElementById('login-section').classList.remove('hidden');
-                document.getElementById('dashboard-section').style.display = 'none';
+        // Auth Logic — hardcoded credentials (no auth library)
+        const _a = atob('YWRtaW5AYmV0b25saWdodGluZy5jb20=');
+        const _b = atob('QmV0b25AMjAyNg==');
+
+        function showDashboard() {
+            sessionStorage.setItem('bl_admin', '1');
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').style.display = 'block';
+            loadProducts();
+        }
+
+        function checkAuth() {
+            if (sessionStorage.getItem('bl_admin') === '1') {
+                showDashboard();
             }
         }
 
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('login-email').value;
+            const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
             const errorEl = document.getElementById('login-error');
-            
-            try {
-                if (!window.supabase || !supabase) {
-                    throw new Error("Supabase client not initialized. Check your internet connection or console logs.");
-                }
-                errorEl.style.display = 'none';
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                
-                if (error) {
-                    errorEl.textContent = error.message;
-                    errorEl.style.display = 'block';
-                } else {
-                    checkAuth();
-                }
-            } catch (err) {
-                console.error(err);
-                errorEl.textContent = "Error: " + err.message;
+            errorEl.style.display = 'none';
+
+            if (email === _a && password === _b) {
+                showDashboard();
+            } else {
+                errorEl.textContent = 'Invalid email or password.';
                 errorEl.style.display = 'block';
             }
         });
 
-        document.getElementById('logout-btn').addEventListener('click', async () => {
-            try {
-                await supabase.auth.signOut();
-                checkAuth();
-            } catch (err) {
-                console.error(err);
-            }
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            sessionStorage.removeItem('bl_admin');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('dashboard-section').style.display = 'none';
         });
 
         // Load Products
