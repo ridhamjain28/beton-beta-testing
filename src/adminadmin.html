@@ -4,35 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | BETON LIGHTING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/lucide@latest/dist/umd/lucide.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        body { background-color: var(--color-background); font-family: 'Outfit', sans-serif; color: var(--color-text); margin: 0; padding: 0; }
+        :root {
+            --color-primary: #134095;
+            --color-accent: #EF7F1A;
+            --color-background: #f8fafc;
+            --color-surface: #ffffff;
+            --color-border: #cbd5e1;
+            --color-text: #1e293b;
+            --color-text-muted: #64748b;
+        }
+
+        body { background-color: var(--color-background); font-family: 'Montserrat', sans-serif; color: var(--color-text); margin: 0; padding: 0; }
         .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; }
-        .btn { padding: 0.5rem 1rem; background: var(--color-primary); color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn { padding: 0.75rem 1.5rem; background: var(--color-primary); color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 500; font-family: 'Montserrat', sans-serif; font-size: 0.925rem; transition: background-color 0.2s; }
+        .btn:hover { background: #0f3378; }
         .btn-outline { background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary); }
+        .btn-outline:hover { background: rgba(19, 64, 149, 0.05); }
         .btn-danger { background: #ef4444; }
+        .btn-danger:hover { background: #dc2626; }
         .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
         table { width: 100%; border-collapse: collapse; }
         th, td { text-align: left; padding: 1rem; border-bottom: 1px solid var(--color-border); }
         th { font-weight: 600; color: var(--color-text-muted); }
         .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; }
-        .tab { padding: 0.75rem 1.5rem; background: transparent; border: 1px solid var(--color-border); border-radius: 4px; cursor: pointer; color: var(--color-text); }
+        .tab { padding: 0.75rem 1.5rem; background: transparent; border: 1px solid var(--color-border); border-radius: 4px; cursor: pointer; color: var(--color-text); font-family: 'Montserrat', sans-serif; font-weight: 500; }
         .tab.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-background); color: var(--color-text); font-family: 'Outfit', sans-serif; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.875rem; color: var(--color-text); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); color: var(--color-text); font-family: 'Montserrat', sans-serif; box-sizing: border-box; font-size: 0.925rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(19, 64, 149, 0.15); }
         
         #login-section {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: var(--color-background-muted, #f3f4f6);
+            background: var(--color-background);
             margin: 0;
             position: fixed;
             top: 0;
@@ -41,19 +55,21 @@
             z-index: 50;
         }
         .login-card {
-            background: var(--color-surface, #ffffff);
-            padding: 2.5rem;
+            background: var(--color-surface);
+            padding: 3rem 2.5rem;
             border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 420px;
             border: 1px solid var(--color-border);
+            box-sizing: border-box;
         }
         .login-header { text-align: center; margin-bottom: 2rem; }
-        .login-header h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .login-header p { color: var(--color-text-muted); font-size: 0.875rem; }
+        .login-header h1 { font-size: 2rem; font-weight: 700; color: var(--color-primary); letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .login-header p.subtitle { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; font-weight: 600; color: var(--color-accent); margin-bottom: 1.5rem; }
+        .login-header p.desc { color: var(--color-text-muted); font-size: 0.875rem; }
         .auth-links { display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.875rem; }
-        .auth-links a { color: var(--color-primary); text-decoration: none; }
+        .auth-links a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
         .auth-links a:hover { text-decoration: underline; }
         .login-footer { margin-top: 2rem; text-align: center; font-size: 0.875rem; color: var(--color-text-muted); border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
         .login-footer a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
@@ -72,8 +88,9 @@
     <div id="login-section">
         <div class="login-card">
             <div class="login-header">
-                <h2>BETON Admin</h2>
-                <p>Enter your credentials to access the dashboard</p>
+                <h1>BETON</h1>
+                <p class="subtitle">Admin Dashboard</p>
+                <p class="desc">Enter your credentials to access the portal</p>
             </div>
             <form id="login-form">
                 <div class="form-group">
@@ -85,12 +102,12 @@
                     <input type="password" id="login-password" required placeholder="••••••••">
                 </div>
                 <div class="auth-links">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: normal; color: var(--color-text-muted);">
-                        <input type="checkbox"> Remember me
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 500; color: var(--color-text-muted);">
+                        <input type="checkbox" style="width: auto; margin: 0;"> Remember me
                     </label>
                     <a href="#" onclick="alert('Please contact the system administrator to reset your password.')">Forgot Password?</a>
                 </div>
-                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 0.75rem; font-size: 1rem; font-weight: 500;">Log In</button>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1.75rem; padding: 0.75rem; font-size: 1rem;">Log In</button>
                 <p id="login-error" style="color: #ef4444; margin-top: 1rem; text-align: center; display: none;"></p>
             </form>
             <div class="login-footer">
