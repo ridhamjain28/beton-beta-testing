@@ -190,200 +190,85 @@
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
 <script>
 // Supabase integration for Product Details
 document.addEventListener('DOMContentLoaded', async () => {
+    let _detailsDb = null;
+    if (typeof supabase !== 'undefined') {
+        _detailsDb = supabase.createClient(
+            'https://kageeyipltwnsuuhkwfm.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck'
+        );
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const productRef = urlParams.get('ref') || 'B-204'; // Default fallback
     
+    if (!_detailsDb) return;
+
     try {
-        const { data, error } = await supabase
+        const { data, error } = await _detailsDb
             .from('products')
             .select('*')
             .eq('ref', productRef)
-            .single();
+            .maybeSingle();
             
         if (error) throw error;
-        if (!data) throw new Error("Product not found");
+        if (!data) return; // Keep fallback static HTML if product not found
         
         const product = data;
         
-        // Update Meta Title
-        document.title = `${product.name} | BETON LIGHTING`;
+        // Page & Meta Title
+        document.title = `${product.name || 'Product Details'} | Beton Lighting`;
         
-        // Update DOM Elements
-        const elements = {
-            ref: document.querySelector('.product-detail-ref'),
-            name: document.querySelector('.product-detail-name'),
-            category: document.querySelector('.product-detail-category'),
-            desc: document.querySelector('.product-detail-desc'),
-            image: document.querySelector('.product-detail-image'),
-            specsList: document.querySelector('.product-specs-list'),
-            delivery: document.querySelector('[data-product-delivery]'),
-            origin: document.querySelector('[data-product-origin]'),
-            warranty: document.querySelector('[data-product-warranty]')
-        };
-        
-        if (elements.ref) elements.ref.textContent = product.ref;
-        if (elements.name) elements.name.textContent = product.name;
-        if (elements.category) elements.category.textContent = product.category;
-        if (elements.desc) elements.desc.textContent = product.long_description || product.short_description || '';
-        
-        if (elements.image) {
-            elements.image.src = product.image_url || 'assets/images/products/sys-01.webp';
-            elements.image.alt = product.name;
+        // Category Label
+        const catLabel = document.querySelector('main span.text-\\[10px\\].uppercase.tracking-\\[0\\.4em\\]');
+        if (catLabel && product.category) {
+            catLabel.textContent = product.category;
         }
         
-        // Populate Specifications
-        if (elements.specsList && product.specifications) {
-            elements.specsList.innerHTML = '';
-            for (const [key, value] of Object.entries(product.specifications)) {
-                if (!value) continue;
-                const div = document.createElement('div');
-                div.className = 'py-4 border-b border-[#EF7F1A]/20 flex flex-col md:flex-row md:items-center justify-between group hover:border-[#EF7F1A] transition-colors';
-                div.innerHTML = `
-                    <span class="text-xs font-semibold text-[#FEFEFE]/70 group-hover:text-[#EF7F1A] transition-colors uppercase tracking-widest mb-1 md:mb-0">${key}</span>
-                    <span class="text-sm text-white font-light md:text-right">${value}</span>
-                `;
-                elements.specsList.appendChild(div);
+        // Product Name Header
+        const nameHeader = document.querySelector('main h1.text-4xl');
+        if (nameHeader && product.name) {
+            const words = product.name.split(' ');
+            if (words.length > 2) {
+                const first = words.slice(0, words.length - 2).join(' ');
+                const italic = words.slice(words.length - 2).join(' ');
+                nameHeader.innerHTML = `${first} <br/><em class="italic font-light text-[#EF7F1A]">${italic}.</em>`;
+            } else if (words.length === 2) {
+                nameHeader.innerHTML = `${words[0]} <br/><em class="italic font-light text-[#EF7F1A]">${words[1]}.</em>`;
+            } else {
+                nameHeader.innerHTML = `<em class="italic font-light text-[#EF7F1A]">${product.name}.</em>`;
             }
         }
         
-        if (elements.delivery) elements.delivery.textContent = product.delivery || '3-4 Weeks';
-        if (elements.origin) elements.origin.textContent = product.origin || 'Surat, Gujarat';
-        if (elements.warranty) elements.warranty.textContent = product.warranty || '5 Years Limited';
+        // Reference and Subtitle
+        const refContainer = document.querySelector('main div.flex.items-center.gap-4.text-\\[10px\\]');
+        if (refContainer && product.ref) {
+            refContainer.innerHTML = `<span>Ref. ${product.ref}</span><span class="w-1 h-1 bg-[#EF7F1A] rounded-full"></span><span>Architectural Grade</span>`;
+        }
+        
+        // Description text
+        const descEl = document.querySelector('main div.prose.prose-sm p');
+        if (descEl) {
+            descEl.textContent = product.short_description || product.long_description || '';
+        }
+        
+        // Main image
+        const mainImg = document.querySelector('main img.image-grayscale');
+        if (mainImg && product.image_url) {
+            mainImg.src = product.image_url;
+            mainImg.alt = product.name || '';
+        }
+        
+        // Contact button query param injection
+        const ctaBtn = document.getElementById('cta-project-inquiry');
+        if (ctaBtn && product.ref) {
+            ctaBtn.href = `contact.html?ref=${encodeURIComponent(product.ref)}&type=quotation`;
+        }
         
     } catch (err) {
-        console.error('Error fetching product:', err);
-        const nameEl = document.querySelector('.product-detail-name');
-        if (nameEl) nameEl.textContent = 'Product Not Found';
-    }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Get query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const ref = urlParams.get('ref') || 'M-992'; // fallback to Mag-Track Linear Pro (M-992)
-    
-    const product = PRODUCTS_DB[ref] || PRODUCTS_DB['M-992'];
-    
-    // Page Title
-    document.title = `${product.name} | Beton Lighting`;
-    
-    // Category Label
-    const catLabel = document.querySelector('main span.text-\\[10px\\].uppercase.tracking-\\[0.4em\\]');
-    if (catLabel) {
-        catLabel.textContent = product.category;
-    }
-    
-    // Product Name Header
-    const nameHeader = document.querySelector('main h1.text-4xl');
-    if (nameHeader) {
-        const words = product.name.split(' ');
-        if (words.length > 2) {
-            const first = words.slice(0, words.length - 2).join(' ');
-            const italic = words.slice(words.length - 2).join(' ');
-            nameHeader.innerHTML = `${first} <br/><em class="italic font-light text-[#EF7F1A]">${italic}.</em>`;
-        } else if (words.length === 2) {
-            nameHeader.innerHTML = `${words[0]} <br/><em class="italic font-light text-[#EF7F1A]">${words[1]}.</em>`;
-        } else {
-            nameHeader.innerHTML = `<em class="italic font-light text-[#EF7F1A]">${product.name}.</em>`;
-        }
-    }
-    
-    // Reference and Subtitle
-    const refContainer = document.querySelector('main div.flex.items-center.gap-4.text-\\[10px\\]');
-    if (refContainer) {
-        refContainer.innerHTML = `<span>Ref. ${product.ref}</span><span class="w-1 h-1 bg-[#EF7F1A] rounded-full"></span><span>Architectural Grade</span>`;
-    }
-    
-    // Description text
-    const descEl = document.querySelector('main div.prose.prose-sm p');
-    if (descEl) {
-        descEl.textContent = product.description;
-    }
-    
-    // Main image
-    const mainImg = document.querySelector('main img.w-full.h-auto.object-contain');
-    if (mainImg) {
-        mainImg.src = product.image;
-        mainImg.alt = product.name;
-    }
-    
-    // Gallery thumbnails
-    const thumbnails = document.querySelectorAll('main div.grid-cols-3 img');
-    thumbnails.forEach((thumb, idx) => {
-        thumb.src = product.image;
-        thumb.alt = `${product.name} View ${idx + 1}`;
-        
-        const parent = thumb.parentElement;
-        if (parent) {
-            parent.addEventListener('click', () => {
-                if (mainImg) mainImg.src = thumb.src;
-                document.querySelectorAll('main div.grid-cols-3 div').forEach(d => {
-                    d.classList.remove('border-[#EF7F1A]');
-                    d.classList.add('border-transparent');
-                });
-                parent.classList.remove('border-transparent');
-                parent.classList.add('border-[#EF7F1A]');
-            });
-        }
-    });
-    
-    // Specifications list table
-    const specsContainer = document.querySelector('main div.space-y-4');
-    if (specsContainer) {
-        specsContainer.innerHTML = '';
-        for (const [key, value] of Object.entries(product.specs)) {
-            const row = document.createElement('div');
-            row.className = 'flex justify-between border-b border-[var(--border-neutral)] pb-3';
-            row.innerHTML = `<span class="text-xs text-[#134095]/90">${key}</span><span class="text-xs font-medium">${value}</span>`;
-            specsContainer.appendChild(row);
-        }
-    }
-    
-    // Meta values
-    const metaContainer = document.querySelector('main div.flex.items-center.gap-8.py-6');
-    if (metaContainer) {
-        metaContainer.innerHTML = `
-            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Delivery</span><span class="text-xs font-medium">${product.delivery}</span></div>
-            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Origin</span><span class="text-xs font-medium">${product.origin}</span></div>
-            <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Warranty</span><span class="text-xs font-medium">${product.warranty}</span></div>
-        `;
-    }
-    
-    // Dynamic Ingress Protection (CE box)
-    const ipLabel = document.querySelector('main section bg-\\[\\#134095\\] span.text-3xl:has(+ span)'); // let's find the IP20 text specifically
-    // We can loop over the cert blocks
-    const certContainers = document.querySelectorAll('main div.flex.flex-col:has(span.text-3xl)');
-    certContainers.forEach(container => {
-        const titleSpan = container.querySelector('span.text-3xl');
-        const descSpan = container.querySelector('span.text-\\[10px\\]');
-        if (titleSpan && descSpan && descSpan.textContent.includes('Ingress Protection')) {
-            titleSpan.textContent = product.specs['Ingress Protection'] || 'IP20';
-        }
-    });
-
-    // Contact button query param injection
-    const ctaBtn = document.getElementById('cta-project-inquiry');
-    if (ctaBtn) {
-        ctaBtn.href = `contact.html?ref=${product.ref}&type=quotation`;
-    }
-    
-    // Datasheet button - catalogue PDF trigger
-    const datasheetBtn = document.getElementById('download-datasheet');
-    if (datasheetBtn) {
-        datasheetBtn.href = 'assets/docs/BETON_Catalogue.pdf';
-        datasheetBtn.setAttribute('download', 'BETON_Catalogue.pdf');
-    }
-    
-    // IES button - redirect to contact form
-    const iesBtn = document.getElementById('download-ies');
-    if (iesBtn) {
-        iesBtn.href = `contact.html?ref=${product.ref}&type=ies`;
+        console.error('Error fetching product details from Supabase:', err);
     }
 });
 </script>

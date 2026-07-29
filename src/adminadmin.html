@@ -410,6 +410,17 @@
         reader.readAsDataURL(file);
     }
 
+    // Overwrite setImageFile to add file size check
+    const originalSetImageFile = setImageFile;
+    setImageFile = function(file) {
+        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+        if (file && file.size > MAX_SIZE) {
+            alert('File is too large! Maximum image size is 5MB.');
+            return;
+        }
+        originalSetImageFile(file);
+    };
+
     function removeImage() {
         _pendingFile = null;
         document.getElementById('p-image-url').value = '';
@@ -428,6 +439,9 @@
         return urlData.publicUrl;
     }
 
+    // Map to hold loaded product objects safely without string escaping issues in onclick handlers
+    const _productsMap = new Map();
+
     // ── Load Products ──────────────────────────────────────
     async function loadProducts() {
         const tbody = document.getElementById('products-tbody');
@@ -436,14 +450,17 @@
             const { data, error } = await _db.from('products').select('*').order('ref', { ascending: true });
             if (error) throw error;
             if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No products yet — add one above.</td></tr>';
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No products found. Add your first product above!</td></tr>';
                 return;
             }
             tbody.innerHTML = '';
+            _productsMap.clear();
+            
             data.forEach(p => {
+                _productsMap.set(p.id, p);
                 const tr = document.createElement('tr');
                 const imgHtml = p.image_url
-                    ? `<img class="prod-thumb" src="${p.image_url}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+                    ? `<img class="prod-thumb" src="${p.image_url}" alt="${p.name || ''}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
                     + `<div class="prod-thumb-placeholder" style="display:none">📷</div>`
                     : `<div class="prod-thumb-placeholder">📷</div>`;
                 tr.innerHTML = `
@@ -455,10 +472,10 @@
                     </td>
                     <td><span class="category-text">${p.category || '—'}</span></td>
                     <td>
-                        <button class="action-icon icon-edit" title="Edit" onclick='startEdit(${JSON.stringify(p).replace(/'/g,"&#39;")})'>
+                        <button class="action-icon icon-edit" title="Edit" data-id="${p.id}" onclick="startEditById('${p.id}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                         </button>
-                        <button class="action-icon icon-delete" title="Delete" onclick="deleteProduct('${p.id}','${p.ref}')">
+                        <button class="action-icon icon-delete" title="Delete" data-id="${p.id}" onclick="deleteProductById('${p.id}')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </td>
@@ -515,6 +532,11 @@
 
     function cancelEdit() { clearForm(); }
 
+    function startEditById(id) {
+        const p = _productsMap.get(id);
+        if (p) startEdit(p);
+    }
+
     function startEdit(p) {
         document.getElementById('p-id').value         = p.id || '';
         document.getElementById('p-ref').value        = p.ref || '';
@@ -526,7 +548,7 @@
         document.getElementById('save-btn-text').textContent = 'Update Product';
         document.getElementById('form-card').classList.add('editing');
         document.getElementById('editing-banner').classList.add('visible');
-        document.getElementById('editing-ref').textContent = p.ref;
+        document.getElementById('editing-ref').textContent = p.ref || '';
 
         // Set category
         const sel = document.getElementById('p-category');
@@ -555,6 +577,12 @@
 
     // ── Save product ───────────────────────────────────────
     async function saveProduct() {
+        // Auto-confirm pending new category if user typed in input
+        const newCatInput = document.getElementById('new-cat-input');
+        if (document.getElementById('add-cat-row').classList.contains('visible') && newCatInput.value.trim()) {
+            confirmNewCategory();
+        }
+
         const id  = document.getElementById('p-id').value;
         const ref = document.getElementById('p-ref').value.trim();
         const name     = document.getElementById('p-name').value.trim();
@@ -579,8 +607,15 @@
                 try {
                     imageUrl = await uploadImage(_pendingFile, ref);
                 } catch (uploadErr) {
-                    // Storage bucket may not exist yet — fall back to no image
-                    console.warn('Image upload failed:', uploadErr.message);
+                    const proceed = confirm(
+                        `Image upload failed: ${uploadErr.message}\n\nDo you want to continue saving the product WITHOUT the new image?`
+                    );
+                    if (!proceed) {
+                        btn.disabled = false;
+                        document.getElementById('save-btn-text').textContent = id ? 'Update Product' : 'Save Product';
+                        document.getElementById('upload-progress').style.display = 'none';
+                        return;
+                    }
                     imageUrl = imageUrl || '';
                 }
                 document.getElementById('upload-progress').style.display = 'none';
@@ -603,6 +638,12 @@
     }
 
     // ── Delete ──────────────────────────────────────────────
+    async function deleteProductById(id) {
+        const p = _productsMap.get(id);
+        const refName = p ? (p.ref || p.name) : 'this product';
+        deleteProduct(id, refName);
+    }
+
     async function deleteProduct(id, ref) {
         if (!confirm(`Delete "${ref}"? This cannot be undone.`)) return;
         try {
