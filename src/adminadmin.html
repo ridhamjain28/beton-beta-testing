@@ -110,9 +110,6 @@
                 <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1.75rem; padding: 0.75rem; font-size: 1rem;">Log In</button>
                 <p id="login-error" style="color: #ef4444; margin-top: 1rem; text-align: center; display: none;"></p>
             </form>
-            <div class="login-footer">
-                Don't have an account? <a href="#" onclick="alert('Admin registration is restricted. Please contact the superadmin to create an account.')">Sign Up</a>
-            </div>
         </div>
     </div>
 
@@ -247,63 +244,102 @@
             const password = document.getElementById('login-password').value;
             const errorEl = document.getElementById('login-error');
             
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            
-            if (error) {
-                errorEl.textContent = error.message;
-                errorEl.style.display = 'block';
-            } else {
+            try {
+                if (!window.supabase || !supabase) {
+                    throw new Error("Supabase client not initialized. Check your internet connection or console logs.");
+                }
                 errorEl.style.display = 'none';
-                checkAuth();
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                
+                if (error) {
+                    errorEl.textContent = error.message;
+                    errorEl.style.display = 'block';
+                } else {
+                    checkAuth();
+                }
+            } catch (err) {
+                console.error(err);
+                errorEl.textContent = "Error: " + err.message;
+                errorEl.style.display = 'block';
             }
         });
 
         document.getElementById('logout-btn').addEventListener('click', async () => {
-            await supabase.auth.signOut();
-            checkAuth();
+            try {
+                await supabase.auth.signOut();
+                checkAuth();
+            } catch (err) {
+                console.error(err);
+            }
         });
 
         // Load Products
         async function loadProducts() {
-            const { data, error } = await supabase.from('products').select('*').order('ref', { ascending: true });
-            if (error) return alert('Error loading products: ' + error.message);
-            
-            const tbody = document.querySelector('#products-table tbody');
-            tbody.innerHTML = '';
-            
-            data.forEach(p => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${p.ref}</td>
-                    <td>${p.name}</td>
-                    <td>${p.category}</td>
-                    <td>
-                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Edit</button>
-                        <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.875rem; margin-left: 0.5rem;" onclick="deleteProduct('${p.id}')">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+            try {
+                const { data, error } = await supabase.from('products').select('*').order('ref', { ascending: true });
+                if (error) {
+                    console.error("Error loading products:", error);
+                    return alert('Error loading products: ' + error.message);
+                }
+                
+                const tbody = document.querySelector('#products-table tbody');
+                tbody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--color-text-muted);">No products found in the database.</td></tr>';
+                    return;
+                }
+                
+                data.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${p.ref}</td>
+                        <td>${p.name}</td>
+                        <td>${p.category}</td>
+                        <td>
+                            <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Edit</button>
+                            <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.875rem; margin-left: 0.5rem;" onclick="deleteProduct('${p.id}')">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error(err);
+                alert("System error loading products: " + err.message);
+            }
         }
 
         // Load Inquiries
         async function loadInquiries() {
-            const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
-            if (error) return alert('Error loading inquiries: ' + error.message);
-            
-            const tbody = document.querySelector('#inquiries-table tbody');
-            tbody.innerHTML = '';
-            
-            data.forEach(i => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${new Date(i.created_at).toLocaleDateString()}</td>
-                    <td>${i.name}</td>
-                    <td><a href="mailto:${i.email}" style="color: var(--color-primary);">${i.email}</a></td>
-                    <td><div style="max-height: 100px; overflow-y: auto;">${i.message}</div></td>
-                `;
-                tbody.appendChild(tr);
-            });
+            try {
+                const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
+                if (error) {
+                    console.error("Error loading inquiries:", error);
+                    return alert('Error loading inquiries: ' + error.message);
+                }
+                
+                const tbody = document.querySelector('#inquiries-table tbody');
+                tbody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--color-text-muted);">No inquiries found.</td></tr>';
+                    return;
+                }
+                
+                data.forEach(i => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${new Date(i.created_at).toLocaleDateString()}</td>
+                        <td>${i.name}</td>
+                        <td><a href="mailto:${i.email}" style="color: var(--color-primary);">${i.email}</a></td>
+                        <td><div style="max-height: 100px; overflow-y: auto;">${i.message}</div></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error(err);
+                alert("System error loading inquiries: " + err.message);
+            }
         }
 
         // Product Modal Logic
