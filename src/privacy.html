@@ -436,10 +436,23 @@
             button.disabled = true;
             button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
             
-            fetch('https://api.web3forms.com/submit', {
+            // Send to Web3Forms
+            const web3Promise = fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 body: new FormData(form)
-            })
+            });
+
+            // Send to Supabase
+            const supabasePromise = typeof supabase !== 'undefined' 
+                ? supabase.from('inquiries').insert([{ 
+                    name: 'Newsletter Subscriber', 
+                    email: emailInput.value, 
+                    message: 'Newsletter Subscription' 
+                  }])
+                : Promise.resolve();
+
+            Promise.all([web3Promise, supabasePromise])
+            .then(responses => responses[0])
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -465,6 +478,8 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 </body>
 </html>
 
