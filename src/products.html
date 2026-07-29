@@ -700,13 +700,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Init Supabase directly so it's ready for loadProducts()
+        const _productsDb = supabase.createClient(
+            'https://kageeyipltwnsuuhkwfm.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck'
+        );
+    </script>
     <script>
         async function loadProducts() {
             const container = document.getElementById('products-container');
             const loading = document.getElementById('products-loading');
             
             try {
-                const { data: products, error } = await supabase
+                const { data: products, error } = await _productsDb
                     .from('products')
                     .select('*')
                     .order('ref');
@@ -755,8 +763,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
 </body></html>
 
 
