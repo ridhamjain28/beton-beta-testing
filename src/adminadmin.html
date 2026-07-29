@@ -457,7 +457,13 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
+<script>
+    // Initialize Supabase directly — avoids window.supabase conflict
+    const _db = supabase.createClient(
+        'https://kageeyipltwnsuuhkwfm.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck'
+    );
+</script>
 <script>
     // ── Hardcoded auth (base64 encoded) ──────────────────
     const _u = atob('YWRtaW5AYmV0b25saWdodGluZy5jb20=');
@@ -508,7 +514,7 @@
         const tbody = document.getElementById('products-tbody');
         tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading…</td></tr>';
         try {
-            const { data, error } = await supabase.from('products').select('*').order('ref', { ascending: true });
+            const { data, error } = await _db.from('products').select('*').order('ref', { ascending: true });
             if (error) throw error;
             if (!data || data.length === 0) {
                 tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No products yet. Click + Add Product to get started.</td></tr>';
@@ -538,7 +544,7 @@
         const tbody = document.getElementById('inquiries-tbody');
         tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading…</td></tr>';
         try {
-            const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
+            const { data, error } = await _db.from('inquiries').select('*').order('created_at', { ascending: false });
             if (error) throw error;
             if (!data || data.length === 0) {
                 tbody.innerHTML = '<tr class="empty-row"><td colspan="4">No inquiries yet.</td></tr>';
@@ -601,9 +607,9 @@
         try {
             let result;
             if (id) {
-                result = await supabase.from('products').update(payload).eq('id', id);
+                result = await _db.from('products').update(payload).eq('id', id);
             } else {
-                result = await supabase.from('products').insert([payload]);
+                result = await _db.from('products').insert([payload]);
             }
             if (result.error) throw result.error;
             closeModal();
@@ -616,7 +622,7 @@
     async function deleteProduct(id) {
         if (!confirm('Delete this product? This cannot be undone.')) return;
         try {
-            const { error } = await supabase.from('products').delete().eq('id', id);
+            const { error } = await _db.from('products').delete().eq('id', id);
             if (error) throw error;
             loadProducts();
         } catch (err) {
