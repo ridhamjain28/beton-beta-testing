@@ -1,8 +1,5 @@
-// supabase-client.js
-// Initialize Supabase Client
-
-const SUPABASE_URL = 'https://kageeyipltwnsuuhkwfm.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck';
+const SUPABASE_URL = 'https://vxlbsmghixjvhxugmrhb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bGJzbWdoaXhqdmh4dWdtcmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwNDM0MDQsImV4cCI6MjA2MzYxOTQwNH0.z2g8zSjM0cQxNl847z7hT9XjLz2-W2n9T10L82z0kX0';
 
 // We rely on the Supabase CDN script being loaded in the HTML before this script:
 // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
