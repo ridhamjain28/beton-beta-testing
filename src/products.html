@@ -150,7 +150,7 @@
                     <span class="text-xs uppercase tracking-[0.2em] text-[#134095] font-bold mt-2">Loading Products Collection…</span>
                 </div>
             </div>
-            <div class="mt-24 border-t border-[var(--border-neutral)] pt-12 flex justify-between items-center" id="pagination-container">
+            <div class="mt-24 border-t border-[var(--border-neutral)] pt-12 flex justify-between items-center" id="pagination-container" style="display: none;">
                 <div class="flex gap-4">
                     <button class="w-10 h-10 border border-[#134095] flex items-center justify-center text-[10px] font-bold bg-[#134095] text-white pagination-btn" data-page="1">01</button>
                     <button class="w-10 h-10 border border-[var(--border-neutral)] flex items-center justify-center text-[10px] font-bold hover:border-[#134095] transition-colors text-[#134095]/90 pagination-btn" data-page="2">02</button>
@@ -279,13 +279,13 @@
         function updateFilters() {
             const products = Array.from(document.querySelectorAll('.product-card'));
             const filtered = products.filter(p => {
-                const cat = p.dataset.category || '';
-                const optics = p.dataset.optics || '';
-                const ip = p.dataset.ip || '';
+                const cat = (p.dataset.category || '').toLowerCase();
+                const optics = (p.dataset.optics || '').toLowerCase();
+                const ip = (p.dataset.ip || '').toLowerCase();
                 
-                const matchCat = activeCategory === 'all' || cat === activeCategory;
-                const matchOptics = activeOptics.length === 0 || activeOptics.includes(optics);
-                const matchIP = activeIP.length === 0 || activeIP.includes(ip);
+                const matchCat = activeCategory === 'all' || cat === activeCategory || cat.includes(activeCategory);
+                const matchOptics = activeOptics.length === 0 || activeOptics.some(o => optics.includes(o.toLowerCase()));
+                const matchIP = activeIP.length === 0 || activeIP.some(i => ip.includes(i.toLowerCase()));
                 
                 return matchCat && matchOptics && matchIP;
             });
@@ -561,10 +561,10 @@
             if (!container || !_productsDb) return;
             
             try {
-                // Fetch data and enforce minimum 2-cycle matrix animation duration (~3.5 seconds)
+                // Strictly enforce 2 seconds (2000ms) dot matrix loader duration
                 const [dataResult] = await Promise.all([
                     _productsDb.from('products').select('*').order('ref'),
-                    new Promise(resolve => setTimeout(resolve, 3500))
+                    new Promise(resolve => setTimeout(resolve, 2000))
                 ]);
 
                 const { data: products, error } = dataResult;
@@ -589,7 +589,7 @@
                         
                         card.innerHTML = `
                             <div class="aspect-square bg-white mb-6 overflow-hidden flex items-center justify-center p-12 border border-[var(--border-neutral)] relative">
-                                <label class="absolute top-4 right-4 z-20 w-6 h-6 rounded-full border-2 border-[#134095] flex items-center justify-center cursor-pointer bg-white" onclick="e=>e.stopPropagation()">
+                                <label class="absolute top-4 right-4 z-20 w-6 h-6 rounded-full border-2 border-[#134095] flex items-center justify-center cursor-pointer bg-white" onclick="event.stopPropagation();">
                                     <input type="checkbox" class="sr-only inquiry-checkbox" data-product-ref="${ref}" onchange="handleGridInquiryToggle(this, '${ref}', '${name.replace(/'/g, "\\'")}')">
                                     <svg class="w-3.5 h-3.5 fill-current text-white hidden" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
                                 </label>
@@ -604,9 +604,14 @@
                         container.appendChild(card);
                     });
                 }
+
+                // Show pagination bar once products are loaded
+                const pagContainer = document.getElementById('pagination-container');
+                if (pagContainer) pagContainer.style.display = 'flex';
                 
-                // Re-run filter logic if initialized
+                // Trigger filter calculation & inquiry checkbox sync
                 if (typeof updateFiltersGlobal === 'function') updateFiltersGlobal();
+                if (typeof updateInquiryTrayUI === 'function') updateInquiryTrayUI();
                 
             } catch (err) {
                 console.error('Error loading products from Supabase:', err);
