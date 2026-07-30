@@ -34,31 +34,32 @@ class DotmSquare8 extends HTMLElement {
           display: grid;
           grid-template-columns: repeat(8, 1fr);
           grid-template-rows: repeat(8, 1fr);
-          gap: 2px;
+          gap: 3px;
           width: ${size}px;
           height: ${size}px;
         }
         .dmx-dot {
           width: 100%;
           height: 100%;
-          border-radius: 1px;
+          border-radius: 2px;
+          background-color: ${color};
           opacity: 0.15;
-          ${animated ? 'animation: dmxPulse 1.4s ease-in-out infinite alternate;' : ''}
+          ${animated ? 'animation: dmxPulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;' : ''}
         }
         @keyframes dmxPulse {
           0% {
-            opacity: 0.15;
-            transform: scale(0.85);
+            opacity: 0.12;
+            transform: scale(0.8);
             box-shadow: 0 0 0 rgba(19, 64, 149, 0);
           }
           50% {
-            opacity: 0.5;
+            opacity: 0.6;
             transform: scale(1);
           }
           100% {
-            opacity: 0.95;
-            transform: scale(1.1);
-            box-shadow: 0 0 4px ${color};
+            opacity: 1;
+            transform: scale(1.15);
+            box-shadow: 0 0 6px ${color}, 0 0 10px ${color};
           }
         }
       </style>

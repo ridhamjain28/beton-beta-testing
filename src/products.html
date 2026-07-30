@@ -143,11 +143,11 @@
 </div>
 </aside>
 <div class="flex-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8" id="product-grid">
-                <!-- Loading State with Dot Matrix Loader -->
-                <div class="col-span-full py-24 flex flex-col items-center justify-center gap-4 text-center" id="grid-loader">
-                    <dotm-square-8 size="36" color="#134095" speed="1.2"></dotm-square-8>
-                    <span class="text-xs uppercase tracking-widest text-[#134095] font-semibold mt-2">Loading Products Collection…</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 min-h-[420px]" id="product-grid">
+                <!-- Loading State with Centered Dot Matrix Loader -->
+                <div class="col-span-full py-28 flex flex-col items-center justify-center gap-5 text-center my-auto" id="grid-loader">
+                    <dotm-square-8 size="48" color="#134095" animated="true"></dotm-square-8>
+                    <span class="text-xs uppercase tracking-[0.2em] text-[#134095] font-bold mt-2">Loading Products Collection…</span>
                 </div>
             </div>
             <div class="mt-24 border-t border-[var(--border-neutral)] pt-12 flex justify-between items-center" id="pagination-container">
@@ -568,15 +568,17 @@
             if (!container || !_productsDb) return;
             
             try {
-                const { data: products, error } = await _productsDb
-                    .from('products')
-                    .select('*')
-                    .order('ref');
-                
+                // Fetch data and enforce minimum 2-cycle matrix animation duration (~3.5 seconds)
+                const [dataResult] = await Promise.all([
+                    _productsDb.from('products').select('*').order('ref'),
+                    new Promise(resolve => setTimeout(resolve, 3500))
+                ]);
+
+                const { data: products, error } = dataResult;
                 if (error) throw error;
                 
                 if (products && products.length > 0) {
-                    // Clear hardcoded static cards
+                    // Clear matrix loader and populate cards
                     container.innerHTML = '';
                     
                     products.forEach(p => {
