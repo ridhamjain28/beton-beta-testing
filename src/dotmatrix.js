@@ -23,28 +23,27 @@ class DotmSquare8 extends HTMLElement {
       }
     }
 
+    this.style.display = 'inline-flex';
+    this.style.alignItems = 'center';
+    this.style.justifyContent = 'center';
+
     this.innerHTML = `
       <style>
-        dotm-square-8 {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
         .dmx-grid {
-          display: grid;
-          grid-template-columns: repeat(8, 1fr);
-          grid-template-rows: repeat(8, 1fr);
-          gap: 3px;
-          width: ${size}px;
-          height: ${size}px;
+          display: grid !important;
+          grid-template-columns: repeat(8, 1fr) !important;
+          grid-template-rows: repeat(8, 1fr) !important;
+          gap: 3px !important;
+          width: ${size}px !important;
+          height: ${size}px !important;
         }
         .dmx-dot {
-          width: 100%;
-          height: 100%;
-          border-radius: 2px;
-          background-color: ${color};
+          width: 100% !important;
+          height: 100% !important;
+          border-radius: 2px !important;
+          background-color: ${color} !important;
           opacity: 0.15;
-          ${animated ? 'animation: dmxPulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;' : ''}
+          ${animated ? 'animation: dmxPulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate !important;' : ''}
         }
         @keyframes dmxPulse {
           0% {
@@ -63,7 +62,7 @@ class DotmSquare8 extends HTMLElement {
           }
         }
       </style>
-      <div class="dmx-grid" role="status" aria-label="Loading">
+      <div class="dmx-grid" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; width: ${size}px; height: ${size}px;" role="status" aria-label="Loading">
         ${dotsHtml}
       </div>
     `;
