@@ -95,14 +95,17 @@
 </div>
 <div class="lg:w-2/5 p-8 lg:p-16 flex flex-col justify-start bg-white">
 <div class="mb-12">
-<span id="product-category" class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 mb-4 block">Loading Category…</span>
-<h1 id="product-title" class="text-4xl lg:text-5xl font-serif leading-tight mb-4"><span class="text-neutral-300">Loading…</span></h1>
+<span id="product-category" class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 mb-4 block"></span>
+<div id="details-loader" class="py-6 flex items-center gap-3">
+    <dotm-square-8 size="24" color="#134095" speed="1.2"></dotm-square-8>
+    <span class="text-xs uppercase tracking-widest text-[#134095] font-semibold">Loading product specs…</span>
+</div>
+<h1 id="product-title" class="text-4xl lg:text-5xl font-serif leading-tight mb-4"></h1>
 <div id="product-ref-container" class="flex items-center gap-4 text-[10px] uppercase tracking-widest text-[#134095]/90">
-<span>Ref. …</span><span class="w-1 h-1 bg-[#EF7F1A] rounded-full"></span><span>Architectural Grade</span>
 </div>
 </div>
 <div class="prose prose-sm prose-slate mb-12">
-<p id="product-description" class="text-sm text-neutral-600 leading-relaxed">Loading product details…</p>
+<p id="product-description" class="text-sm text-neutral-600 leading-relaxed"></p>
 </div>
 <div class="space-y-12">
 <div class="border-t border-[var(--border-neutral)] pt-8">
@@ -279,6 +282,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         const product = data;
+        
+        // Hide dotmatrix loader once data arrives
+        const loader = document.getElementById('details-loader');
+        if (loader) loader.style.display = 'none';
         
         // Page & Meta Title
         document.title = `${product.name || 'Product Details'} | Beton Lighting`;
