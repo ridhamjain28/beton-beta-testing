@@ -4,6 +4,8 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // We rely on the Supabase CDN script being loaded in the HTML before this script:
 // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-window.supabase = supabase;
+// Store the shared client as _betonDb so window.supabase (the library) is NOT overwritten.
+// adminadmin.html calls supabase.createClient() directly and must keep window.supabase = library.
+window._betonDb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
