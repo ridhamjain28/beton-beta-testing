@@ -144,10 +144,10 @@
 </aside>
 <div class="flex-1 flex flex-col justify-center min-h-[500px]">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 w-full my-auto" id="product-grid">
-                <!-- Loading State with Centered Dot Matrix Loader -->
-                <div class="col-span-full py-16 flex flex-col items-center justify-center gap-5 text-center" id="grid-loader">
-                    <dotm-square-8 size="48" color="#134095" animated="true"></dotm-square-8>
-                    <span class="text-xs uppercase tracking-[0.2em] text-[#134095] font-bold mt-2">Loading Products Collection…</span>
+                <!-- Loading State -->
+                <div class="col-span-full py-16 flex flex-col items-center justify-center gap-4 text-center" id="grid-loader">
+                    <iconify-icon icon="line-md:loading-loop" class="text-3xl text-[#134095]"></iconify-icon>
+                    <span class="text-xs uppercase tracking-[0.2em] text-[#134095] font-bold">Loading Products Collection…</span>
                 </div>
             </div>
             <div class="mt-24 border-t border-[var(--border-neutral)] pt-12 flex justify-between items-center" id="pagination-container" style="display: none;">
@@ -569,13 +569,7 @@
             if (!container || !_productsDb) return;
             
             try {
-                // Strictly enforce 2 seconds (2000ms) dot matrix loader duration
-                const [dataResult] = await Promise.all([
-                    _productsDb.from('products').select('*').order('ref'),
-                    new Promise(resolve => setTimeout(resolve, 2000))
-                ]);
-
-                const { data: products, error } = dataResult;
+                const { data: products, error } = await _productsDb.from('products').select('*').order('ref');
                 if (error) throw error;
                 
                 if (products && products.length > 0) {
