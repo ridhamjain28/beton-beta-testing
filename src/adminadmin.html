@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | BETON LIGHTING</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="dotmatrix.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; }
@@ -49,10 +50,10 @@
         .card-title-row h3 { font-size: 1rem; font-weight: 700; color: #111827; }
 
         /* Editing banner */
-        #editing-banner { display: none; background: #eff6ff; border-bottom: 1px solid #bfdbfe; padding: 0.6rem 1.5rem; font-size: 0.8rem; color: #1d4ed8; font-weight: 500; align-items: center; justify-content: space-between; }
-        #editing-banner.visible { display: flex; }
-        #form-card.editing { box-shadow: 0 0 0 2px #134095, 0 4px 16px rgba(19,64,149,0.12); }
-        #cancel-edit-btn { background: none; border: 1px solid #93c5fd; color: #1d4ed8; padding: 0.2rem 0.65rem; border-radius: 4px; cursor: pointer; font-size: 0.78rem; font-family: 'Inter', sans-serif; }
+        .editing-banner { display: none; background: #eff6ff; border-bottom: 1px solid #bfdbfe; padding: 0.6rem 1.5rem; font-size: 0.8rem; color: #1d4ed8; font-weight: 500; align-items: center; justify-content: space-between; }
+        .editing-banner.visible { display: flex; }
+        .card.editing { box-shadow: 0 0 0 2px #134095, 0 4px 16px rgba(19,64,149,0.12); }
+        .cancel-edit-btn { background: none; border: 1px solid #93c5fd; color: #1d4ed8; padding: 0.2rem 0.65rem; border-radius: 4px; cursor: pointer; font-size: 0.78rem; font-family: 'Inter', sans-serif; }
 
         /* Form */
         .form-body { padding: 1.25rem 1.5rem 0.5rem; }
@@ -166,7 +167,7 @@
     <div class="topbar">
         <div class="topbar-left">
             <h2>Admin Dashboard</h2>
-            <p>Manage products and view inquiries.</p>
+            <p>Manage products, projects, and view inquiries.</p>
         </div>
         <div class="topbar-right">
             <a href="index.html" class="btn-outline" target="_blank">View Site</a>
@@ -177,6 +178,7 @@
     <div class="main">
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('products', this)">Products</button>
+            <button class="tab-btn" onclick="switchTab('projects', this)">Projects</button>
             <button class="tab-btn" onclick="switchTab('inquiries', this)">Inquiries</button>
         </div>
 
@@ -185,9 +187,9 @@
 
             <!-- Form Card -->
             <div class="card" id="form-card">
-                <div id="editing-banner">
-                    <span>✏️ Editing — <strong id="editing-ref"></strong></span>
-                    <button id="cancel-edit-btn" onclick="cancelEdit()">Cancel Edit</button>
+                <div class="editing-banner" id="editing-banner">
+                    <span>✏️ Editing Product — <strong id="editing-ref"></strong></span>
+                    <button class="cancel-edit-btn" id="cancel-edit-btn" onclick="cancelEdit()">Cancel Edit</button>
                 </div>
                 <div class="card-title-row">
                     <span class="icon" id="form-icon">+</span>
@@ -200,206 +202,396 @@
                     <!-- Row 1: Ref + Category -->
                     <div class="form-row">
                         <div class="form-field">
-                            <label>Reference <span class="req">*</span></label>
-                            <input type="text" id="p-ref" placeholder="e.g. B-204">
+                            <label>Product Ref / Code <span class="req">*</span></label>
+                            <input type="text" id="p-ref" placeholder="e.g. BT-DL-001" required>
                         </div>
                         <div class="form-field">
                             <label>Category <span class="req">*</span></label>
                             <div class="dropdown-with-add">
-                                <select id="p-category">
-                                    <option value="">Select Category</option>
-                                    <option>Indoor Lighting</option>
-                                    <option>Outdoor Lighting</option>
-                                    <option>Magnetic Systems</option>
-                                    <option>Surface Luminaire</option>
-                                    <option>Strip &amp; Profiles</option>
-                                    <option>Accessories</option>
-                                    <option value="__add__">➕ Add new category…</option>
+                                <select id="p-category" onchange="handleCategoryChange(this)">
+                                    <option value="">Select category...</option>
+                                    <option value="Recessed Downlights">Recessed Downlights</option>
+                                    <option value="Magnetic Track Systems">Magnetic Track Systems</option>
+                                    <option value="Linear Architectural">Linear Architectural</option>
+                                    <option value="Surface & Pendant">Surface & Pendant</option>
+                                    <option value="Outdoor & Facade">Outdoor & Facade</option>
+                                    <option value="__add__">➕ Add new category...</option>
                                 </select>
                             </div>
                             <div class="add-cat-row" id="add-cat-row">
-                                <input type="text" id="new-cat-input" placeholder="New category name">
-                                <button class="btn-add-cat" onclick="confirmNewCategory()">Add</button>
-                                <button class="btn-cancel-cat" onclick="cancelNewCategory()">✕</button>
+                                <input type="text" id="new-cat-input" placeholder="Enter new category name">
+                                <button type="button" class="btn-add-cat" onclick="confirmNewCategory()">Add</button>
+                                <button type="button" class="btn-cancel-cat" onclick="cancelNewCategory()">✕</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Row 2: Name -->
+                    <!-- Row 2: Product Name -->
                     <div class="form-row single">
                         <div class="form-field">
                             <label>Product Name <span class="req">*</span></label>
-                            <input type="text" id="p-name" placeholder="e.g. Apex Recessed Downlight">
+                            <input type="text" id="p-name" placeholder="e.g. SIERRA A LIGHT" required>
                         </div>
                     </div>
 
-                    <!-- Row 3: Image Upload -->
-                    <div class="form-row single">
+                    <!-- Row 3: Filter Specs (Optics & IP Rating) -->
+                    <div class="form-row">
                         <div class="form-field">
-                            <label>Product Image</label>
-                            <div class="img-upload-area" id="img-drop-zone">
-                                <input type="file" id="img-file-input" accept="image/png,image/jpeg,image/webp,image/jpg" onchange="handleFileSelect(event)">
-                                <div class="upload-icon">☁️</div>
-                                <p>Drag &amp; drop photo here, or <span>browse</span></p>
-                                <p style="margin-top:4px;font-size:0.75rem;">Supports PNG, JPG, JPEG, WebP</p>
-                            </div>
-                            <div class="img-preview" id="img-preview">
-                                <img id="img-preview-img" src="" alt="Preview">
-                                <button class="remove-img" onclick="removeImage()" title="Remove image">✕</button>
-                            </div>
-                            <div class="upload-progress" id="upload-progress">Uploading image…</div>
+                            <label>Optics & Beam Angle</label>
+                            <select id="p-optics">
+                                <option value="Narrow (15°-24°)">Narrow (15°-24°)</option>
+                                <option value="Medium (36°)" selected>Medium (36°)</option>
+                                <option value="Wide (60°+)">Wide (60°+)</option>
+                                <option value="Asymmetric Diffuse">Asymmetric Diffuse</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>IP Rating</label>
+                            <select id="p-ip-rating">
+                                <option value="IP20" selected>IP20 (Indoor)</option>
+                                <option value="IP44">IP44 (Damp Location)</option>
+                                <option value="IP65">IP65 (Outdoor/Waterproof)</option>
+                                <option value="IP67">IP67 (Submersible)</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Row 4: Description -->
+                    <!-- Row 4: Logistics & Warranty -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Delivery Time</label>
+                            <input type="text" id="p-delivery" value="3-4 Weeks" placeholder="e.g. 3-4 Weeks">
+                        </div>
+                        <div class="form-field">
+                            <label>Origin & Warranty (Fixed)</label>
+                            <input type="text" value="Surat, Gujarat | 2 Years Warranty" disabled style="background:#f3f4f6; color:#6b7280;">
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Short Description -->
                     <div class="form-row single">
                         <div class="form-field">
                             <label>Short Description</label>
-                            <textarea id="p-short-desc" placeholder="Brief product description…"></textarea>
+                            <textarea id="p-short-desc" placeholder="Brief summary of fixture design, reflector technology, and ideal application..."></textarea>
                         </div>
                     </div>
+
+                    <!-- Row 6: Image Upload with Clipboard Paste Support -->
+                    <div class="form-field">
+                        <label>Product Image (Drag & Drop, Browse, or Paste Ctrl+V Anywhere)</label>
+                        <div class="img-upload-area" id="drop-zone">
+                            <input type="file" id="img-file-input" accept="image/*" onchange="handleFileSelect(this)">
+                            <div class="upload-icon">📷</div>
+                            <p>Drag & drop image here, <span>browse</span>, or paste clipboard (Ctrl+V)</p>
+                            <p style="font-size:0.75rem; color:#9ca3af; margin-top:2px;">PNG, JPG, WEBP up to 5MB</p>
+                        </div>
+                        <div class="img-preview" id="img-preview">
+                            <img id="img-preview-img" src="" alt="Preview">
+                            <button type="button" class="remove-img" onclick="removeImage()" title="Remove image">✕</button>
+                        </div>
+                        <div class="upload-progress" id="upload-progress">Uploading image to cloud storage...</div>
+                    </div>
                 </div>
+
                 <div class="form-save-row">
                     <button class="btn-save" id="save-btn" onclick="saveProduct()">
-                        💾 <span id="save-btn-text">Save Product</span>
+                        <span id="save-btn-text">Save Product</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Products Table -->
+            <!-- Table Card -->
             <div class="card">
-                <div class="table-card-header"><h3>All Products</h3></div>
+                <div class="table-card-header">
+                    <h3>Product Catalog</h3>
+                </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Image</th>
                             <th>Ref</th>
-                            <th>Product Details</th>
+                            <th>Product Name</th>
                             <th>Category</th>
-                            <th>Actions</th>
+                            <th style="text-align:right">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="products-tbody">
-                        <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+                        <tr class="empty-row">
+                            <td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading products...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
+
         </div>
 
-        <!-- ── INQUIRIES TAB ─────────────────────────── -->
+        <!-- ── PROJECTS TAB ───────────────────────────── -->
+        <div id="tab-projects" class="tab-pane">
+
+            <!-- Project Form Card -->
+            <div class="card" id="project-form-card">
+                <div class="editing-banner" id="project-editing-banner">
+                    <span>✏️ Editing Project — <strong id="project-editing-title"></strong></span>
+                    <button class="cancel-edit-btn" onclick="cancelProjectEdit()">Cancel Edit</button>
+                </div>
+                <div class="card-title-row">
+                    <span class="icon" id="project-form-icon">+</span>
+                    <h3 id="project-form-title">Add New Project Case Study</h3>
+                </div>
+                <div class="form-body">
+                    <input type="hidden" id="proj-id">
+                    <input type="hidden" id="proj-image-url">
+
+                    <!-- Row 1: Title & Category -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Project Title <span class="req">*</span></label>
+                            <input type="text" id="proj-title" placeholder="e.g. Premium Residence Surat" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Category <span class="req">*</span></label>
+                            <select id="proj-category" required>
+                                <option value="Residence">Residence</option>
+                                <option value="Showroom">Showroom</option>
+                                <option value="Workspace">Workspace</option>
+                                <option value="Hospitality">Hospitality</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Overview Description -->
+                    <div class="form-row single">
+                        <div class="form-field">
+                            <label>Overview Description</label>
+                            <textarea id="proj-description" placeholder="A residential project page should explain the requested mood, ceiling constraints, furniture planning, and final fixture mix..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Client Brief & Beton Response -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Client Brief</label>
+                            <input type="text" id="proj-client-brief" placeholder="e.g. Warm, glare-conscious lighting for living and private areas">
+                        </div>
+                        <div class="form-field">
+                            <label>Beton Response</label>
+                            <input type="text" id="proj-beton-response" placeholder="e.g. Layered ambient, task, and accent lighting direction">
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Supplied Families & Specification Output -->
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Supplied Families</label>
+                            <input type="text" id="proj-supplied-families" placeholder="e.g. Downlights, cove linear, magnetic track options">
+                        </div>
+                        <div class="form-field">
+                            <label>Specification Output</label>
+                            <input type="text" id="proj-specification-output" placeholder="e.g. Shortlist, finish preferences, and enquiry-ready notes">
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Project Image -->
+                    <div class="form-field">
+                        <label>Project Image (Drag & Drop, Browse, or Paste Ctrl+V)</label>
+                        <div class="img-upload-area" id="proj-drop-zone">
+                            <input type="file" id="proj-img-file-input" accept="image/*" onchange="handleProjectFileSelect(this)">
+                            <div class="upload-icon">🏞️</div>
+                            <p>Drag & drop image here, <span>browse</span>, or paste clipboard (Ctrl+V)</p>
+                            <p style="font-size:0.75rem; color:#9ca3af; margin-top:2px;">PNG, JPG, WEBP up to 5MB</p>
+                        </div>
+                        <div class="img-preview" id="proj-img-preview">
+                            <img id="proj-img-preview-img" src="" alt="Preview">
+                            <button type="button" class="remove-img" onclick="removeProjectImage()" title="Remove image">✕</button>
+                        </div>
+                        <div class="upload-progress" id="proj-upload-progress">Uploading project image...</div>
+                    </div>
+                </div>
+
+                <div class="form-save-row">
+                    <button class="btn-save" id="proj-save-btn" onclick="saveProject()">
+                        <span id="proj-save-btn-text">Save Project</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Projects Table Card -->
+            <div class="card">
+                <div class="table-card-header">
+                    <h3>Architectural Projects</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Client Brief</th>
+                            <th style="text-align:right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-tbody">
+                        <tr class="empty-row">
+                            <td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading projects...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- ── INQUIRIES TAB ──────────────────────────── -->
         <div id="tab-inquiries" class="tab-pane">
             <div class="card">
-                <div class="table-card-header"><h3>Recent Inquiries</h3></div>
+                <div class="table-card-header">
+                    <h3>Submitted Inquiries</h3>
+                </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Message</th>
+                            <th>Message & Details</th>
                         </tr>
                     </thead>
                     <tbody id="inquiries-tbody">
-                        <tr class="empty-row"><td colspan="4">Loading…</td></tr>
+                        <tr class="empty-row">
+                            <td colspan="4"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading inquiries...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // ── Supabase ─────────────────────────────────────────
-    const _db = supabase.createClient(
-        'https://kageeyipltwnsuuhkwfm.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthZ2VleWlwbHR3bnN1dWhrd2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNTkyNDgsImV4cCI6MjEwMDgzNTI0OH0.U93etZwUGIP5EYs9zV7bj5b7SU82VXQ4naqIHu8LTck'
-    );
+    const SUPABASE_URL  = 'https://vxlbsmghixjvhxugmrhb.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bGJzbWdoaXhqdmh4dWdtcmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwNDM0MDQsImV4cCI6MjA2MzYxOTQwNH0.z2g8zSjM0cQxNl847z7hT9XjLz2-W2n9T10L82z0kX0';
     const STORAGE_BUCKET = 'product-images';
+    const _db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-    // ── Auth ──────────────────────────────────────────────
-    const _u = atob('YWRtaW5AYmV0b25saWdodGluZy5jb20=');
-    const _p = atob('QmV0b25AMjAyNg==');
-
-    function checkAuth() { if (sessionStorage.getItem('bl_admin') === '1') showDashboard(); }
-    function showDashboard() {
-        document.getElementById('login-page').style.display = 'none';
-        document.getElementById('dashboard-page').style.display = 'block';
-        loadProducts();
+    // Auth session
+    function checkAuth() {
+        if (sessionStorage.getItem('beton_admin_session') === 'true') {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+            loadProducts();
+        }
     }
 
-    document.getElementById('login-form').addEventListener('submit', function(e) {
+    document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const pass  = document.getElementById('login-password').value;
-        const err   = document.getElementById('login-error');
-        err.style.display = 'none';
-        if (email === _u && pass === _p) { sessionStorage.setItem('bl_admin','1'); showDashboard(); }
-        else err.style.display = 'block';
-    });
-
-    document.getElementById('logout-btn').addEventListener('click', function() {
-        sessionStorage.removeItem('bl_admin');
-        document.getElementById('dashboard-page').style.display = 'none';
-        document.getElementById('login-page').style.display = 'flex';
-    });
-
-    // ── Tabs ──────────────────────────────────────────────
-    function switchTab(name, btn) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + name).classList.add('active');
-        if (name === 'inquiries') loadInquiries();
-    }
-
-    // ── Category dropdown ─────────────────────────────────
-    document.getElementById('p-category').addEventListener('change', function() {
-        if (this.value === '__add__') {
-            this.value = '';
-            document.getElementById('add-cat-row').classList.add('visible');
-            document.getElementById('new-cat-input').focus();
+        const em = document.getElementById('login-email').value.trim();
+        const pw = document.getElementById('login-password').value;
+        if (em === 'admin@betonlighting.com' && pw === 'beton2026') {
+            sessionStorage.setItem('beton_admin_session', 'true');
+            document.getElementById('login-error').style.display = 'none';
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+            loadProducts();
+        } else {
+            document.getElementById('login-error').style.display = 'block';
         }
     });
 
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        sessionStorage.removeItem('beton_admin_session');
+        window.location.reload();
+    });
+
+    function switchTab(tab, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`tab-${tab}`).classList.add('active');
+        if (tab === 'inquiries') loadInquiries();
+        if (tab === 'projects') loadProjects();
+    }
+
+    // Category Add-New Handler
+    function handleCategoryChange(sel) {
+        if (sel.value === '__add__') {
+            document.getElementById('add-cat-row').classList.add('visible');
+            document.getElementById('new-cat-input').focus();
+        } else {
+            document.getElementById('add-cat-row').classList.remove('visible');
+        }
+    }
     function confirmNewCategory() {
         const val = document.getElementById('new-cat-input').value.trim();
         if (!val) return;
         const sel = document.getElementById('p-category');
-        // Add option before the "Add new" option
         const addOpt = sel.querySelector('option[value="__add__"]');
-        const newOpt = document.createElement('option');
-        newOpt.value = val;
-        newOpt.textContent = val;
-        sel.insertBefore(newOpt, addOpt);
+        const opt = document.createElement('option');
+        opt.value = val; opt.textContent = val;
+        sel.insertBefore(opt, addOpt);
         sel.value = val;
-        document.getElementById('new-cat-input').value = '';
-        document.getElementById('add-cat-row').classList.remove('visible');
+        cancelNewCategory();
     }
-
     function cancelNewCategory() {
         document.getElementById('new-cat-input').value = '';
         document.getElementById('add-cat-row').classList.remove('visible');
+        const sel = document.getElementById('p-category');
+        if (sel.value === '__add__') sel.value = '';
     }
 
-    // ── Image Upload ──────────────────────────────────────
+    // Image Upload & Paste Drag/Drop
     let _pendingFile = null;
+    let _pendingProjectFile = null;
 
-    const dropZone = document.getElementById('img-drop-zone');
+    const dropZone = document.getElementById('drop-zone');
     dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
     dropZone.addEventListener('drop', e => {
-        e.preventDefault(); dropZone.classList.remove('dragover');
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) setImageFile(file);
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) setImageFile(e.dataTransfer.files[0]);
     });
 
-    function handleFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) setImageFile(file);
+    const projDropZone = document.getElementById('proj-drop-zone');
+    if (projDropZone) {
+        projDropZone.addEventListener('dragover', e => { e.preventDefault(); projDropZone.classList.add('dragover'); });
+        projDropZone.addEventListener('dragleave', () => projDropZone.classList.remove('dragover'));
+        projDropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            projDropZone.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) setProjectImageFile(e.dataTransfer.files[0]);
+        });
+    }
+
+    // Global Paste (Ctrl+V) Support Anywhere on Page
+    document.addEventListener('paste', e => {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                const blob = item.getAsFile();
+                if (document.getElementById('tab-projects').classList.contains('active')) {
+                    setProjectImageFile(blob);
+                } else {
+                    setImageFile(blob);
+                }
+                break;
+            }
+        }
+    });
+
+    function handleFileSelect(input) {
+        if (input.files && input.files[0]) setImageFile(input.files[0]);
+    }
+    function handleProjectFileSelect(input) {
+        if (input.files && input.files[0]) setProjectImageFile(input.files[0]);
     }
 
     function setImageFile(file) {
+        const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+        if (file && file.size > MAX_SIZE) {
+            alert('File is too large! Maximum image size is 5MB.');
+            return;
+        }
         _pendingFile = file;
         const reader = new FileReader();
         reader.onload = ev => {
@@ -410,16 +602,21 @@
         reader.readAsDataURL(file);
     }
 
-    // Overwrite setImageFile to add file size check
-    const originalSetImageFile = setImageFile;
-    setImageFile = function(file) {
+    function setProjectImageFile(file) {
         const MAX_SIZE = 5 * 1024 * 1024; // 5MB
         if (file && file.size > MAX_SIZE) {
             alert('File is too large! Maximum image size is 5MB.');
             return;
         }
-        originalSetImageFile(file);
-    };
+        _pendingProjectFile = file;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            document.getElementById('proj-img-preview-img').src = ev.target.result;
+            document.getElementById('proj-img-preview').style.display = 'block';
+            projDropZone.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
 
     function removeImage() {
         _pendingFile = null;
@@ -428,6 +625,15 @@
         document.getElementById('img-preview-img').src = '';
         document.getElementById('img-file-input').value = '';
         dropZone.style.display = 'block';
+    }
+
+    function removeProjectImage() {
+        _pendingProjectFile = null;
+        document.getElementById('proj-image-url').value = '';
+        document.getElementById('proj-img-preview').style.display = 'none';
+        document.getElementById('proj-img-preview-img').src = '';
+        document.getElementById('proj-img-file-input').value = '';
+        projDropZone.style.display = 'block';
     }
 
     async function uploadImage(file, ref) {
@@ -439,13 +645,13 @@
         return urlData.publicUrl;
     }
 
-    // Map to hold loaded product objects safely without string escaping issues in onclick handlers
     const _productsMap = new Map();
+    const _projectsMap = new Map();
 
     // ── Load Products ──────────────────────────────────────
     async function loadProducts() {
         const tbody = document.getElementById('products-tbody');
-        tbody.innerHTML = '<tr class="empty-row"><td colspan="5">Loading…</td></tr>';
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading products...</td></tr>';
         try {
             const { data, error } = await _db.from('products').select('*').order('ref', { ascending: true });
             if (error) throw error;
@@ -487,10 +693,51 @@
         }
     }
 
+    // ── Load Projects ──────────────────────────────────────
+    async function loadProjects() {
+        const tbody = document.getElementById('projects-tbody');
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading projects...</td></tr>';
+        try {
+            const { data, error } = await _db.from('projects').select('*').order('created_at', { ascending: false });
+            if (error) throw error;
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No projects found. Add your first project above!</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            _projectsMap.clear();
+
+            data.forEach(p => {
+                _projectsMap.set(p.id, p);
+                const tr = document.createElement('tr');
+                const imgHtml = p.image_url
+                    ? `<img class="prod-thumb" src="${p.image_url}" alt="${p.title || ''}">`
+                    : `<div class="prod-thumb-placeholder">🏞️</div>`;
+                tr.innerHTML = `
+                    <td>${imgHtml}</td>
+                    <td><div class="product-name">${p.title || '—'}</div></td>
+                    <td><span class="category-text">${p.category || '—'}</span></td>
+                    <td><div class="product-meta">${p.client_brief || '—'}</div></td>
+                    <td>
+                        <button class="action-icon icon-edit" title="Edit" onclick="startProjectEditById('${p.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        </button>
+                        <button class="action-icon icon-delete" title="Delete" onclick="deleteProjectById('${p.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            tbody.innerHTML = `<tr class="empty-row"><td colspan="5">Error: ${err.message}</td></tr>`;
+        }
+    }
+
     // ── Load Inquiries ─────────────────────────────────────
     async function loadInquiries() {
         const tbody = document.getElementById('inquiries-tbody');
-        tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Loading…</td></tr>';
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="4"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading inquiries...</td></tr>';
         try {
             const { data, error } = await _db.from('inquiries').select('*').order('created_at', { ascending: false });
             if (error) throw error;
@@ -514,7 +761,7 @@
         }
     }
 
-    // ── Form helpers ───────────────────────────────────────
+    // ── Product Form Helpers ─────────────────────────────────────
     function clearForm() {
         document.getElementById('p-id').value = '';
         document.getElementById('p-ref').value = '';
@@ -543,6 +790,10 @@
         document.getElementById('p-name').value       = p.name || '';
         document.getElementById('p-short-desc').value = p.short_description || '';
         document.getElementById('p-image-url').value  = p.image_url || '';
+        if (p.optics) document.getElementById('p-optics').value = p.optics;
+        if (p.ip_rating) document.getElementById('p-ip-rating').value = p.ip_rating;
+        if (p.delivery) document.getElementById('p-delivery').value = p.delivery;
+
         document.getElementById('form-title').textContent = 'Edit Product';
         document.getElementById('form-icon').textContent  = '✏️';
         document.getElementById('save-btn-text').textContent = 'Update Product';
@@ -550,7 +801,6 @@
         document.getElementById('editing-banner').classList.add('visible');
         document.getElementById('editing-ref').textContent = p.ref || '';
 
-        // Set category
         const sel = document.getElementById('p-category');
         let found = false;
         for (let opt of sel.options) { if (opt.value === p.category) { sel.value = p.category; found = true; break; } }
@@ -562,7 +812,6 @@
             sel.value = p.category;
         }
 
-        // Show existing image
         if (p.image_url) {
             document.getElementById('img-preview-img').src = p.image_url;
             document.getElementById('img-preview').style.display = 'block';
@@ -575,9 +824,8 @@
         document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // ── Save product ───────────────────────────────────────
+    // ── Save Product ───────────────────────────────────────
     async function saveProduct() {
-        // Auto-confirm pending new category if user typed in input
         const newCatInput = document.getElementById('new-cat-input');
         if (document.getElementById('add-cat-row').classList.contains('visible') && newCatInput.value.trim()) {
             confirmNewCategory();
@@ -588,6 +836,9 @@
         const name     = document.getElementById('p-name').value.trim();
         const category = document.getElementById('p-category').value;
         const desc     = document.getElementById('p-short-desc').value.trim();
+        const optics   = document.getElementById('p-optics').value;
+        const ip_rating = document.getElementById('p-ip-rating').value;
+        const delivery = document.getElementById('p-delivery').value.trim() || '3-4 Weeks';
         let imageUrl   = document.getElementById('p-image-url').value.trim();
 
         if (!ref || !name || !category || category === '__add__') {
@@ -600,28 +851,24 @@
         document.getElementById('save-btn-text').textContent = 'Saving…';
 
         try {
-            // Upload image if a new file was selected
             if (_pendingFile) {
                 document.getElementById('upload-progress').style.display = 'block';
                 document.getElementById('save-btn-text').textContent = 'Uploading image…';
                 try {
                     imageUrl = await uploadImage(_pendingFile, ref);
                 } catch (uploadErr) {
-                    const proceed = confirm(
-                        `Image upload failed: ${uploadErr.message}\n\nDo you want to continue saving the product WITHOUT the new image?`
-                    );
+                    const proceed = confirm(`Image upload failed: ${uploadErr.message}\n\nContinue saving WITHOUT new image?`);
                     if (!proceed) {
                         btn.disabled = false;
                         document.getElementById('save-btn-text').textContent = id ? 'Update Product' : 'Save Product';
                         document.getElementById('upload-progress').style.display = 'none';
                         return;
                     }
-                    imageUrl = imageUrl || '';
                 }
                 document.getElementById('upload-progress').style.display = 'none';
             }
 
-            const payload = { ref, name, category, image_url: imageUrl, short_description: desc };
+            const payload = { ref, name, category, image_url: imageUrl, short_description: desc, optics, ip_rating, delivery };
             const result  = id
                 ? await _db.from('products').update(payload).eq('id', id)
                 : await _db.from('products').insert([payload]);
@@ -637,23 +884,142 @@
         }
     }
 
-    // ── Delete ──────────────────────────────────────────────
+    // ── Delete Product ──────────────────────────────────────
     async function deleteProductById(id) {
         const p = _productsMap.get(id);
         const refName = p ? (p.ref || p.name) : 'this product';
-        deleteProduct(id, refName);
-    }
-
-    async function deleteProduct(id, ref) {
-        if (!confirm(`Delete "${ref}"? This cannot be undone.`)) return;
+        if (!confirm(`Delete "${refName}"? This cannot be undone.`)) return;
         try {
             const { error } = await _db.from('products').delete().eq('id', id);
             if (error) throw error;
             await loadProducts();
-        } catch (err) { alert('Error deleting: ' + err.message); }
+        } catch (err) { alert('Error deleting product: ' + err.message); }
     }
 
-    // ── Init ────────────────────────────────────────────────
+    // ── Project Form Helpers ─────────────────────────────────────
+    function clearProjectForm() {
+        document.getElementById('proj-id').value = '';
+        document.getElementById('proj-title').value = '';
+        document.getElementById('proj-category').value = 'Residence';
+        document.getElementById('proj-description').value = '';
+        document.getElementById('proj-client-brief').value = '';
+        document.getElementById('proj-beton-response').value = '';
+        document.getElementById('proj-supplied-families').value = '';
+        document.getElementById('proj-specification-output').value = '';
+        document.getElementById('proj-image-url').value = '';
+        removeProjectImage();
+        document.getElementById('project-form-title').textContent = 'Add New Project Case Study';
+        document.getElementById('project-form-icon').textContent = '+';
+        document.getElementById('proj-save-btn-text').textContent = 'Save Project';
+        document.getElementById('project-form-card').classList.remove('editing');
+        document.getElementById('project-editing-banner').classList.remove('visible');
+    }
+
+    function cancelProjectEdit() { clearProjectForm(); }
+
+    function startProjectEditById(id) {
+        const p = _projectsMap.get(id);
+        if (p) startProjectEdit(p);
+    }
+
+    function startProjectEdit(p) {
+        document.getElementById('proj-id').value = p.id || '';
+        document.getElementById('proj-title').value = p.title || '';
+        document.getElementById('proj-category').value = p.category || 'Residence';
+        document.getElementById('proj-description').value = p.description || '';
+        document.getElementById('proj-client-brief').value = p.client_brief || '';
+        document.getElementById('proj-beton-response').value = p.beton_response || '';
+        document.getElementById('proj-supplied-families').value = p.supplied_families || '';
+        document.getElementById('proj-specification-output').value = p.specification_output || '';
+        document.getElementById('proj-image-url').value = p.image_url || '';
+
+        document.getElementById('project-form-title').textContent = 'Edit Project Case Study';
+        document.getElementById('project-form-icon').textContent = '✏️';
+        document.getElementById('proj-save-btn-text').textContent = 'Update Project';
+        document.getElementById('project-form-card').classList.add('editing');
+        document.getElementById('project-editing-banner').classList.add('visible');
+        document.getElementById('project-editing-title').textContent = p.title || '';
+
+        if (p.image_url) {
+            document.getElementById('proj-img-preview-img').src = p.image_url;
+            document.getElementById('proj-img-preview').style.display = 'block';
+            projDropZone.style.display = 'none';
+        } else {
+            removeProjectImage();
+        }
+        _pendingProjectFile = null;
+
+        document.getElementById('project-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Save Project ───────────────────────────────────────
+    async function saveProject() {
+        const id = document.getElementById('proj-id').value;
+        const title = document.getElementById('proj-title').value.trim();
+        const category = document.getElementById('proj-category').value;
+        const description = document.getElementById('proj-description').value.trim();
+        const client_brief = document.getElementById('proj-client-brief').value.trim();
+        const beton_response = document.getElementById('proj-beton-response').value.trim();
+        const supplied_families = document.getElementById('proj-supplied-families').value.trim();
+        const specification_output = document.getElementById('proj-specification-output').value.trim();
+        let imageUrl = document.getElementById('proj-image-url').value.trim();
+
+        if (!title || !category) {
+            alert('Please fill in Project Title and Category.');
+            return;
+        }
+
+        const btn = document.getElementById('proj-save-btn');
+        btn.disabled = true;
+        document.getElementById('proj-save-btn-text').textContent = 'Saving…';
+
+        try {
+            if (_pendingProjectFile) {
+                document.getElementById('proj-upload-progress').style.display = 'block';
+                document.getElementById('proj-save-btn-text').textContent = 'Uploading image…';
+                try {
+                    imageUrl = await uploadImage(_pendingProjectFile, 'proj-' + title.replace(/\s+/g, '-').toLowerCase());
+                } catch (uploadErr) {
+                    const proceed = confirm(`Project image upload failed: ${uploadErr.message}\n\nContinue saving WITHOUT new image?`);
+                    if (!proceed) {
+                        btn.disabled = false;
+                        document.getElementById('proj-save-btn-text').textContent = id ? 'Update Project' : 'Save Project';
+                        document.getElementById('proj-upload-progress').style.display = 'none';
+                        return;
+                    }
+                }
+                document.getElementById('proj-upload-progress').style.display = 'none';
+            }
+
+            const payload = { title, category, description, client_brief, beton_response, supplied_families, specification_output, image_url: imageUrl };
+            const result = id
+                ? await _db.from('projects').update(payload).eq('id', id)
+                : await _db.from('projects').insert([payload]);
+
+            if (result.error) throw result.error;
+            clearProjectForm();
+            await loadProjects();
+        } catch (err) {
+            alert('Error saving project: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            document.getElementById('proj-save-btn-text').textContent = id ? 'Update Project' : 'Save Project';
+        }
+    }
+
+    // ── Delete Project ──────────────────────────────────────
+    async function deleteProjectById(id) {
+        const p = _projectsMap.get(id);
+        const title = p ? p.title : 'this project';
+        if (!confirm(`Delete project "${title}"? This cannot be undone.`)) return;
+        try {
+            const { error } = await _db.from('projects').delete().eq('id', id);
+            if (error) throw error;
+            await loadProjects();
+        } catch (err) { alert('Error deleting project: ' + err.message); }
+    }
+
+    // Init
     checkAuth();
 </script>
 </body>

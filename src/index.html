@@ -687,9 +687,81 @@
         });
     });
 </script>
-<script>document.querySelectorAll('[data-current-year]').forEach(function(el){el.textContent=new Date().getFullYear();});</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
+<script src="dotmatrix.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const strip = document.querySelector('.home-project-strip');
+    if (!strip) return;
+
+    // Default sample fallback projects
+    const fallbackProjects = [
+        {
+            title: "Layered lighting for a premium residence",
+            category: "Residence",
+            image_url: "assets/images/applications/residential-living.jpg",
+            client_brief: "Warm, glare-conscious lighting for living and private areas"
+        },
+        {
+            title: "Display-led commercial lighting",
+            category: "Showroom",
+            image_url: "assets/images/applications/commercial-showroom.jpg",
+            client_brief: "High CRI display lighting with tight beam angle control"
+        },
+        {
+            title: "Comfort-led office specification",
+            category: "Workspace",
+            image_url: "assets/images/applications/office-cabin.jpg",
+            client_brief: "UGR < 19 glare control for prolonged visual task comfort"
+        },
+        {
+            title: "Atmosphere-led hospitality supply",
+            category: "Hospitality",
+            image_url: "assets/images/applications/hospitality-bar.jpg",
+            client_brief: "Tunable warm ambience with dim-to-warm architectural accents"
+        }
+    ];
+
+    let projects = fallbackProjects;
+
+    // Fetch projects from Supabase if client is available
+    if (typeof _db !== 'undefined' || typeof supabase !== 'undefined') {
+        try {
+            const client = typeof _db !== 'undefined' ? _db : supabase;
+            const { data } = await client.from('projects').select('*');
+            if (data && data.length > 0) {
+                projects = data;
+            }
+        } catch (e) {
+            console.log('Using default project landmarks');
+        }
+    }
+
+    // Randomize array order
+    const shuffled = [...projects].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+
+    strip.innerHTML = '';
+    selected.forEach((p, idx) => {
+        const card = document.createElement('a');
+        card.href = 'projects.html';
+        card.className = 'home-project-card w-full md:w-auto md:min-w-[400px] lg:min-w-[500px] group block';
+        const img = p.image_url || 'assets/images/applications/residential-living.jpg';
+        card.innerHTML = `
+            <div class="aspect-[16/10] overflow-hidden mb-6 border border-[var(--border-neutral)] bg-gray-50">
+                <img class="w-full h-full object-cover image-grayscale group-hover:scale-105 transition-transform duration-1000" loading="lazy" src="${img}" alt="${p.title || 'Project'}"/>
+            </div>
+            <div class="home-project-meta flex justify-between items-start">
+                <div>
+                    <h3 class="text-lg font-serif mb-1 uppercase tracking-tight text-[#134095] group-hover:text-[#EF7F1A] transition-colors">${p.title || 'Architectural Landmark'}</h3>
+                    <p class="text-[10px] uppercase tracking-widest text-[#374151]">${p.category || 'Architectural'} • ${p.client_brief || 'Beton Lighting Supply'}</p>
+                </div>
+                <span class="text-[10px] border border-[#134095]/20 px-3 py-1 font-mono text-[#134095]">Case 0${idx + 1}</span>
+            </div>
+        `;
+        strip.appendChild(card);
+    });
+});
+</script>
 </body>
 </html>
 
