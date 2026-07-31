@@ -603,6 +603,7 @@
                             modal.classList.add('flex');
                         }
                         form.reset();
+                        if (typeof window.clearInquiryShortlist === 'function') window.clearInquiryShortlist();
                         if (typeof window.showStep === 'function') window.showStep(1);
                     } else {
                         console.log(response);
