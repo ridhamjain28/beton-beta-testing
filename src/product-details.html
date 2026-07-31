@@ -261,26 +261,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     if (!_detailsDb) return;
 
+    const fallbackDetails = {
+        "B-204": { ref: "B-204", name: "Apex Recessed Downlight", category: "Indoor Lighting", short_description: "A deep-recessed luminaire featuring precision optics for high-visual comfort architectural integration.", image_url: "assets/images/products/sys-01.webp", optics: "Medium (36°)", ip_rating: "IP20 (Indoor)", delivery: "3-4 Weeks" },
+        "M-992": { ref: "M-992", name: "Mag-Track Linear Pro", category: "Magnetic Systems", short_description: "Modular 48V magnetic track system with tool-free positioning and seamless lighting modules.", image_url: "assets/images/products/render-1.webp", optics: "Narrow (15°-24°)", ip_rating: "IP20 (Indoor)", delivery: "3-4 Weeks" },
+        "S-441": { ref: "S-441", name: "Zenith Surface 150", category: "Surface Luminaire", short_description: "A minimalist surface-mounted cylinder with integrated high-output drivers and anti-glare louvers.", image_url: "assets/images/products/sys-01.webp", optics: "Narrow (15°-24°)", ip_rating: "IP20 (Indoor)", delivery: "3-4 Weeks" },
+        "P-102": { ref: "P-102", name: "Flux Dali-2 Driver", category: "Accessories", short_description: "Universal DALI-2 dimmable driver for precise control and flicker-free architectural performance.", image_url: "assets/images/products/render-4.webp", optics: "Wide (60°+)", ip_rating: "IP20 (Indoor)", delivery: "2-3 Weeks" },
+        "L-550": { ref: "L-550", name: "Matrix 20 Profile", category: "Strip & Profiles", short_description: "Slim architectural extrusion for continuous linear lighting with uniform opal diffusers.", image_url: "assets/images/products/render-2.webp", optics: "Medium (36°)", ip_rating: "IP20 (Indoor)", delivery: "2-3 Weeks" },
+        "W-881": { ref: "W-881", name: "Titan Flood Washer", category: "Outdoor Lighting", short_description: "Robust IP67 wall washer with asymmetric optics for facade illumination and landscape detailing.", image_url: "assets/images/products/innova.webp", optics: "Wide (60°+)", ip_rating: "IP67 (Submersible)", delivery: "3-4 Weeks" }
+    };
+
+    let product = null;
+
     try {
-        const { data, error } = await _detailsDb
-            .from('products')
-            .select('*')
-            .eq('ref', productRef)
-            .maybeSingle();
-            
-        if (error) throw error;
-        if (!data) {
-            document.title = "Product Not Found | Beton Lighting";
-            const nameHeader = document.getElementById('product-title');
-            if (nameHeader) nameHeader.innerHTML = '<span class="text-red-500">Product Not Found</span>';
-            return;
+        if (_detailsDb) {
+            const { data, error } = await _detailsDb
+                .from('products')
+                .select('*')
+                .eq('ref', productRef)
+                .maybeSingle();
+            if (!error && data) {
+                product = data;
+            }
         }
-        
-        const product = data;
-        
-        // Hide dotmatrix loader once data arrives
-        const loader = document.getElementById('details-loader');
-        if (loader) loader.style.display = 'none';
+    } catch (err) {
+        console.warn('Supabase fetch details failed, using fallback:', err);
+    }
+
+    if (!product) {
+        product = fallbackDetails[productRef] || fallbackDetails["B-204"];
+        product.ref = productRef;
+    }
+
+    // Hide loader once product object is ready
+    const loader = document.getElementById('details-loader');
+    if (loader) loader.style.display = 'none';
         
         // Page & Meta Title
         document.title = `${product.name || 'Product Details'} | Beton Lighting`;
@@ -338,9 +352,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cb = document.getElementById('details-inquiry-checkbox');
         if (cb && product.ref) {
             cb.dataset.productRef = product.ref;
-            if (typeof isInquirySelected === 'function' && isInquirySelected(product.ref)) {
-                cb.checked = true;
-            }
             window.handleDetailsInquiryToggle = function(el) {
                 if (typeof toggleInquiryProduct === 'function') {
                     toggleInquiryProduct({
@@ -351,6 +362,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                 }
             };
+            if (typeof updateInquiryTrayUI === 'function') {
+                updateInquiryTrayUI();
+            }
         }
         
         // Contact button query param injection

@@ -77,12 +77,16 @@ function updateInquiryTrayUI() {
     // Update checkboxes on page
     document.querySelectorAll('.inquiry-checkbox').forEach(cb => {
         const ref = cb.dataset.productRef;
+        const parent = cb.parentElement;
+        const svg = parent ? parent.querySelector('svg') : null;
         if (ref && isInquirySelected(ref)) {
             cb.checked = true;
-            cb.parentElement.classList.add('bg-[#134095]', 'border-[#134095]', 'text-white');
+            if (parent) parent.classList.add('bg-[#134095]', 'border-[#134095]', 'text-white');
+            if (svg) svg.classList.remove('hidden');
         } else {
             cb.checked = false;
-            cb.parentElement.classList.remove('bg-[#134095]', 'border-[#134095]', 'text-white');
+            if (parent) parent.classList.remove('bg-[#134095]', 'border-[#134095]', 'text-white');
+            if (svg) svg.classList.add('hidden');
         }
     });
 
