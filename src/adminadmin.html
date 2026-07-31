@@ -104,7 +104,8 @@
         /* Table */
         .table-card-header { padding: 1rem 1.5rem; border-bottom: 1px solid #e9ecef; }
         .table-card-header h3 { font-size: 1rem; font-weight: 700; color: #111827; }
-        table { width: 100%; border-collapse: collapse; }
+        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; }
         thead th { padding: 0.7rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid #e9ecef; background: #fafafa; }
         thead th:first-child { padding-left: 1.5rem; }
         thead th:last-child  { padding-right: 1.5rem; text-align: right; }
@@ -133,9 +134,9 @@
 
         /* Inquiries */
         .inq-date { white-space: nowrap; color: #6b7280; font-size: 0.8rem; }
-        .inq-name { font-weight: 600; }
-        .inq-email a { color: #134095; text-decoration: none; }
-        .inq-msg { max-width: 320px; color: #374151; font-size: 0.82rem; }
+        .inq-name { font-weight: 600; white-space: nowrap; }
+        .inq-email a { color: #134095; text-decoration: none; white-space: nowrap; }
+        .inq-msg { min-width: 250px; color: #374151; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word; }
     </style>
 </head>
 <body>
@@ -304,22 +305,24 @@
                 <div class="table-card-header">
                     <h3>Product Catalog</h3>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Ref</th>
-                            <th>Product Name</th>
-                            <th>Category</th>
-                            <th style="text-align:right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="products-tbody">
-                        <tr class="empty-row">
-                            <td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading products...</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Ref</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th style="text-align:right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <tr class="empty-row">
+                                <td colspan="5"><dotm-square-8 size="24" color="#134095"></dotm-square-8><br>Loading products...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -419,22 +422,24 @@
                 <div class="table-card-header">
                     <h3>Architectural Projects</h3>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Client Brief</th>
-                            <th style="text-align:right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="projects-tbody">
-                        <tr class="empty-row">
-                            <td colspan="5">Loading projects...</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Client Brief</th>
+                                <th style="text-align:right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-tbody">
+                            <tr class="empty-row">
+                                <td colspan="5">Loading projects...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
@@ -445,21 +450,23 @@
                 <div class="table-card-header">
                     <h3>Submitted Inquiries</h3>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Message & Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inquiries-tbody">
-                        <tr class="empty-row">
-                            <td colspan="4">Loading inquiries...</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Message & Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inquiries-tbody">
+                            <tr class="empty-row">
+                                <td colspan="4">Loading inquiries...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
