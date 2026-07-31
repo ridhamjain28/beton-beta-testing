@@ -92,7 +92,7 @@ function updateInquiryTrayUI() {
         // EXPANDED FLOATING CARD STATE (Morphs floating bar into expanded card with Chevron Down button)
         let itemsHTML = '';
         if (count === 0) {
-            itemsHTML = `<div class="p-4 text-center text-xs text-gray-300 italic">Your inquiry tray is currently empty.<br>Browse products and click "+ ADD TO QUOTE".</div>`;
+            itemsHTML = `<div class="p-4 text-center text-xs text-gray-300 italic">Your inquiry tray is currently empty.<br>Browse products and click "ADD TO QUOTE".</div>`;
         } else {
             itemsHTML = list.map(item => `
                 <div class="flex items-center justify-between p-2.5 bg-white/10 rounded-lg border border-white/10 gap-3">
@@ -170,14 +170,14 @@ function updateInquiryTrayUI() {
         if (isSelected) {
             ctaAddBtn.className = 'w-full flex items-center justify-center gap-3 bg-[#134095] text-white py-4 text-xs uppercase tracking-[0.25em] font-bold hover:bg-[#0f3278] transition-all rounded-lg border-2 border-[#134095] shadow-md';
             ctaAddBtn.innerHTML = `
-                <iconify-icon icon="heroicons:check-circle-20-solid" class="text-lg text-white"></iconify-icon>
+                <iconify-icon icon="heroicons:check-20-solid" class="text-lg text-white"></iconify-icon>
                 <span>REMOVE FROM QUOTE</span>
             `;
         } else {
             ctaAddBtn.className = 'w-full flex items-center justify-center gap-3 bg-white text-[#134095] py-4 text-xs uppercase tracking-[0.25em] font-bold hover:bg-[#134095]/5 transition-all rounded-lg border-2 border-[#134095]';
             ctaAddBtn.innerHTML = `
-                <iconify-icon icon="heroicons:plus-circle-20-solid" class="text-lg text-[#134095]"></iconify-icon>
-                <span>+ ADD TO QUOTE</span>
+                <iconify-icon icon="heroicons:plus-20-solid" class="text-lg text-[#134095]"></iconify-icon>
+                <span>ADD TO QUOTE</span>
             `;
         }
     }

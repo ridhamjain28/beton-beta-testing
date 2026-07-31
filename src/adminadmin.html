@@ -104,9 +104,32 @@
         /* Table */
         .table-card-header { padding: 1rem 1.5rem; border-bottom: 1px solid #e9ecef; }
         .table-card-header h3 { font-size: 1rem; font-weight: 700; color: #111827; }
-        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 650px; }
-        thead th { padding: 0.7rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid #e9ecef; background: #fafafa; }
+        .table-wrapper {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto !important;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x pan-y;
+            padding-bottom: 6px;
+        }
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #134095;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px !important;
+        }
+        thead th { padding: 0.7rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid #e9ecef; background: #fafafa; white-space: nowrap; }
         thead th:first-child { padding-left: 1.5rem; }
         thead th:last-child  { padding-right: 1.5rem; text-align: right; }
         tbody td { padding: 0.85rem 1rem; font-size: 0.875rem; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
@@ -136,7 +159,7 @@
         .inq-date { white-space: nowrap; color: #6b7280; font-size: 0.8rem; }
         .inq-name { font-weight: 600; white-space: nowrap; }
         .inq-email a { color: #134095; text-decoration: none; white-space: nowrap; }
-        .inq-msg { min-width: 250px; color: #374151; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word; }
+        .inq-msg { min-width: 300px; color: #374151; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word; }
     </style>
 </head>
 <body>
