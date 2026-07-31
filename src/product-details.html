@@ -69,6 +69,7 @@
                 document.body.style.overflow = '';
             });
         }
+    });
 </script>
 <script src="dotmatrix.js"></script>
 <script src="inquiry-tray.js"></script>
@@ -120,8 +121,12 @@
 </div>
 </div>
 </div>
-<div class="space-y-6">
-<a class="w-full flex items-center justify-center gap-4 bg-[#EF7F1A] text-white py-5 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#134095] transition-colors duration-500" href="contact.html" id="cta-project-inquiry">Contact Us for Project</a>
+<div class="space-y-3">
+<a class="w-full flex items-center justify-center gap-4 bg-[#EF7F1A] text-white py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#134095] transition-colors duration-500 rounded" href="contact.html" id="cta-project-inquiry">Contact Us for Project</a>
+<button type="button" onclick="const cb = document.getElementById('details-inquiry-checkbox'); if (cb) { cb.checked = !cb.checked; handleDetailsInquiryToggle(cb); }" class="w-full flex items-center justify-center gap-3 bg-[#134095] text-white py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-[#0f3278] transition-colors duration-500 rounded border border-[#134095]">
+    <span class="w-4 h-4 rounded-full border-2 border-white flex items-center justify-center bg-white/20"><svg class="w-2.5 h-2.5 fill-current text-white" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg></span>
+    <span>Add / Remove Shortlist</span>
+</button>
 </div>
 <div class="flex items-center gap-8 py-6 border-y border-[var(--border-neutral)]">
 <div class="flex flex-col"><span class="text-[10px] uppercase tracking-widest text-[#134095]/90 mb-1">Delivery</span><span class="text-xs font-medium" id="spec-delivery">3-4 Weeks</span></div>
@@ -338,8 +343,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const imgUrl = product.image_url || 'assets/images/temporary/beton-product-render.webp';
             mainImg.src = imgUrl;
             mainImg.alt = product.name || '';
+        }
             
-            // Update thumbnails as well
         // Dynamic Optics, IP, Delivery Specs
         const specOptics = document.getElementById('spec-optics');
         if (specOptics) specOptics.textContent = product.optics || 'Medium (36°)';
@@ -352,20 +357,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cb = document.getElementById('details-inquiry-checkbox');
         if (cb && product.ref) {
             cb.dataset.productRef = product.ref;
-            window.handleDetailsInquiryToggle = function(el) {
-                if (typeof toggleInquiryProduct === 'function') {
-                    toggleInquiryProduct({
-                        ref: product.ref,
-                        name: product.name || 'Product',
-                        cct: '3000K Warm White',
-                        wattage: '12W'
-                    });
-                }
-            };
             if (typeof updateInquiryTrayUI === 'function') {
                 updateInquiryTrayUI();
             }
         }
+
+        window.handleDetailsInquiryToggle = function(el) {
+            if (typeof toggleInquiryProduct === 'function' && product && product.ref) {
+                toggleInquiryProduct({
+                    ref: product.ref,
+                    name: product.name || 'Product',
+                    cct: '3000K Warm White',
+                    wattage: '12W'
+                });
+            }
+        };
         
         // Contact button query param injection
         const ctaBtn = document.getElementById('cta-project-inquiry');

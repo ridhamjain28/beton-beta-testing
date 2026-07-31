@@ -52,27 +52,21 @@ function updateInquiryTrayUI() {
         document.body.appendChild(tray);
     }
 
-    if (list.length > 0) {
-        const lastName = list[list.length - 1].name;
-        const extraCount = list.length - 1;
-        const label = extraCount > 0 ? `${lastName} +${extraCount} more` : lastName;
+    const count = list.length;
+    const label = count > 0 ? (count > 1 ? `${list[count - 1].name} +${count - 1} more` : list[count - 1].name) : 'No items selected';
 
-        tray.innerHTML = `
-            <a href="contact.html#step-3" class="flex items-center gap-4 bg-[#134095] text-white px-5 py-3.5 rounded-full shadow-2xl hover:bg-[#0f3278] transition-all border border-white/20 group">
-                <span class="w-6 h-6 rounded-full bg-[#EF7F1A] text-white text-[11px] font-bold flex items-center justify-center">${list.length}</span>
-                <div class="flex flex-col text-left">
-                    <span class="text-[9px] uppercase tracking-widest text-[#EF7F1A] font-bold">Inquiry Tray</span>
-                    <span class="text-xs font-semibold max-w-[160px] truncate">${label}</span>
-                </div>
-                <span class="text-[10px] uppercase tracking-widest font-semibold bg-white/10 px-3 py-1 rounded-full group-hover:bg-[#EF7F1A] transition-colors">Proceed →</span>
-            </a>
-        `;
-        tray.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-        tray.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-    } else {
-        tray.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-        tray.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-    }
+    tray.innerHTML = `
+        <a href="contact.html#step-3" class="flex items-center gap-4 bg-[#134095] text-white px-5 py-3.5 rounded-full shadow-2xl hover:bg-[#0f3278] transition-all border border-white/20 group">
+            <span class="w-6 h-6 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-[11px] font-bold flex items-center justify-center">${count}</span>
+            <div class="flex flex-col text-left">
+                <span class="text-[9px] uppercase tracking-widest text-[#EF7F1A] font-bold">Inquiry Tray</span>
+                <span class="text-xs font-semibold max-w-[160px] truncate">${label}</span>
+            </div>
+            <span class="text-[10px] uppercase tracking-widest font-semibold bg-white/10 px-3 py-1 rounded-full group-hover:bg-[#EF7F1A] transition-colors">${count > 0 ? 'Proceed →' : 'View Shortlist'}</span>
+        </a>
+    `;
+    tray.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+    tray.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
 
     // Update checkboxes on page
     document.querySelectorAll('.inquiry-checkbox').forEach(cb => {
