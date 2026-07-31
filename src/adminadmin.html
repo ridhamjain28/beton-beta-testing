@@ -634,10 +634,58 @@
         projDropZone.style.display = 'block';
     }
 
+    function convertToWebP(file, maxWidth = 1600, quality = 0.82) {
+        return new Promise((resolve) => {
+            if (!file || file.type === 'image/svg+xml' || file.type === 'image/gif') {
+                resolve(file);
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(
+                        (blob) => {
+                            if (blob) {
+                                const newFileName = file.name.replace(/\.[^/.]+$/, '') + '.webp';
+                                const webpFile = new File([blob], newFileName, { type: 'image/webp' });
+                                resolve(webpFile);
+                            } else {
+                                resolve(file);
+                            }
+                        },
+                        'image/webp',
+                        quality
+                    );
+                };
+                img.onerror = () => resolve(file);
+                img.src = e.target.result;
+            };
+            reader.onerror = () => resolve(file);
+            reader.readAsDataURL(file);
+        });
+    }
+
     async function uploadImage(file, ref) {
-        const ext  = file.name.split('.').pop();
+        // Automatically convert uploaded images (JPG, PNG) to compressed WebP format
+        const webpFile = await convertToWebP(file);
+        const ext = webpFile.name.split('.').pop() || 'webp';
         const path = `${ref}-${Date.now()}.${ext}`;
-        const { data, error } = await _db.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: true });
+        const { data, error } = await _db.storage.from(STORAGE_BUCKET).upload(path, webpFile, {
+            upsert: true,
+            contentType: webpFile.type || 'image/webp'
+        });
         if (error) throw error;
         const { data: urlData } = _db.storage.from(STORAGE_BUCKET).getPublicUrl(path);
         return urlData.publicUrl;
