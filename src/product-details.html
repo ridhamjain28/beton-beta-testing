@@ -378,10 +378,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (ctaBtn && product.ref) {
             ctaBtn.href = `contact.html?ref=${encodeURIComponent(product.ref)}&type=quotation`;
         }
-        
-    } catch (err) {
-        console.error('Error fetching product details from Supabase:', err);
-    }
 });
 </script>
 
