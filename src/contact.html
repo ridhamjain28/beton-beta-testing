@@ -553,6 +553,14 @@
                 const originalText = submitBtn.innerHTML;
                 submitBtn.innerHTML = 'Sending...';
                 
+                // Format selected inquiry products from tray
+                const inquiryProducts = typeof window.getInquiryProducts === 'function' ? window.getInquiryProducts() : [];
+                let formattedProductsStr = '';
+                if (inquiryProducts && inquiryProducts.length > 0) {
+                    formattedProductsStr = '\n\nSelected Fixtures (' + inquiryProducts.length + '):\n' + 
+                        inquiryProducts.map(p => `- Ref: ${p.ref} | Name: ${p.name} | CCT: ${p.cct || '3000K Warm White'} | Power: ${p.wattage || '12W'}`).join('\n');
+                }
+
                 const formData = new FormData(form);
                 const object = {};
                 formData.forEach((value, key) => {
@@ -567,6 +575,19 @@
                         object[key] = value;
                     }
                 });
+
+                // Attach explicit selected fixtures fields to Web3Forms payload
+                if (inquiryProducts && inquiryProducts.length > 0) {
+                    object['selected_fixtures'] = inquiryProducts.map(p => `${p.ref} (${p.name}) - ${p.cct || '3000K'}, ${p.wattage || '12W'}`).join('; ');
+                    object['total_fixtures_selected'] = inquiryProducts.length;
+                } else {
+                    object['selected_fixtures'] = 'None selected';
+                }
+
+                // Combine user message + selected fixtures text
+                const fullMessageText = (form.message.value || '') + formattedProductsStr;
+                object['message'] = fullMessageText;
+
                 const json = JSON.stringify(object);
                 
                 const web3Promise = fetch('https://api.web3forms.com/submit', {
@@ -582,7 +603,7 @@
                     ? supabase.from('inquiries').insert([{
                         name: form.name.value,
                         email: form.email.value,
-                        message: form.message.value
+                        message: fullMessageText
                     }])
                     : Promise.resolve();
 
