@@ -65,7 +65,6 @@ function updateInquiryTrayUI() {
     if (!tray) {
         tray = document.createElement('div');
         tray.id = 'beton-floating-inquiry-tray';
-        tray.className = 'fixed bottom-6 right-6 z-[100] transition-all duration-300 flex flex-col items-end';
         document.body.appendChild(tray);
     }
 
@@ -73,53 +72,10 @@ function updateInquiryTrayUI() {
     const lastItem = count > 0 ? list[count - 1] : null;
     const label = count > 0 ? (count > 1 ? `${lastItem.name} +${count - 1} more` : lastItem.name) : 'No items selected';
 
-    let popoverItemsHTML = '';
-    if (count === 0) {
-        popoverItemsHTML = `<div class="p-4 text-center text-xs text-gray-500 italic">Your inquiry shortlist is currently empty.<br>Browse products and click "+ ADD TO QUOTE".</div>`;
-    } else {
-        popoverItemsHTML = list.map(item => `
-            <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg border border-gray-100 gap-3">
-                <div class="flex flex-col text-left overflow-hidden">
-                    <span class="text-[9px] font-mono text-[#EF7F1A] font-bold uppercase">${item.ref}</span>
-                    <span class="text-xs font-semibold text-[#134095] truncate">${item.name}</span>
-                </div>
-                <button type="button" onclick="event.stopPropagation(); removeInquiryProductByRef('${item.ref}')" class="text-gray-400 hover:text-red-500 p-1 rounded transition-colors" title="Remove fixture">
-                    <iconify-icon icon="heroicons:x-mark-20-solid" class="text-base block"></iconify-icon>
-                </button>
-            </div>
-        `).join('');
-    }
-
-    tray.innerHTML = `
-        <!-- Floating Quick-View Popover Dialog -->
-        <div id="beton-inquiry-popover" class="w-72 sm:w-80 bg-white/95 backdrop-blur-md border border-[#134095]/20 rounded-2xl shadow-2xl p-4 mb-3 transition-all duration-300 transform ${!_popoverOpen ? 'hidden opacity-0 scale-95' : 'block opacity-100 scale-100'}">
-            <div class="flex justify-between items-center pb-2.5 mb-2.5 border-b border-gray-100">
-                <div class="flex items-center gap-2">
-                    <iconify-icon icon="heroicons:shopping-bag-20-solid" class="text-[#EF7F1A] text-lg"></iconify-icon>
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#134095]">Shortlist (${count})</span>
-                </div>
-                <button type="button" onclick="toggleInquiryPopover(event)" class="text-gray-400 hover:text-[#134095] transition-colors p-1">
-                    <iconify-icon icon="heroicons:x-mark-20-solid" class="text-lg block"></iconify-icon>
-                </button>
-            </div>
-            
-            <div class="space-y-2 max-h-56 overflow-y-auto pr-1">
-                ${popoverItemsHTML}
-            </div>
-
-            ${count > 0 ? `
-            <div class="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between gap-2">
-                <button type="button" onclick="clearInquiryShortlist()" class="text-[10px] uppercase font-bold text-red-500 hover:underline px-2 py-1">Clear All</button>
-                <a href="contact.html#step-3" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#134095] text-white py-2 px-3 rounded-lg text-[10px] font-bold uppercase tracking-wider hover:bg-[#0f3278] transition-colors">
-                    <span>Proceed to Quote</span>
-                    <iconify-icon icon="heroicons:arrow-right-20-solid" class="text-sm"></iconify-icon>
-                </a>
-            </div>
-            ` : ''}
-        </div>
-
-        <!-- Floating Tray Main Bar -->
-        <div class="flex items-center gap-2 bg-[#134095] text-white p-2.5 sm:px-4 sm:py-3 rounded-full shadow-2xl border border-white/20">
+    if (!_popoverOpen) {
+        // COLLAPSED FLOATING BAR STATE
+        tray.className = 'fixed bottom-6 right-6 z-[100] bg-[#134095] text-white p-2.5 sm:px-4 sm:py-3 rounded-full shadow-2xl border border-white/20 flex items-center gap-2 transition-all duration-300 transform translate-y-0 opacity-100';
+        tray.innerHTML = `
             <a href="contact.html#step-3" class="flex items-center gap-3 group text-left">
                 <span class="w-7 h-7 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-xs font-bold flex items-center justify-center shadow-inner">${count}</span>
                 <div class="flex flex-col text-left">
@@ -128,11 +84,59 @@ function updateInquiryTrayUI() {
                 </div>
             </a>
             
-            <button type="button" onclick="toggleInquiryPopover(event)" class="ml-1 p-2 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center" title="Toggle shortlist preview">
-                <iconify-icon icon="${_popoverOpen ? 'heroicons:chevron-down-20-solid' : 'heroicons:chevron-up-20-solid'}" class="text-base block"></iconify-icon>
+            <button type="button" onclick="toggleInquiryPopover(event)" class="ml-1 p-2 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center" title="Expand Inquiry Tray">
+                <iconify-icon icon="heroicons:chevron-up-20-solid" class="text-base block"></iconify-icon>
             </button>
-        </div>
-    `;
+        `;
+    } else {
+        // EXPANDED FLOATING CARD STATE (Morphs floating bar into expanded card with Chevron Down button)
+        let itemsHTML = '';
+        if (count === 0) {
+            itemsHTML = `<div class="p-4 text-center text-xs text-gray-300 italic">Your inquiry tray is currently empty.<br>Browse products and click "+ ADD TO QUOTE".</div>`;
+        } else {
+            itemsHTML = list.map(item => `
+                <div class="flex items-center justify-between p-2.5 bg-white/10 rounded-lg border border-white/10 gap-3">
+                    <div class="flex flex-col text-left overflow-hidden">
+                        <span class="text-[9px] font-mono text-[#EF7F1A] font-bold uppercase">${item.ref}</span>
+                        <span class="text-xs font-semibold text-white truncate">${item.name}</span>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); removeInquiryProductByRef('${item.ref}')" class="text-white/60 hover:text-red-400 p-1 rounded transition-colors" title="Remove fixture">
+                        <iconify-icon icon="heroicons:x-mark-20-solid" class="text-base block"></iconify-icon>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        tray.className = 'fixed bottom-6 right-6 z-[100] w-72 sm:w-80 bg-[#134095] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex flex-col gap-3 transition-all duration-300 transform translate-y-0 opacity-100';
+        tray.innerHTML = `
+            <!-- Header with Badge & Chevron Down (NO X BUTTON) -->
+            <div class="flex justify-between items-center pb-2.5 border-b border-white/15">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-xs font-bold flex items-center justify-center shadow-inner">${count}</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Inquiry Tray (${count})</span>
+                </div>
+                <button type="button" onclick="toggleInquiryPopover(event)" class="p-1.5 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center" title="Collapse Inquiry Tray">
+                    <iconify-icon icon="heroicons:chevron-down-20-solid" class="text-lg block"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Scrollable Items List -->
+            <div class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                ${itemsHTML}
+            </div>
+
+            <!-- Footer Actions -->
+            ${count > 0 ? `
+            <div class="pt-2.5 border-t border-white/15 flex items-center justify-between gap-2">
+                <button type="button" onclick="clearInquiryShortlist()" class="text-[10px] uppercase font-bold text-red-300 hover:text-red-100 hover:underline px-2 py-1">Clear All</button>
+                <a href="contact.html#step-3" class="flex-1 inline-flex items-center justify-center gap-2 bg-[#EF7F1A] text-white py-2 px-3 rounded-lg text-[10px] font-bold uppercase tracking-wider hover:bg-white hover:text-[#134095] transition-colors">
+                    <span>Proceed to Quote</span>
+                    <iconify-icon icon="heroicons:arrow-right-20-solid" class="text-sm"></iconify-icon>
+                </a>
+            </div>
+            ` : ''}
+        `;
+    }
 
     // Update circular checkboxes on page to use SOLID BRAND BLUE when checked
     document.querySelectorAll('.inquiry-checkbox').forEach(cb => {
