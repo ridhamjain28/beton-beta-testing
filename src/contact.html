@@ -528,77 +528,97 @@
         }
 
         const form = document.getElementById('wizard-form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!form.name.value || !form.email.value || !form.message.value) {
-                alert("Please make sure you have filled out your Name, Email, and Aesthetic Goals (Message) in the previous steps.");
-                return;
-            }
-            
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Sending...';
-            
-            const formData = new FormData(form);
-            const object = {};
-            formData.forEach((value, key) => {
-                if (Reflect.has(object, key)) {
-                    let currentVal = object[key];
-                    if (!Array.isArray(currentVal)) {
-                        currentVal = [currentVal];
-                    }
-                    currentVal.push(value);
-                    object[key] = currentVal;
-                } else {
-                    object[key] = value;
-                }
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                // Let the module script handle the submission
             });
-            const json = JSON.stringify(object);
-            
-            const web3Promise = fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            });
-
-            const supabasePromise = typeof supabase !== 'undefined'
-                ? supabase.from('inquiries').insert([{
-                    name: form.name.value,
-                    email: form.email.value,
-                    message: form.message.value
-                }])
-                : Promise.resolve();
-
-            Promise.all([web3Promise, supabasePromise])
-            .then(async (responses) => {
-                const response = responses[0];
-            
-                let json = await response.json();
-                if (response.status == 200) {
-                    const modal = document.getElementById('success-modal');
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                    form.reset();
-                    showStep(1);
-                } else {
-                    console.log(response);
-                    alert('Something went wrong submitting your form.');
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                alert('Something went wrong submitting your form.');
-            })
-            .finally(() => {
-                submitBtn.innerHTML = originalText;
-            });
-        });
+        }
     });
+</script>
+<script type="module">
+    import { supabase, handleSupabaseError } from './supabase-client.js';
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('wizard-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!form.name.value || !form.email.value || !form.message.value) {
+                    alert("Please make sure you have filled out your Name, Email, and Aesthetic Goals (Message) in the previous steps.");
+                    return;
+                }
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Sending...';
+                
+                const formData = new FormData(form);
+                const object = {};
+                formData.forEach((value, key) => {
+                    if (Reflect.has(object, key)) {
+                        let currentVal = object[key];
+                        if (!Array.isArray(currentVal)) {
+                            currentVal = [currentVal];
+                        }
+                        currentVal.push(value);
+                        object[key] = currentVal;
+                    } else {
+                        object[key] = value;
+                    }
+                });
+                const json = JSON.stringify(object);
+                
+                const web3Promise = fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                });
+
+                const supabasePromise = supabase
+                    ? supabase.from('inquiries').insert([{
+                        name: form.name.value,
+                        email: form.email.value,
+                        message: form.message.value
+                    }])
+                    : Promise.resolve();
+
+                Promise.all([web3Promise, supabasePromise])
+                .then(async (responses) => {
+                    const response = responses[0];
+                    const supabaseResponse = responses[1];
+                    
+                    if (supabaseResponse && supabaseResponse.error) {
+                        handleSupabaseError(supabaseResponse.error, 'insert_inquiry');
+                    }
+                
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        const modal = document.getElementById('success-modal');
+                        if (modal) {
+                            modal.classList.remove('hidden');
+                            modal.classList.add('flex');
+                        }
+                        form.reset();
+                        if (typeof window.showStep === 'function') window.showStep(1);
+                    } else {
+                        console.log(response);
+                        alert('Something went wrong submitting your form.');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Something went wrong submitting your form.');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                });
+            });
+        }
+    });
 </script>
 </div>
 </section>
@@ -683,65 +703,76 @@
     });
 </script>
 
-<script>
-    // Newsletter Form AJAX handler
-    document.querySelectorAll('#newsletter-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = form.querySelector('input[type="email"]');
-            const button = form.querySelector('button');
-            const originalContent = button.innerHTML;
-            
-            const messageInput = form.querySelector('#newsletter-message');
-            messageInput.value = `for newsletter - ${emailInput.value}`;
-            
-            button.disabled = true;
-            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
-            
-            // Send to Web3Forms
-            const web3Promise = fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: new FormData(form)
-            });
+<script type="module">
+    import { supabase, handleSupabaseError } from './supabase-client.js';
 
-            // Send to Supabase
-            const supabasePromise = typeof supabase !== 'undefined' 
-                ? supabase.from('inquiries').insert([{ 
-                    name: 'Newsletter Subscriber', 
-                    email: emailInput.value, 
-                    message: 'Newsletter Subscription' 
-                  }])
-                : Promise.resolve();
-
-            Promise.all([web3Promise, supabasePromise])
-            .then(responses => responses[0])
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    emailInput.value = '';
-                    emailInput.placeholder = 'Subscribed successfully!';
-                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
-                } else {
-                    emailInput.placeholder = 'Please try again';
-                    button.innerHTML = originalContent;
-                    button.disabled = false;
+    document.addEventListener('DOMContentLoaded', () => {
+        // Newsletter Form AJAX handler
+        document.querySelectorAll('#newsletter-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = form.querySelector('input[type="email"]');
+                const button = form.querySelector('button');
+                const originalContent = button.innerHTML;
+                
+                const messageInput = form.querySelector('#newsletter-message');
+                if (messageInput) {
+                    messageInput.value = `for newsletter - ${emailInput.value}`;
                 }
-                setTimeout(() => {
-                    emailInput.placeholder = 'Email address';
+                
+                button.disabled = true;
+                button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
+                
+                // Send to Web3Forms
+                const web3Promise = fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(form)
+                });
+
+                // Send to Supabase
+                const supabasePromise = supabase 
+                    ? supabase.from('inquiries').insert([{ 
+                        name: 'Newsletter Subscriber', 
+                        email: emailInput.value, 
+                        message: 'Newsletter Subscription' 
+                    }])
+                    : Promise.resolve();
+
+                Promise.all([web3Promise, supabasePromise])
+                .then(responses => {
+                    const supabaseResponse = responses[1];
+                    if (supabaseResponse && supabaseResponse.error) {
+                        handleSupabaseError(supabaseResponse.error, 'newsletter_subscription');
+                    }
+                    return responses[0];
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        emailInput.value = '';
+                        emailInput.placeholder = 'Subscribed successfully!';
+                        button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
+                    } else {
+                        emailInput.placeholder = 'Please try again';
+                        button.innerHTML = originalContent;
+                        button.disabled = false;
+                    }
+                    setTimeout(() => {
+                        emailInput.placeholder = 'Email address';
+                        button.innerHTML = originalContent;
+                        button.disabled = false;
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Newsletter error:', error);
+                    emailInput.placeholder = 'Submission failed';
                     button.innerHTML = originalContent;
                     button.disabled = false;
-                }, 3000);
-            })
-            .catch(() => {
-                emailInput.placeholder = 'Submission failed';
-                button.innerHTML = originalContent;
-                button.disabled = false;
+                });
             });
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
 </body>
 </html>
 

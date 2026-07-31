@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | BETON LIGHTING</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; }
@@ -468,11 +467,10 @@
 </div>
 
 
-<script>
-    const SUPABASE_URL  = 'https://vxlbsmghixjvhxugmrhb.supabase.co';
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bGJzbWdoaXhqdmh4dWdtcmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwNDM0MDQsImV4cCI6MjA2MzYxOTQwNH0.z2g8zSjM0cQxNl847z7hT9XjLz2-W2n9T10L82z0kX0';
+<script type="module">
+    import { supabase, handleSupabaseError } from './supabase-client.js';
     const STORAGE_BUCKET = 'product-images';
-    const _db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    const _db = supabase;
 
     // Auth session
     function checkAuth() {
@@ -1018,6 +1016,24 @@
             await loadProjects();
         } catch (err) { alert('Error deleting project: ' + err.message); }
     }
+
+    // Expose functions to window since we are now in a module
+    window.switchTab = switchTab;
+    window.handleCategoryChange = handleCategoryChange;
+    window.confirmNewCategory = confirmNewCategory;
+    window.cancelNewCategory = cancelNewCategory;
+    window.handleFileSelect = handleFileSelect;
+    window.handleProjectFileSelect = handleProjectFileSelect;
+    window.removeImage = removeImage;
+    window.removeProjectImage = removeProjectImage;
+    window.cancelEdit = cancelEdit;
+    window.startEditById = startEditById;
+    window.saveProduct = saveProduct;
+    window.deleteProductById = deleteProductById;
+    window.cancelProjectEdit = cancelProjectEdit;
+    window.startProjectEditById = startProjectEditById;
+    window.saveProject = saveProject;
+    window.deleteProjectById = deleteProjectById;
 
     // Init
     checkAuth();

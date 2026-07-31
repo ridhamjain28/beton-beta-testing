@@ -249,17 +249,12 @@
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
+<script type="module">
 // Supabase integration for Product Details
+import { supabase, handleSupabaseError } from './supabase-client.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
-    let _detailsDb = null;
-    if (typeof supabase !== 'undefined') {
-        _detailsDb = supabase.createClient(
-            'https://vxlbsmghixjvhxugmrhb.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bGJzbWdoaXhqdmh4dWdtcmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwNDM0MDQsImV4cCI6MjA2MzYxOTQwNH0.z2g8zSjM0cQxNl847z7hT9XjLz2-W2n9T10L82z0kX0'
-        );
-    }
+    let _detailsDb = supabase;
 
     const urlParams = new URLSearchParams(window.location.search);
     const productRef = urlParams.get('ref') || 'B-201'; // Default fallback

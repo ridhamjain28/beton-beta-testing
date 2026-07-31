@@ -334,7 +334,9 @@
     });
 </script>
 
-<script>
+<script type="module">
+    import { supabase, handleSupabaseError } from './supabase-client.js';
+
     // Newsletter Form AJAX handler
     document.querySelectorAll('#newsletter-form').forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -391,8 +393,6 @@
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
 </body>
 </html>
 
