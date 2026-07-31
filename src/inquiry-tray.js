@@ -7,6 +7,32 @@
 
 const INQUIRY_STORAGE_KEY = 'beton_inquiry_products';
 
+// Inject custom seamless scrollbar CSS for floating tray
+if (typeof document !== 'undefined' && !document.getElementById('inquiry-tray-custom-styles')) {
+    const styleEl = document.createElement('style');
+    styleEl.id = 'inquiry-tray-custom-styles';
+    styleEl.innerHTML = `
+        .inquiry-tray-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+        }
+        .inquiry-tray-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .inquiry-tray-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .inquiry-tray-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 9999px;
+        }
+        .inquiry-tray-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #EF7F1A;
+        }
+    `;
+    document.head.appendChild(styleEl);
+}
+
 function getInquiryProducts() {
     try {
         return JSON.parse(localStorage.getItem(INQUIRY_STORAGE_KEY) || '[]');
@@ -121,7 +147,7 @@ function updateInquiryTrayUI() {
             </div>
 
             <!-- Scrollable Items List -->
-            <div class="space-y-2 max-h-56 overflow-y-auto pr-1">
+            <div class="space-y-2 max-h-56 overflow-y-auto pr-1 inquiry-tray-scrollbar">
                 ${itemsHTML}
             </div>
 

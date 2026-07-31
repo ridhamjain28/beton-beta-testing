@@ -1,11 +1,77 @@
 {
   "version": 1,
   "skills": {
+    "bambu-labs": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/bambu-labs/SKILL.md",
+      "computedHash": "0af4ebc31f84552f23dbe1ff663ea3aa507a5ff4f8ea44b2838a725efd61d86b"
+    },
+    "cad": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/cad/SKILL.md",
+      "computedHash": "1368c9ee5c91563c03756f1d3345fd8203f9bd6a64ab09f08696db5c2b268b3e"
+    },
+    "cad-viewer": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/cad-viewer/SKILL.md",
+      "computedHash": "62c3c414909f05d124ec00ff8defc5f853c1c2f8be145ff5a79e0faf25e6784c"
+    },
+    "dxf": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/dxf/SKILL.md",
+      "computedHash": "e61dbcc73f41e19d9392921e2426b127b88cc142a06794223d0c218c3abb3fbe"
+    },
+    "gcode": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/gcode/SKILL.md",
+      "computedHash": "2e9a99a525832c629c1df4a936760cde0899c7026f0392d9af26823ce490a467"
+    },
     "hallmark": {
       "source": "nutlope/hallmark",
       "sourceType": "github",
       "skillPath": "skills/hallmark/SKILL.md",
       "computedHash": "d3a20aae61e43793d74932c92b63bcad5882e73ec1c8545b858910fd95b25136"
+    },
+    "implicit-cad": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/implicit-cad/SKILL.md",
+      "computedHash": "cf6aa1d4414f42b02f8c4560c07045ea679b3a00a1efb2adb7dbc74fa7c0359c"
+    },
+    "sdf": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/sdf/SKILL.md",
+      "computedHash": "459de78f08b08896b4910cc55699b680a6c411a6cf73378844fa84bda1a63079"
+    },
+    "sendcutsend": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/sendcutsend/SKILL.md",
+      "computedHash": "cb713a1ae12b00572e9924c5035fcda3a49924fe5d4326788fd07d70e2684307"
+    },
+    "srdf": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/srdf/SKILL.md",
+      "computedHash": "4a8b299c9687668ad92720f0a282235f4f563d77ce6b740691d4e1245d92ce53"
+    },
+    "step-parts": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/step-parts/SKILL.md",
+      "computedHash": "b5c0341e97b114d4f9e52a4b2ec59adcd2880ddaf756b9d517417159d550f4dd"
+    },
+    "urdf": {
+      "source": "earthtojake/text-to-cad",
+      "sourceType": "github",
+      "skillPath": "skills/urdf/SKILL.md",
+      "computedHash": "c151581c6519771f7e09d56d45b1418748904f3ba9f00ba6a0d1b38734800dfc"
     }
   }
 }
