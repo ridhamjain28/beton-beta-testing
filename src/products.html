@@ -376,20 +376,8 @@
         
         if (nextPageBtn) {
             nextPageBtn.addEventListener('click', () => {
-                const products = Array.from(document.querySelectorAll('.product-card'));
-                const filtered = products.filter(p => {
-                    const cat = p.dataset.category || '';
-                    const optics = p.dataset.optics || '';
-                    const ip = p.dataset.ip || '';
-                    return (activeCategory === 'all' || cat === activeCategory) &&
-                           (activeOptics.length === 0 || activeOptics.includes(optics)) &&
-                           (activeIP.length === 0 || activeIP.includes(ip));
-                });
-                const totalPages = Math.ceil(filtered.length / itemsPerPage);
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updateFilters();
-                }
+                currentPage++;
+                updateFilters();
             });
         }
 
@@ -914,7 +902,6 @@
         loadProducts();
     }
 </script>
-    <script src="dotmatrix.js"></script>
     <script src="inquiry-tray.js"></script>
 </body></html>
 

@@ -281,73 +281,73 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="flex gap-10">
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
 <a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
+<div class="flex-1 flex lg:hidden justify-end items-center">
+<button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn" aria-label="Open Menu">
+<iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
+</button>
 </div>
+</header>
+<div class="fixed inset-0 bg-[#FEFEFE]/95 backdrop-blur-md z-[100] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+<button class="absolute top-6 right-8 text-3xl text-[#134095] focus:outline-none" id="mobile-menu-close" aria-label="Close Menu">
+<iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+</button>
+<div class="flex flex-col items-center gap-8 text-center">
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
+<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors text-[#EF7F1A]" href="projects.html">Projects</a>
+<a class="mt-4 px-8 py-3 border border-[#EF7F1A] text-[#EF7F1A] text-sm uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
 </div>
-</footer>
-</div>
-<div class="beton-sticky-enquiry" aria-label="Quick enquiry actions">
-<a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
-<a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
 </div>
 <script>
-    document.querySelectorAll('[data-current-year]').forEach((node) => {
-        node.textContent = new Date().getFullYear();
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mobile-menu-btn');
+    const close = document.getElementById('mobile-menu-close');
+    const overlay = document.getElementById('mobile-menu-overlay');
+    if (btn && close && overlay) {
+        btn.addEventListener('click', () => {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = 'hidden';
+        });
+        close.addEventListener('click', () => {
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        });
+    }
+});
 </script>
-
-<script>
-    // Newsletter Form AJAX handler
-    document.querySelectorAll('#newsletter-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = form.querySelector('input[type="email"]');
-            const button = form.querySelector('button');
-            const originalContent = button.innerHTML;
-            
-            const messageInput = form.querySelector('#newsletter-message');
-            messageInput.value = `for newsletter - ${emailInput.value}`;
-            
-            button.disabled = true;
-            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
-            
-            // Send to Web3Forms
-            const web3Promise = fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: new FormData(form)
-            });
-
-            // Send to Supabase
-            const supabasePromise = typeof supabase !== 'undefined' 
-                ? supabase.from('inquiries').insert([{ 
-                    name: 'Newsletter Subscriber', 
-                    email: emailInput.value, 
-                    message: 'Newsletter Subscription' 
-                  }])
-                : Promise.resolve();
-
-            Promise.all([web3Promise, supabasePromise])
-            .then(responses => responses[0])
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    emailInput.value = '';
-                    emailInput.placeholder = 'Subscribed successfully!';
-                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
-                } else {
-                    emailInput.placeholder = 'Please try again';
-                    button.innerHTML = originalContent;
-                    button.disabled = false;
-                }
-                setTimeout(() => {
-                    emailInput.placeholder = 'Email address';
-                    button.innerHTML = originalContent;
-                    button.disabled = false;
-                }, 3000);
-            })
-            .catch(() => {
-                emailInput.placeholder = 'Submission failed';
-                button.innerHTML = originalContent;
+<main>
+<section class="px-8 lg:px-16 py-16 md:py-24 border-b border-[var(--border-neutral)]">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+<div class="lg:col-span-7">
+<span class="project-label text-[#EF7F1A] block mb-5">Project Case Studies</span>
+<h1 class="text-4xl md:text-5xl font-serif leading-tight mb-6">Supplied lighting projects, documented with design intent.</h1>
+<p class="text-base text-[#374151] leading-relaxed max-w-2xl">This page is designed to showcase projects where Beton has supplied lighting, with each case study explaining what the client needed, how the lighting direction was resolved, and what fixture families supported the final specification.</p>
+</div>
+<div class="lg:col-span-5 border border-[var(--border-neutral)] p-6 bg-[#F5F7FA]">
+<span class="project-label text-[#134095]/70 block mb-4">How to read this page</span>
+<p class="text-sm text-[#374151] leading-relaxed">Each study should focus on the project brief, site condition, lighting approach, product families supplied, and enquiry support. Until verified Beton project data and photography are added, sample imagery is used without client names or completion claims.</p>
+</div>
+</div>
+</section>
+<section class="px-8 lg:px-16 py-12 md:py-20 border-b border-[var(--border-neutral)]">
+<div class="space-y-12" id="projects-grid">
+<!-- Case Study 1 -->
+<article id="residence" class="project-card border border-[var(--border-neutral)] bg-white scroll-mt-24">
+<div class="aspect-[16/10] overflow-hidden">
+<img alt="Premium residence with warm layered lighting" class="project-image w-full h-full object-cover" src="assets/images/applications/residential-living.jpg" loading="lazy"/>
+</div>
+<div class="p-6 md:p-8">
+<span class="project-label text-[#EF7F1A] block mb-3">Case Study Format / Residence</span>
+<h2 class="text-3xl font-serif mb-4">Layered lighting for a premium residence</h2>
+<p class="text-base text-[#374151] leading-relaxed max-w-3xl">A residential project page should explain the requested mood, ceiling constraints, furniture planning, and how the final fixture mix created comfort, usable brightness, and architectural depth.</p>
+</div>
+<div class="project-meta-grid">
+<div><span class="project-label text-[#134095]/70 block mb-2">Client Brief</span><p class="text-sm text-[#374151]">Warm, glare-conscious lighting for living and private areas</p></div>
+<div><span class="project-label text-[#134095]/70 block mb-2">Beton Response</span><p class="text-sm text-[#374151]">Layered ambient, task, and accent lighting direction</p></div>
 <div><span class="project-label text-[#134095]/70 block mb-2">Supplied Families</span><p class="text-sm text-[#374151]">Downlights, cove linear, magnetic track options</p></div>
 <div><span class="project-label text-[#134095]/70 block mb-2">Specification Output</span><p class="text-sm text-[#374151]">Shortlist, finish preferences, and enquiry-ready notes</p></div>
 </div>
