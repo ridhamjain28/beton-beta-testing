@@ -52,27 +52,6 @@
             outline: none !important;
             box-shadow: none !important;
         }
-        .checkbox-custom {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--border-navy);
-            cursor: pointer;
-            position: relative;
-        }
-        .checkbox-custom:checked {
-            background-color: var(--accent-orange);
-            border-color: var(--accent-orange);
-        }
-        .checkbox-custom:checked::after {
-            content: '\2713';
-            color: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 12px;
-        }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -544,12 +523,17 @@
                 });
             });
 
-            // Check step restoration or hash navigation
+            // Determine initial step
             const hash = window.location.hash;
-            if (hash === '#step-3' || draft.step === 3) {
+            const search = window.location.search;
+            const inquiryItems = typeof window.getInquiryProducts === 'function' ? window.getInquiryProducts() : [];
+
+            if (hash === '#step-3' || search.includes('step=3') || (inquiryItems && inquiryItems.length > 0)) {
                 showStep(3);
-            } else if (draft.step) {
+            } else if (draft && draft.step) {
                 showStep(draft.step);
+            } else {
+                showStep(1);
             }
         } catch (e) {
             console.error('Draft restore failed', e);
@@ -557,7 +541,15 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        showStep(1);
+        // Pre-restore draft and determine step
+        restoreContactFormDraft();
+
+        const hash = window.location.hash;
+        const search = window.location.search;
+        const inquiryItems = typeof window.getInquiryProducts === 'function' ? window.getInquiryProducts() : [];
+        if (hash === '#step-3' || search.includes('step=3') || (inquiryItems && inquiryItems.length > 0)) {
+            showStep(3);
+        }
 
         // Input listeners for draft saving
         const form = document.getElementById('wizard-form');

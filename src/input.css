@@ -79,6 +79,99 @@
   .beton-sticky-enquiry {
     display: none;
   }
+
+  /* Unified Radio and Checkbox Styling System */
+  .radio-custom,
+  input[type="radio"].radio-custom,
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50% !important;
+    border: 2px solid rgba(19, 64, 149, 0.35);
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+  }
+
+  .radio-custom:hover,
+  input[type="radio"].radio-custom:hover,
+  input[type="radio"]:hover {
+    border-color: #EF7F1A;
+  }
+
+  .radio-custom:checked,
+  input[type="radio"].radio-custom:checked,
+  input[type="radio"]:checked {
+    border-color: #EF7F1A !important;
+    background-color: #ffffff !important;
+  }
+
+  .radio-custom:checked::after,
+  input[type="radio"].radio-custom:checked::after,
+  input[type="radio"]:checked::after {
+    content: '' !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    background-color: #EF7F1A !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  /* Custom Checkbox */
+  .checkbox-custom,
+  input[type="checkbox"].checkbox-custom,
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid rgba(19, 64, 149, 0.35);
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+  }
+
+  .checkbox-custom:hover,
+  input[type="checkbox"].checkbox-custom:hover,
+  input[type="checkbox"]:hover {
+    border-color: #EF7F1A;
+  }
+
+  .checkbox-custom:checked,
+  input[type="checkbox"].checkbox-custom:checked,
+  input[type="checkbox"]:checked {
+    background-color: #EF7F1A !important;
+    border-color: #EF7F1A !important;
+  }
+
+  .checkbox-custom:checked::after,
+  input[type="checkbox"].checkbox-custom:checked::after,
+  input[type="checkbox"]:checked::after {
+    content: '\2713' !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
 }
 
 @layer utilities {

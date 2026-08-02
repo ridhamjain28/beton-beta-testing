@@ -291,11 +291,17 @@
                         </div>
                     </div>
 
-                    <!-- Row 5: Short Description -->
+                    <!-- Row 5: Short Description & Additional Gallery Images -->
                     <div class="form-row single">
                         <div class="form-field">
                             <label>Short Description</label>
                             <textarea id="p-short-desc" placeholder="Brief summary of fixture design, reflector technology, and ideal application..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="form-field">
+                            <label>Additional Gallery Image URLs (Amazon-Style Gallery, one URL per line)</label>
+                            <textarea id="p-gallery-urls" style="height: 70px; font-family: monospace; font-size: 0.8rem;" placeholder="assets/images/products/angle-2.webp&#10;assets/images/products/angle-3.webp"></textarea>
                         </div>
                     </div>
 
@@ -989,6 +995,7 @@
         document.getElementById('p-name').value = '';
         document.getElementById('p-category').value = '';
         document.getElementById('p-short-desc').value = '';
+        document.getElementById('p-gallery-urls').value = '';
         document.getElementById('p-image-url').value = '';
         removeImage();
         document.getElementById('form-title').textContent = 'Add New Product';
@@ -1010,6 +1017,7 @@
         document.getElementById('p-ref').value        = p.ref || '';
         document.getElementById('p-name').value       = p.name || '';
         document.getElementById('p-short-desc').value = p.short_description || '';
+        document.getElementById('p-gallery-urls').value = Array.isArray(p.gallery_urls) ? p.gallery_urls.join('\n') : (p.gallery_urls || '');
         document.getElementById('p-image-url').value  = p.image_url || '';
         if (p.optics) document.getElementById('p-optics').value = p.optics;
         if (p.ip_rating) document.getElementById('p-ip-rating').value = p.ip_rating;
@@ -1057,6 +1065,8 @@
         const name     = document.getElementById('p-name').value.trim();
         const category = document.getElementById('p-category').value;
         const desc     = document.getElementById('p-short-desc').value.trim();
+        const rawGallery = document.getElementById('p-gallery-urls').value.trim();
+        const gallery_urls = rawGallery ? rawGallery.split('\n').map(s => s.trim()).filter(Boolean) : [];
         const optics   = document.getElementById('p-optics').value;
         const ip_rating = document.getElementById('p-ip-rating').value;
         const delivery = document.getElementById('p-delivery').value.trim() || '3-4 Weeks';
@@ -1089,10 +1099,12 @@
                 document.getElementById('upload-progress').style.display = 'none';
             }
 
-            const payload = { ref, name, category, image_url: imageUrl, short_description: desc, optics, ip_rating, delivery };
+            const payload = { ref, name, category, image_url: imageUrl, gallery_urls, short_description: desc, optics, ip_rating, delivery };
             const result  = id
                 ? await _db.from('products').update(payload).eq('id', id)
                 : await _db.from('products').insert([payload]);
+
+            if (result.error) throw result.error;
 
             if (result.error) throw result.error;
             clearForm();

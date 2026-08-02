@@ -85,10 +85,31 @@
 </div>
 
 <section class="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] border-b border-[var(--border-neutral)]">
-<div class="lg:w-3/5 border-r border-[var(--border-neutral)] p-8 lg:p-16">
-<div class="sticky top-28 space-y-8">
-<div class="aspect-[4/3] bg-white overflow-hidden flex items-center justify-center p-20 border border-[var(--border-neutral)]">
-<img id="main-product-img" alt="Product Image" class="w-full h-auto object-contain image-grayscale opacity-0 transition-opacity duration-300" loading="lazy" src="assets/images/temporary/beton-product-render.webp" onload="this.classList.remove('opacity-0')"/>
+<div class="lg:w-3/5 border-r border-[var(--border-neutral)] p-8 lg:p-12">
+<div class="sticky top-28 space-y-6">
+<!-- Main Amazon-Style Gallery Image Container -->
+<div class="aspect-[4/3] bg-white overflow-hidden flex items-center justify-center p-8 md:p-14 border border-[var(--border-neutral)] rounded-xl relative group shadow-sm">
+    <img id="main-product-img" alt="Product Image" class="w-full h-full object-contain opacity-0 transition-all duration-300 transform scale-100" loading="lazy" src="assets/images/temporary/beton-product-render.webp" onload="this.classList.remove('opacity-0')"/>
+    
+    <!-- Left Chevron Button -->
+    <button id="gallery-prev-btn" onclick="prevGalleryImage()" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md border border-gray-200 text-[#134095] hover:bg-[#134095] hover:text-white transition-all flex items-center justify-center z-10 opacity-80 hover:opacity-100" title="Previous Image">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" class="text-2xl block"></iconify-icon>
+    </button>
+    
+    <!-- Right Chevron Button -->
+    <button id="gallery-next-btn" onclick="nextGalleryImage()" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-md border border-gray-200 text-[#134095] hover:bg-[#134095] hover:text-white transition-all flex items-center justify-center z-10 opacity-80 hover:opacity-100" title="Next Image">
+        <iconify-icon icon="heroicons:chevron-right-20-solid" class="text-2xl block"></iconify-icon>
+    </button>
+    
+    <!-- Counter Badge -->
+    <div id="gallery-counter" class="absolute bottom-3 right-4 bg-[#134095]/85 text-white text-[10px] font-mono px-3 py-1 rounded-full backdrop-blur-sm shadow-sm font-semibold">
+        1 / 1
+    </div>
+</div>
+
+<!-- Amazon-Style Thumbnail Bar Strip -->
+<div class="flex items-center gap-3 overflow-x-auto pb-2 inquiry-tray-scrollbar" id="gallery-thumbnails-strip">
+    <!-- Populated by JavaScript -->
 </div>
 </div>
 </div>
@@ -265,6 +286,54 @@
         });
     });
 </script>
+<script>
+    let galleryImagesList = [];
+    let activeGalleryIndex = 0;
+
+    function setGalleryImageIndex(index) {
+        if (!galleryImagesList || galleryImagesList.length === 0) return;
+        if (index < 0) index = galleryImagesList.length - 1;
+        if (index >= galleryImagesList.length) index = 0;
+        activeGalleryIndex = index;
+
+        const mainImg = document.getElementById('main-product-img');
+        if (mainImg) {
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = galleryImagesList[activeGalleryIndex];
+                mainImg.style.opacity = '1';
+            }, 120);
+        }
+
+        const counter = document.getElementById('gallery-counter');
+        if (counter) {
+            counter.textContent = `${activeGalleryIndex + 1} / ${galleryImagesList.length}`;
+        }
+
+        const strip = document.getElementById('gallery-thumbnails-strip');
+        if (strip) {
+            const thumbs = strip.querySelectorAll('.gallery-thumb');
+            thumbs.forEach((t, i) => {
+                if (i === activeGalleryIndex) {
+                    t.className = 'gallery-thumb w-16 h-16 rounded-lg border-2 border-[#134095] p-1 bg-white cursor-pointer shadow-md transition-all flex-shrink-0';
+                } else {
+                    t.className = 'gallery-thumb w-16 h-16 rounded-lg border border-gray-200 p-1 bg-white hover:border-[#EF7F1A] cursor-pointer opacity-70 hover:opacity-100 transition-all flex-shrink-0';
+                }
+            });
+        }
+    }
+    window.setGalleryImageIndex = setGalleryImageIndex;
+
+    function prevGalleryImage() {
+        setGalleryImageIndex(activeGalleryIndex - 1);
+    }
+    window.prevGalleryImage = prevGalleryImage;
+
+    function nextGalleryImage() {
+        setGalleryImageIndex(activeGalleryIndex + 1);
+    }
+    window.nextGalleryImage = nextGalleryImage;
+</script>
 <script type="module">
 // Supabase integration for Product Details
 import { supabase, handleSupabaseError } from './supabase-client.js';
@@ -348,13 +417,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             descEl.textContent = product.short_description || product.long_description || 'High-performance architectural lighting fixture engineered for precision and durability.';
         }
         
-        // Main image
-        const mainImg = document.getElementById('main-product-img');
-        if (mainImg) {
-            const imgUrl = product.image_url || 'assets/images/temporary/beton-product-render.webp';
-            mainImg.src = imgUrl;
-            mainImg.alt = product.name || '';
+        // Setup Amazon-Style Gallery Images
+        galleryImagesList = [];
+        if (product.image_url) galleryImagesList.push(product.image_url);
+        if (product.gallery_urls) {
+            let extra = [];
+            if (Array.isArray(product.gallery_urls)) {
+                extra = product.gallery_urls;
+            } else if (typeof product.gallery_urls === 'string') {
+                extra = product.gallery_urls.split(/[\n,]/).map(s => s.trim()).filter(Boolean);
+            }
+            extra.forEach(url => {
+                if (url && !galleryImagesList.includes(url)) galleryImagesList.push(url);
+            });
         }
+        if (galleryImagesList.length <= 1) {
+            galleryImagesList.push('assets/images/temporary/beton-product-render.webp');
+            galleryImagesList.push('assets/images/products/sys-01.webp');
+            galleryImagesList.push('assets/images/products/render-1.webp');
+        }
+
+        const thumbStrip = document.getElementById('gallery-thumbnails-strip');
+        if (thumbStrip) {
+            thumbStrip.innerHTML = galleryImagesList.map((url, i) => `
+                <button type="button" onclick="setGalleryImageIndex(${i})" class="gallery-thumb w-16 h-16 rounded-lg border ${i===0?'border-2 border-[#134095]':'border-gray-200 opacity-70'} p-1 bg-white hover:border-[#EF7F1A] cursor-pointer transition-all flex-shrink-0 overflow-hidden flex items-center justify-center">
+                    <img src="${url}" class="w-full h-full object-contain" alt="Thumbnail ${i+1}" />
+                </button>
+            `).join('');
+        }
+        setGalleryImageIndex(0);
             
         // Dynamic Optics, IP, Delivery Specs
         const specOptics = document.getElementById('spec-optics');
