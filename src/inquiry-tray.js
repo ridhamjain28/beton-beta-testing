@@ -118,7 +118,7 @@ function updateInquiryTrayUI() {
         // EXPANDED FLOATING CARD STATE (Morphs floating bar into expanded card with Chevron Down button)
         let itemsHTML = '';
         if (count === 0) {
-            itemsHTML = `<div class="p-4 text-center text-xs text-gray-300 italic">Your inquiry tray is currently empty.<br>Browse products and click "ADD TO QUOTE".</div>`;
+            itemsHTML = `<div class="p-4 text-center text-xs text-gray-300 italic">Your inquiry tray is currently empty.</div>`;
         } else {
             itemsHTML = list.map(item => `
                 <div class="flex items-center justify-between p-2.5 bg-white/10 rounded-lg border border-white/10 gap-3">
@@ -131,15 +131,23 @@ function updateInquiryTrayUI() {
                     </button>
                 </div>
             `).join('');
+            
+            // Add More Products button below selected items
+            itemsHTML += `
+                <a href="products.html" class="flex items-center justify-center gap-1.5 py-2 px-3 mt-2 text-[10px] uppercase font-bold text-[#EF7F1A] hover:text-white hover:bg-[#EF7F1A]/20 transition-all rounded-lg border border-dashed border-[#EF7F1A]/50 w-full text-center">
+                    <iconify-icon icon="heroicons:plus-20-solid" class="text-sm"></iconify-icon>
+                    <span>Add more products</span>
+                </a>
+            `;
         }
 
         tray.className = 'fixed bottom-6 right-6 z-[100] w-72 sm:w-80 bg-[#134095] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex flex-col gap-3 transition-all duration-300 transform translate-y-0 opacity-100';
         tray.innerHTML = `
-            <!-- Header with Badge & Chevron Down (NO X BUTTON) -->
+            <!-- Header with Badge & Chevron Down (NO X BUTTON, NO Parentheses Count in Title) -->
             <div class="flex justify-between items-center pb-2.5 border-b border-white/15">
                 <div class="flex items-center gap-2.5">
                     <span class="w-6 h-6 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-xs font-bold flex items-center justify-center shadow-inner">${count}</span>
-                    <span class="text-xs font-bold uppercase tracking-wider text-white">Inquiry Tray (${count})</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-white">Inquiry Tray</span>
                 </div>
                 <button type="button" onclick="toggleInquiryPopover(event)" class="p-1.5 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center" title="Collapse Inquiry Tray">
                     <iconify-icon icon="heroicons:chevron-down-20-solid" class="text-lg block"></iconify-icon>
@@ -225,9 +233,9 @@ function updateInquiryTrayUI() {
                     </div>
                     <div class="flex gap-3 items-center">
                         <select class="text-xs border border-gray-300 rounded px-2.5 py-1 bg-white" onchange="updateProductSpec('${item.ref}', 'cct', this.value)">
-                            <option value="2700K Extra Warm" ${item.cct.includes('2700')?'selected':''}>2700K Extra Warm</option>
-                            <option value="3000K Warm White" ${item.cct.includes('3000')?'selected':''}>3000K Warm White</option>
+                            <option value="3000K Warm White" ${item.cct.includes('3000')||!item.cct?'selected':''}>3000K Warm White</option>
                             <option value="4000K Neutral White" ${item.cct.includes('4000')?'selected':''}>4000K Neutral White</option>
+                            <option value="5000K Daylight" ${item.cct.includes('5000')?'selected':''}>5000K Daylight</option>
                             <option value="6500K Cool White" ${item.cct.includes('6500')?'selected':''}>6500K Cool White</option>
                         </select>
                         <select class="text-xs border border-gray-300 rounded px-2.5 py-1 bg-white" onchange="updateProductSpec('${item.ref}', 'wattage', this.value)">

@@ -327,18 +327,22 @@
 </div>
 <div class="mb-10">
 <label class="text-[10px] uppercase tracking-widest font-bold block opacity-60 mb-6">Color Temperature (CCT)</label>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 <label class="flex items-center gap-3 cursor-pointer group">
-<input class="checkbox-custom rounded-full" name="cct" value="Warm (2700-3000K)" type="radio"/>
-<span class="text-xs uppercase tracking-widest">Warm (2700-3000K)</span>
+<input class="checkbox-custom rounded-full" name="cct" value="3000K Warm White" type="radio" checked/>
+<span class="text-xs uppercase tracking-widest">3000K Warm White</span>
 </label>
 <label class="flex items-center gap-3 cursor-pointer group">
-<input class="checkbox-custom rounded-full" name="cct" value="Natural (4000K)" type="radio"/>
-<span class="text-xs uppercase tracking-widest">Natural (4000K)</span>
+<input class="checkbox-custom rounded-full" name="cct" value="4000K Neutral White" type="radio"/>
+<span class="text-xs uppercase tracking-widest">4000K Neutral White</span>
 </label>
 <label class="flex items-center gap-3 cursor-pointer group">
-<input class="checkbox-custom rounded-full" name="cct" value="Tunable / Custom" type="radio"/>
-<span class="text-xs uppercase tracking-widest">Tunable / Custom</span>
+<input class="checkbox-custom rounded-full" name="cct" value="5000K Daylight" type="radio"/>
+<span class="text-xs uppercase tracking-widest">5000K Daylight</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="checkbox-custom rounded-full" name="cct" value="6500K Cool White" type="radio"/>
+<span class="text-xs uppercase tracking-widest">6500K Cool White</span>
 </label>
 </div>
 </div>
@@ -409,7 +413,10 @@
 </div>
 
 <script>
+    let currentStepNum = 1;
+
     function updateWizardNav(activeStep) {
+        currentStepNum = activeStep;
         const navSteps = document.querySelectorAll('.wizard-step-nav');
         navSteps.forEach((nav, index) => {
             const stepNum = index + 1;
@@ -432,9 +439,11 @@
                 circle.classList.add('border-[rgba(19,64,149,0.15)]');
             }
         });
+        saveContactFormDraft();
     }
 
     function showStep(step) {
+        currentStepNum = step;
         const steps = document.querySelectorAll('.wizard-step');
         
         steps.forEach(s => {
@@ -453,7 +462,11 @@
         }
         
         updateWizardNav(step);
+        if (step === 3 && typeof window.renderContactStep3Products === 'function') {
+            window.renderContactStep3Products();
+        }
     }
+    window.showStep = showStep;
 
     function validateStep(step) {
         const currentStep = document.querySelector(`.wizard-step[data-step="${step}"]`);
@@ -467,7 +480,6 @@
                 return false;
             }
         }
-
         return true;
     }
 
@@ -481,15 +493,87 @@
         showStep(step);
     }
 
-
     function closeSuccessModal() {
         const modal = document.getElementById('success-modal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    // FORM DRAFT AUTOSAVE & RESTORATION
+    function saveContactFormDraft() {
+        const form = document.getElementById('wizard-form');
+        if (!form) return;
+        const formData = new FormData(form);
+        const dataObj = {};
+        formData.forEach((value, key) => {
+            if (dataObj[key]) {
+                if (!Array.isArray(dataObj[key])) dataObj[key] = [dataObj[key]];
+                dataObj[key].push(value);
+            } else {
+                dataObj[key] = value;
+            }
+        });
+        const draft = { step: currentStepNum, data: dataObj };
+        sessionStorage.setItem('beton_contact_draft_v2', JSON.stringify(draft));
+    }
+
+    function restoreContactFormDraft() {
+        const form = document.getElementById('wizard-form');
+        if (!form) return;
+        const raw = sessionStorage.getItem('beton_contact_draft_v2');
+        if (!raw) return;
+        try {
+            const draft = JSON.parse(raw);
+            const data = draft.data || {};
+            
+            Object.keys(data).forEach(key => {
+                const elements = form.querySelectorAll(`[name="${key}"]`);
+                const val = data[key];
+                elements.forEach(el => {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        if (Array.isArray(val)) {
+                            el.checked = val.includes(el.value);
+                        } else {
+                            el.checked = (el.value === val);
+                        }
+                    } else {
+                        el.value = val;
+                    }
+                });
+            });
+
+            // Check step restoration or hash navigation
+            const hash = window.location.hash;
+            if (hash === '#step-3' || draft.step === 3) {
+                showStep(3);
+            } else if (draft.step) {
+                showStep(draft.step);
+            }
+        } catch (e) {
+            console.error('Draft restore failed', e);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         showStep(1);
+
+        // Input listeners for draft saving
+        const form = document.getElementById('wizard-form');
+        if (form) {
+            form.addEventListener('input', saveContactFormDraft);
+            form.addEventListener('change', saveContactFormDraft);
+        }
+
+        // Restore draft if present
+        restoreContactFormDraft();
+
+        // Check hash or URL params
+        const hash = window.location.hash;
+        if (hash === '#step-3') {
+            showStep(3);
+        }
 
         // Prepopulate from URL parameters if present
         const urlParams = new URLSearchParams(window.location.search);
@@ -501,17 +585,16 @@
             if (refField) refField.value = ref;
             
             const messageTextarea = document.querySelector('textarea[name="message"]');
-            if (messageTextarea) {
+            if (messageTextarea && !messageTextarea.value) {
                 let typeStr = type ? ` (${type})` : '';
                 messageTextarea.value = `I am interested in product reference: ${ref}${typeStr}.\n\n`;
             }
             
-            // Add a product badge at the top of the discovery step
             const firstStep = document.querySelector('.wizard-step[data-step="1"]');
-            if (firstStep) {
+            if (firstStep && !firstStep.querySelector('.prod-badge')) {
                 const header = firstStep.querySelector('h3');
                 const badge = document.createElement('div');
-                badge.className = 'mb-6 p-4 bg-[#134095]/10 border-l-4 border-[#EF7F1A] text-xs uppercase tracking-widest font-semibold flex justify-between items-center';
+                badge.className = 'prod-badge mb-6 p-4 bg-[#134095]/10 border-l-4 border-[#EF7F1A] text-xs uppercase tracking-widest font-semibold flex justify-between items-center';
                 badge.innerHTML = `<span>Inquiring about Product: <strong class="text-[#EF7F1A]">${ref}</strong></span>`;
                 if (header) {
                     header.after(badge);
@@ -523,13 +606,6 @@
         if (type) {
             const typeField = document.getElementById('hidden-enquiry-type');
             if (typeField) typeField.value = type;
-        }
-
-        const form = document.getElementById('wizard-form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                // Let the module script handle the submission
-            });
         }
     });
 </script>
@@ -555,36 +631,75 @@
                 const inquiryProducts = typeof window.getInquiryProducts === 'function' ? window.getInquiryProducts() : [];
                 let formattedProductsStr = '';
                 if (inquiryProducts && inquiryProducts.length > 0) {
-                    formattedProductsStr = '\n\nSelected Fixtures (' + inquiryProducts.length + '):\n' + 
-                        inquiryProducts.map(p => `- Ref: ${p.ref} | Name: ${p.name} | CCT: ${p.cct || '3000K Warm White'} | Power: ${p.wattage || '12W'}`).join('\n');
+                    formattedProductsStr = inquiryProducts.map(p => `  • Ref: ${p.ref} | Name: ${p.name} | CCT: ${p.cct || '3000K Warm White'} | Power: ${p.wattage || '12W'}`).join('\n');
+                } else {
+                    formattedProductsStr = '  • None selected';
                 }
 
                 const formData = new FormData(form);
-                const object = {};
-                formData.forEach((value, key) => {
-                    if (Reflect.has(object, key)) {
-                        let currentVal = object[key];
-                        if (!Array.isArray(currentVal)) {
-                            currentVal = [currentVal];
-                        }
-                        currentVal.push(value);
-                        object[key] = currentVal;
-                    } else {
-                        object[key] = value;
-                    }
-                });
+                const getVals = (name) => {
+                    const vals = formData.getAll(name).filter(Boolean);
+                    return vals.length > 0 ? vals.join(', ') : 'None specified';
+                };
 
-                // Attach explicit selected fixtures fields to Web3Forms payload
-                if (inquiryProducts && inquiryProducts.length > 0) {
-                    object['selected_fixtures'] = inquiryProducts.map(p => `${p.ref} (${p.name}) - ${p.cct || '3000K'}, ${p.wattage || '12W'}`).join('; ');
-                    object['total_fixtures_selected'] = inquiryProducts.length;
-                } else {
-                    object['selected_fixtures'] = 'None selected';
-                }
+                const clientName = form.name.value.trim();
+                const clientCompany = form.company ? form.company.value.trim() : '';
+                const clientEmail = form.email.value.trim();
+                const clientPhone = form.phone ? form.phone.value.trim() : '';
+                const clientLocation = form.location ? form.location.value.trim() : '';
+                const projectSphere = getVals('project_sphere');
+                const timeline = form.timeline ? form.timeline.value : '';
+                const projectScale = form.project_scale ? form.project_scale.value : '';
+                const messageText = form.message ? form.message.value.trim() : '';
+                const technicalReqs = getVals('technical_requirements');
+                const cctPref = form.cct ? form.cct.value : '';
+                const beamAngles = getVals('beam_angles');
+                const productLines = getVals('product_lines');
 
-                // Combine user message + selected fixtures text
-                const fullMessageText = (form.message.value || '') + formattedProductsStr;
-                object['message'] = fullMessageText;
+                // Build rich structured message for Supabase and Web3Forms email
+                const fullMessageText = [
+                    'CLIENT & PROJECT INFO:',
+                    `• Full Name: ${clientName}`,
+                    `• Email: ${clientEmail}`,
+                    `• Phone: ${clientPhone || '—'}`,
+                    `• Company: ${clientCompany || '—'}`,
+                    `• Location: ${clientLocation || '—'}`,
+                    `• Project Sphere: ${projectSphere}`,
+                    `• Timeline: ${timeline || '—'}`,
+                    `• Project Scale: ${projectScale || '—'}`,
+                    '',
+                    'TECHNICAL SPECIFICATIONS:',
+                    `• Dimming: ${technicalReqs}`,
+                    `• CCT Preference: ${cctPref || '—'}`,
+                    `• Beam Angles: ${beamAngles}`,
+                    `• Product Lines: ${productLines}`,
+                    '',
+                    'SELECTED FIXTURES:',
+                    formattedProductsStr,
+                    '',
+                    'CLIENT MESSAGE & BRIEF:',
+                    messageText || '—'
+                ].join('\n');
+
+                const object = {
+                    access_key: form.access_key ? form.access_key.value : 'e6fa1e47-e6f1-4db8-8d0a-[#134095]',
+                    subject: `New Inquiry from ${clientName} (${clientCompany || 'Beton Website'})`,
+                    'Full Name': clientName,
+                    'Company': clientCompany || 'N/A',
+                    'Email': clientEmail,
+                    'Phone': clientPhone || 'N/A',
+                    'Location': clientLocation || 'N/A',
+                    'Project Sphere': projectSphere,
+                    'Timeline': timeline || 'N/A',
+                    'Project Scale': projectScale || 'N/A',
+                    'Dimming Requirements': technicalReqs,
+                    'CCT Preference': cctPref || 'N/A',
+                    'Beam Angles': beamAngles,
+                    'Product Lines': productLines,
+                    'Selected Fixtures': inquiryProducts.length > 0 ? inquiryProducts.map(p => `${p.ref} (${p.name}) [CCT: ${p.cct||'3000K'}, Wattage: ${p.wattage||'12W'}]`).join('; ') : 'None selected',
+                    'Message & Goals': messageText,
+                    'message': fullMessageText
+                };
 
                 const json = JSON.stringify(object);
                 
@@ -599,8 +714,8 @@
 
                 const supabasePromise = supabase
                     ? supabase.from('inquiries').insert([{
-                        name: form.name.value,
-                        email: form.email.value,
+                        name: clientName,
+                        email: clientEmail,
                         message: fullMessageText
                     }])
                     : Promise.resolve();
@@ -615,13 +730,14 @@
                     }
                 
                     let json = await response.json();
-                    if (response.status == 200) {
+                    if (response.status == 200 || json.success) {
                         const modal = document.getElementById('success-modal');
                         if (modal) {
                             modal.classList.remove('hidden');
                             modal.classList.add('flex');
                         }
                         form.reset();
+                        sessionStorage.removeItem('beton_contact_draft_v2');
                         if (typeof window.clearInquiryShortlist === 'function') window.clearInquiryShortlist();
                         if (typeof window.showStep === 'function') window.showStep(1);
                     } else {
@@ -646,17 +762,24 @@
 <div class="p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:calendar"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">Call / WhatsApp</h4>
-<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">+91 9909912897<br/>+91 9898845091</p>
+<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">
+    <a href="tel:+919909912897" class="hover:text-[#EF7F1A] transition-colors">+91 9909912897</a><br/>
+    <a href="tel:+919898845091" class="hover:text-[#EF7F1A] transition-colors">+91 9898845091</a>
+</p>
 </div>
 <div class="p-12 border-r border-[rgba(19,64,149,0.15)] flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:mail"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">E-Mail</h4>
-<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">info@betonlighting.com</p>
+<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">
+    <a href="mailto:info@betonlighting.com" class="hover:text-[#EF7F1A] transition-colors">info@betonlighting.com</a>
+</p>
 </div>
 <div class="p-12 flex flex-col justify-center items-center text-center">
 <iconify-icon class="text-3xl text-[#EF7F1A] mb-6" icon="lucide:map-pin"></iconify-icon>
 <h4 class="text-xs uppercase tracking-widest font-bold mb-2">Visit Us</h4>
-<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">Surat, Gujarat</p>
+<p class="text-sm text-[#134095]/80 font-semibold leading-relaxed">
+    <a href="https://maps.google.com/?q=Surat,+Gujarat,+India" target="_blank" rel="noopener noreferrer" class="hover:text-[#EF7F1A] transition-colors">Surat, Gujarat, India</a>
+</p>
 </div>
 </section>
 </main>
