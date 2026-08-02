@@ -89,7 +89,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50% !important;
-    border: 2px solid rgba(19, 64, 149, 0.35);
+    border: 2px solid #134095;
     background-color: #ffffff;
     cursor: pointer;
     position: relative;
@@ -127,27 +127,50 @@
     transform: translate(-50%, -50%) !important;
   }
 
-  /* Custom Checkbox */
+  /* Checkboxes: Singular Round Circle Box filled with Brand Blue (#134095) when checked. No ticks, no inner dots. */
   .checkbox-custom,
   input[type="checkbox"].checkbox-custom,
+  input[type="checkbox"].inquiry-checkbox,
   input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    border-radius: 4px;
-    border: 2px solid rgba(19, 64, 149, 0.35);
+    border-radius: 50% !important; /* SINGULAR ROUND CIRCLE */
+    border: 2px solid #134095;
     background-color: #ffffff;
     cursor: pointer;
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    vertical-align: middle;
     transition: all 0.2s ease-in-out;
     flex-shrink: 0;
+    margin: 0;
+    outline: none;
   }
 
   .checkbox-custom:hover,
+  input[type="checkbox"].checkbox-custom:hover,
+  input[type="checkbox"].inquiry-checkbox:hover,
+  input[type="checkbox"]:hover {
+    border-color: #134095;
+  }
+
+  .checkbox-custom:checked,
+  input[type="checkbox"].checkbox-custom:checked,
+  input[type="checkbox"].inquiry-checkbox:checked,
+  input[type="checkbox"]:checked {
+    background-color: #134095 !important; /* FILLED WITH BRAND BLUE */
+    border-color: #134095 !important;
+  }
+
+  .checkbox-custom:checked::after,
+  input[type="checkbox"].checkbox-custom:checked::after,
+  input[type="checkbox"].inquiry-checkbox:checked::after,
+  input[type="checkbox"]:checked::after {
+    content: none !important; /* NO TICKS, NO DOTS */
+    display: none !important;
+  }
   input[type="checkbox"].checkbox-custom:hover,
   input[type="checkbox"]:hover {
     border-color: #EF7F1A;

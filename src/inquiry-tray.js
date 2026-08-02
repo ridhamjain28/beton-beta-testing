@@ -100,17 +100,17 @@ function updateInquiryTrayUI() {
 
     if (!_popoverOpen) {
         // COLLAPSED FLOATING BAR STATE
-        tray.className = 'fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] max-w-[calc(100vw-32px)] bg-[#134095] text-white p-2.5 sm:px-4 sm:py-3 rounded-full shadow-2xl border border-white/20 flex items-center gap-2 transition-all duration-300 transform translate-y-0 opacity-100';
+        tray.className = 'fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-[100] max-w-[calc(100vw-32px)] w-auto mx-auto sm:mx-0 bg-[#134095] text-white p-2.5 sm:px-4 sm:py-3 rounded-full shadow-2xl border border-white/20 flex items-center justify-between sm:justify-start gap-2.5 transition-all duration-300 transform translate-y-0 opacity-100';
         tray.innerHTML = `
             <a href="contact.html#step-3" class="flex items-center gap-3 group text-left">
-                <span class="w-7 h-7 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-xs font-bold flex items-center justify-center shadow-inner">${count}</span>
+                <span class="w-7 h-7 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-xs font-bold flex items-center justify-center shadow-inner flex-shrink-0">${count}</span>
                 <div class="flex flex-col text-left">
                     <span class="text-[9px] uppercase tracking-widest text-[#EF7F1A] font-bold">Inquiry Tray</span>
-                    <span class="text-xs font-semibold max-w-[120px] sm:max-w-[170px] truncate text-white/90">${label}</span>
+                    <span class="text-xs font-semibold max-w-[140px] sm:max-w-[170px] truncate text-white/90">${label}</span>
                 </div>
             </a>
             
-            <button type="button" onclick="toggleInquiryPopover(event)" class="ml-1 p-2 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center" title="Expand Inquiry Tray">
+            <button type="button" onclick="toggleInquiryPopover(event)" class="ml-1 p-2 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center flex-shrink-0" title="Expand Inquiry Tray">
                 <iconify-icon icon="heroicons:chevron-up-20-solid" class="text-base block"></iconify-icon>
             </button>
         `;
@@ -141,7 +141,7 @@ function updateInquiryTrayUI() {
             `;
         }
 
-        tray.className = 'fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] w-[calc(100vw-32px)] sm:w-80 bg-[#134095] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex flex-col gap-3 transition-all duration-300 transform translate-y-0 opacity-100';
+        tray.className = 'fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-[100] w-[calc(100vw-32px)] sm:w-80 mx-auto sm:mx-0 bg-[#134095] text-white p-4 rounded-2xl shadow-2xl border border-white/20 flex flex-col gap-3 transition-all duration-300 transform translate-y-0 opacity-100';
         tray.innerHTML = `
             <!-- Header with Badge & Chevron Down (NO X BUTTON, NO Parentheses Count in Title) -->
             <div class="flex justify-between items-center pb-2.5 border-b border-white/15">
@@ -175,22 +175,8 @@ function updateInquiryTrayUI() {
     // Update circular checkboxes on page to use SOLID BRAND BLUE when checked
     document.querySelectorAll('.inquiry-checkbox').forEach(cb => {
         const ref = cb.dataset.productRef;
-        const parent = cb.parentElement;
-        const svg = parent ? parent.querySelector('svg') : null;
-        if (ref && isInquirySelected(ref)) {
-            cb.checked = true;
-            if (parent) {
-                parent.classList.add('bg-[#134095]', 'border-[#134095]', 'text-white');
-                parent.classList.remove('bg-white');
-            }
-            if (svg) svg.classList.remove('hidden');
-        } else {
-            cb.checked = false;
-            if (parent) {
-                parent.classList.remove('bg-[#134095]', 'border-[#134095]', 'text-white');
-                parent.classList.add('bg-white');
-            }
-            if (svg) svg.classList.add('hidden');
+        if (ref) {
+            cb.checked = isInquirySelected(ref);
         }
     });
 
