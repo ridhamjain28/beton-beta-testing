@@ -428,21 +428,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (url && !galleryImagesList.includes(url)) galleryImagesList.push(url);
             });
         }
-        if (galleryImagesList.length <= 1) {
-            galleryImagesList.push('assets/images/temporary/beton-product-render.webp');
-            galleryImagesList.push('assets/images/products/sys-01.webp');
-            galleryImagesList.push('assets/images/products/render-1.webp');
-        }
-
+        
+        // Hide prev/next buttons and thumbnail strip if product has only 1 image
+        const prevBtn = document.getElementById('gallery-prev-btn');
+        const nextBtn = document.getElementById('gallery-next-btn');
+        const counterEl = document.getElementById('gallery-counter');
         const thumbStrip = document.getElementById('gallery-thumbnails-strip');
-        if (thumbStrip) {
-            thumbStrip.innerHTML = galleryImagesList.map((url, i) => `
-                <button type="button" onclick="setGalleryImageIndex(${i})" class="gallery-thumb w-16 h-16 rounded-lg border ${i===0?'border-2 border-[#134095]':'border-gray-200 opacity-70'} p-1 bg-white hover:border-[#EF7F1A] cursor-pointer transition-all flex-shrink-0 overflow-hidden flex items-center justify-center">
-                    <img src="${url}" class="w-full h-full object-contain" alt="Thumbnail ${i+1}" />
-                </button>
-            `).join('');
+
+        if (galleryImagesList.length <= 1) {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (counterEl) counterEl.style.display = 'none';
+            if (thumbStrip) thumbStrip.style.display = 'none';
+        } else {
+            if (prevBtn) prevBtn.style.display = 'flex';
+            if (nextBtn) nextBtn.style.display = 'flex';
+            if (counterEl) counterEl.style.display = 'block';
+            if (thumbStrip) {
+                thumbStrip.style.display = 'flex';
+                thumbStrip.innerHTML = galleryImagesList.map((url, i) => `
+                    <button type="button" onclick="setGalleryImageIndex(${i})" class="gallery-thumb w-16 h-16 rounded-lg border ${i===0?'border-2 border-[#134095]':'border-gray-200 opacity-70'} p-1 bg-white hover:border-[#EF7F1A] cursor-pointer transition-all flex-shrink-0 overflow-hidden flex items-center justify-center">
+                        <img src="${url}" class="w-full h-full object-contain" alt="Thumbnail ${i+1}" />
+                    </button>
+                `).join('');
+            }
         }
-        setGalleryImageIndex(0);
+        if (galleryImagesList.length > 0) setGalleryImageIndex(0);
             
         // Dynamic Optics, IP, Delivery Specs
         const specOptics = document.getElementById('spec-optics');
