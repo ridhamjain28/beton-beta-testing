@@ -535,11 +535,19 @@
         }
     }
 
-    document.getElementById('login-form').addEventListener('submit', (e) => {
+    async function hashInput(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const em = document.getElementById('login-email').value.trim();
         const pw = document.getElementById('login-password').value;
-        if ((em === 'admin@betonlighting.com' || em.toLowerCase() === 'admin') && pw === 'Beton@2026') {
+        const pwHash = await hashInput(pw);
+        const expectedHash = 'd2d018dbd1e115994e8e950a1c0518ecea5d00186126dbab66b500320369aff6';
+
+        if ((em === 'admin@betonlighting.com' || em.toLowerCase() === 'admin') && pwHash === expectedHash) {
             sessionStorage.setItem('beton_admin_session', 'true');
             document.getElementById('login-error').style.display = 'none';
             document.getElementById('login-page').style.display = 'none';
