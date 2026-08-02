@@ -782,3 +782,31 @@
 .image-grayscale {
   filter: none !important;
 }
+
+/* Floating Inquiry Tray Mobile & Desktop Positioning */
+#beton-floating-inquiry-tray {
+  position: fixed !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important; /* 16px default clearance from bottom on mobile */
+  z-index: 100 !important;
+}
+
+/* On mobile views when sticky CTA bar (.beton-sticky-enquiry) is present */
+@media (max-width: 639px) {
+  body:has(.beton-sticky-enquiry) #beton-floating-inquiry-tray,
+  body.has-sticky-cta #beton-floating-inquiry-tray {
+    bottom: 78px !important; /* Floats 12px directly above the 66px sticky CTA bar */
+  }
+}
+
+@media (min-width: 640px) {
+  #beton-floating-inquiry-tray,
+  body:has(.beton-sticky-enquiry) #beton-floating-inquiry-tray,
+  body.has-sticky-cta #beton-floating-inquiry-tray {
+    left: auto !important;
+    right: 1.5rem !important;
+    bottom: 1.5rem !important; /* 24px bottom right on tablet and desktop */
+  }
+}
+
