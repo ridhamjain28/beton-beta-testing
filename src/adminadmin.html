@@ -655,6 +655,7 @@
     }
 
     let _galleryImagesArray = [];
+    let _galleryPendingFiles = [];
 
     function renderGalleryThumbnails() {
         const container = document.getElementById('gallery-thumbnails-preview');
@@ -1087,9 +1088,28 @@
         document.getElementById('p-ref').value        = p.ref || '';
         document.getElementById('p-name').value       = p.name || '';
         document.getElementById('p-short-desc').value = p.short_description || '';
-        _galleryImagesArray = Array.isArray(p.gallery_urls) ? [...p.gallery_urls] : (p.gallery_urls ? p.gallery_urls.split(/[\n,]/).map(s => s.trim()).filter(Boolean) : []);
+        // Parse gallery from JSON-packed image_url or legacy gallery_urls field
+        let mainImageUrl = p.image_url || '';
+        let galleryFromJson = [];
+        try {
+            const parsed = JSON.parse(p.image_url);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                mainImageUrl = parsed[0];
+                galleryFromJson = parsed.slice(1);
+            }
+        } catch(e) { /* not JSON, use as plain URL */ }
+
+        // Also support legacy gallery_urls field
+        let legacyGallery = [];
+        if (p.gallery_urls) {
+            legacyGallery = Array.isArray(p.gallery_urls) ? p.gallery_urls
+                : p.gallery_urls.split(/[\n,]/).map(s => s.trim()).filter(Boolean);
+        }
+
+        _galleryImagesArray = [...new Set([...galleryFromJson, ...legacyGallery])];
+        _galleryPendingFiles = [];
         renderGalleryThumbnails();
-        document.getElementById('p-image-url').value  = p.image_url || '';
+        document.getElementById('p-image-url').value  = mainImageUrl;
         if (p.optics) document.getElementById('p-optics').value = p.optics;
         if (p.ip_rating) document.getElementById('p-ip-rating').value = p.ip_rating;
         if (p.delivery) document.getElementById('p-delivery').value = p.delivery;
@@ -1136,8 +1156,6 @@
         const name     = document.getElementById('p-name').value.trim();
         const category = document.getElementById('p-category').value;
         const desc     = document.getElementById('p-short-desc').value.trim();
-        const rawGallery = document.getElementById('p-gallery-urls').value.trim();
-        const gallery_urls = rawGallery ? rawGallery.split('\n').map(s => s.trim()).filter(Boolean) : [];
         const optics   = document.getElementById('p-optics').value;
         const ip_rating = document.getElementById('p-ip-rating').value;
         const delivery = document.getElementById('p-delivery').value.trim() || '3-4 Weeks';
@@ -1170,16 +1188,35 @@
                 document.getElementById('upload-progress').style.display = 'none';
             }
 
-            const payload = { ref, name, category, image_url: imageUrl, gallery_urls, short_description: desc, optics, ip_rating, delivery };
+            // Upload any pending gallery images first
+            if (_galleryPendingFiles && _galleryPendingFiles.length > 0) {
+                document.getElementById('save-btn-text').textContent = 'Uploading gallery…';
+                for (const file of _galleryPendingFiles) {
+                    try {
+                        const galleryUrl = await uploadImage(file, `${ref}-gallery-${Date.now()}`);
+                        if (galleryUrl && !_galleryImagesArray.includes(galleryUrl)) {
+                            _galleryImagesArray.push(galleryUrl);
+                        }
+                    } catch (e) { /* skip failed gallery uploads */ }
+                }
+                _galleryPendingFiles = [];
+            }
+
+            // Pack main image + gallery extras into image_url as JSON array
+            // Eliminates need for separate gallery_urls DB column
+            const galleryExtras = _galleryImagesArray.filter(u => u && u !== imageUrl);
+            const allImages = [imageUrl, ...galleryExtras].filter(Boolean);
+            const imageUrlToSave = allImages.length > 1 ? JSON.stringify(allImages) : (imageUrl || '');
+
+            const payload = { ref, name, category, image_url: imageUrlToSave, short_description: desc, optics, ip_rating, delivery };
             const result  = id
                 ? await _db.from('products').update(payload).eq('id', id)
                 : await _db.from('products').insert([payload]);
 
             if (result.error) throw result.error;
-
-            if (result.error) throw result.error;
             clearForm();
             await loadProducts();
+            alert('Product saved successfully!');
         } catch (err) {
             alert('Error saving product: ' + err.message);
         } finally {
