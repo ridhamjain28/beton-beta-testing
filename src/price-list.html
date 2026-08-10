@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/>
+    <title>BETON - Price List Catalog (Interactive Flipbook)</title>
+    <meta name="description" content="Explore the official BETON Architectural Lighting Price List catalog in an interactive 3D Flipbook viewer."/>
+    
+    <!-- Favicons -->
+    <link rel="icon" href="favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+
+    <!-- Tailwind Generated Styles -->
+    <link rel="stylesheet" href="styles.css"/>
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- StPageFlip (page-flip) Library -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* 3D Flipbook canvas wrapper styling */
+        .book-wrapper {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Glassmorphism Controls Bar */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar for Thumbnails & Scroll Mode */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EF7F1A;
+        }
+
+        .my-page {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-950 flex flex-col overflow-hidden select-none">
+
+    <!-- Main Application Wrapper -->
+    <div id="app-container" class="relative w-full h-full flex flex-col justify-between overflow-hidden">
+
+        <!-- Top Header Navigation Bar -->
+        <header class="glass-panel z-20 px-4 py-3 flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="assets/Beton_logo.webp" alt="BETON Logo" class="h-7 w-auto bg-white p-1 rounded"/>
+                </a>
+                <div class="h-5 w-px bg-slate-700 mx-1"></div>
+                <h1 class="text-sm md:text-base font-semibold text-slate-100 truncate max-w-[200px] sm:max-w-md">
+                    BETON - PRICE LIST CATALOG
+                </h1>
+                <span class="hidden sm:inline-block bg-slate-800 text-amber-500 text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-amber-500/30">
+                    INTERACTIVE 3D
+                </span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <a href="assets/docs/beton-price-list.pdf" download class="inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-sm">download</span>
+                    <span class="hidden sm:inline">Download PDF</span>
+                </a>
+                <a href="resources.html" class="inline-flex items-center gap-1 text-slate-300 hover:text-white text-xs px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 transition-all border border-slate-700">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                    <span class="hidden sm:inline">Close</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Viewing Area -->
+        <main class="relative flex-1 w-full h-full overflow-hidden flex items-center justify-center p-2 sm:p-6 bg-slate-900/60">
+
+            <!-- Loading Overlay -->
+            <div id="loading-overlay" class="absolute inset-0 z-40 bg-slate-950/95 flex flex-col items-center justify-center p-6 transition-opacity duration-300">
+                <div class="w-16 h-16 relative mb-6">
+                    <div class="absolute inset-0 rounded-full border-4 border-amber-500/20 animate-ping"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-t-amber-500 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+                </div>
+                <h2 class="text-lg font-bold text-slate-100 mb-2">Preparing BETON Price List...</h2>
+                <div class="w-64 sm:w-80 h-2 bg-slate-800 rounded-full overflow-hidden mb-3 border border-slate-700">
+                    <div id="loading-bar" class="h-full bg-gradient-to-r from-amber-600 to-amber-400 w-0 transition-all duration-300"></div>
+                </div>
+                <p id="loading-text" class="text-xs font-mono text-slate-400">Loading engine...</p>
+                <p class="text-[11px] text-slate-500 mt-6 max-w-sm text-center">
+                    Optimized for desktop and mobile devices. Low-spec hardware automatically switches to fast scroll view.
+                </p>
+            </div>
+
+            <!-- 3D Flipbook Container -->
+            <div id="book-container" class="relative w-full h-full flex items-center justify-center overflow-hidden">
+                <div id="book" class="book-wrapper">
+                    <!-- Dynamic Page elements injected via JS -->
+                </div>
+            </div>
+
+            <!-- Fallback Scroll Container (For Low-spec / Mobile / Manual Scroll Mode) -->
+            <div id="scroll-container" class="hidden w-full h-full overflow-y-auto px-2 py-4 flex-col items-center">
+                <!-- Vertical pages rendered here -->
+            </div>
+
+            <!-- Left Slide-out Thumbnails Drawer -->
+            <aside id="thumbnails-drawer" class="absolute top-0 left-0 bottom-0 w-64 sm:w-72 bg-slate-900/95 border-r border-slate-800 z-30 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl backdrop-blur-md">
+                <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-sm text-amber-500">grid_view</span> Page Index
+                    </span>
+                    <button id="close-thumbnails" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition-colors">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+                <div id="thumbnails-list" class="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-3">
+                    <!-- Page preview thumbnails rendered here -->
+                </div>
+            </aside>
+
+        </main>
+
+        <!-- Bottom Floating Control Bar -->
+        <footer class="glass-panel z-20 px-3 py-2 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
+            
+            <!-- Left Controls: Thumbnails & Mode Switcher -->
+            <div class="flex items-center space-x-1 sm:space-x-2">
+                <button id="btn-toggle-thumbnails" title="Toggle Thumbnail Sidebar" class="p-2 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition-all border border-slate-700/50">
+                    <span class="material-symbols-outlined text-lg">grid_view</span>
+                </button>
+                
+                <button id="btn-toggle-mode" title="Switch between 3D Flip and Scroll View" class="px-2.5 py-1.5 rounded text-xs font-medium text-slate-200 bg-slate-800 hover:bg-slate-700 transition-all border border-slate-700 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-base text-amber-500">auto_stories</span>
+                    <span id="mode-text" class="hidden sm:inline">Scroll View</span>
+                </button>
+            </div>
+
+            <!-- Center Controls: Page Navigation -->
+            <div class="flex items-center space-x-1 sm:space-x-2 bg-slate-900/80 px-2 py-1 rounded-lg border border-slate-800">
+                <button id="btn-first" title="First Page" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                    <span class="material-symbols-outlined text-base">first_page</span>
+                </button>
+                <button id="btn-prev" title="Previous Page" class="p-1.5 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                    <span class="material-symbols-outlined text-base">navigate_before</span>
+                </button>
+
+                <div class="flex items-center space-x-1 font-mono text-xs">
+                    <span class="text-slate-400 hidden sm:inline">Page</span>
+                    <input id="current-page-input" type="number" min="1" value="1" class="w-10 sm:w-12 bg-slate-800 text-white font-bold text-center py-0.5 rounded border border-slate-700 focus:outline-none focus:border-amber-500 text-xs" />
+                    <span class="text-slate-400">/</span>
+                    <span id="total-pages" class="text-slate-300 font-bold">1</span>
+                </div>
+
+                <button id="btn-next" title="Next Page" class="p-1.5 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                    <span class="material-symbols-outlined text-base">navigate_next</span>
+                </button>
+                <button id="btn-last" title="Last Page" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors">
+                    <span class="material-symbols-outlined text-base">last_page</span>
+                </button>
+            </div>
+
+            <!-- Right Controls: Zoom, Sound, Fullscreen -->
+            <div class="flex items-center space-x-1 sm:space-x-2">
+                <button id="btn-toggle-sound" title="Toggle Page Flip Sound" class="p-2 rounded text-amber-500 hover:bg-slate-800 transition-colors border border-slate-700/50">
+                    <span id="sound-icon" class="material-symbols-outlined text-lg">volume_up</span>
+                </button>
+
+                <div class="hidden md:flex items-center space-x-1 bg-slate-900/60 p-0.5 rounded border border-slate-800">
+                    <button id="btn-zoom-out" title="Zoom Out (-)" class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-base">zoom_out</span>
+                    </button>
+                    <button id="btn-zoom-reset" title="Reset Zoom" class="px-1.5 py-0.5 text-[10px] font-mono text-slate-400 hover:text-white transition-colors">
+                        100%
+                    </button>
+                    <button id="btn-zoom-in" title="Zoom In (+)" class="p-1.5 text-slate-300 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-base">zoom_in</span>
+                    </button>
+                </div>
+
+                <button id="btn-print" title="Print PDF" class="hidden sm:inline-flex p-2 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition-colors border border-slate-700/50">
+                    <span class="material-symbols-outlined text-lg">print</span>
+                </button>
+
+                <button id="btn-fullscreen" title="Toggle Fullscreen (F)" class="p-2 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition-colors border border-slate-700/50">
+                    <span class="material-symbols-outlined text-lg">fullscreen</span>
+                </button>
+            </div>
+
+        </footer>
+
+    </div>
+
+    <!-- Application Script -->
+    <script src="assets/js/flipbook-app.js"></script>
+</body>
+</html>
