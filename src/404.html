@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>404 Page Not Found | Beton Lighting</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" href="favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css"/>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FEFEFE;
+            color: #134095;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-[#FEFEFE]">
+
+    <!-- Navigation Header -->
+    <header class="border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between bg-white">
+        <a class="flex items-center" href="index.html">
+            <img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.src='Beton_logo.jpg'"/>
+        </a>
+        <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500 font-bold" href="index.html">
+            Back to Home
+        </a>
+    </header>
+
+    <!-- 404 Hero Content -->
+    <main class="flex-1 flex flex-col items-center justify-center text-center px-6 py-16 max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#134095]/5 text-[#134095] rounded-full text-xs font-mono font-bold mb-6 border border-[#134095]/15">
+            ERROR CODE 404
+        </div>
+
+        <h1 class="text-6xl sm:text-8xl font-black text-[#134095] tracking-tight mb-4">
+            404
+        </h1>
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+            Page Not Found
+        </h2>
+
+        <p class="text-sm sm:text-base text-gray-600 max-w-lg mb-8 leading-relaxed">
+            The page or URL you requested does not exist, has been moved, or is temporarily unavailable.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
+            <a href="index.html" class="w-full sm:w-auto px-6 py-3.5 bg-[#134095] hover:bg-[#0d2d6b] text-white text-xs font-bold uppercase tracking-[0.15em] rounded transition-colors shadow-md flex items-center justify-center gap-2">
+                <iconify-icon icon="heroicons:home-20-solid"></iconify-icon> Return Home
+            </a>
+            <a href="resources.html" class="w-full sm:w-auto px-6 py-3.5 bg-[#EF7F1A] hover:bg-[#d66d12] text-white text-xs font-bold uppercase tracking-[0.15em] rounded transition-colors shadow-md flex items-center justify-center gap-2">
+                <iconify-icon icon="heroicons:book-open-20-solid"></iconify-icon> View Digital Resources
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 px-8 text-center text-xs text-gray-500 border-t border-gray-100 bg-gray-50">
+        &copy; 2026 BETON LIGHTING. All rights reserved.
+    </footer>
+
+</body>
+</html>

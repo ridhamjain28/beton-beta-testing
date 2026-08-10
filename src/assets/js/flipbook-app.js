@@ -1,22 +1,23 @@
 /**
- * BETON Price List - Interactive PDF Flipbook Engine
- * Supports high-DPI rendering, 3D physics StPageFlip page turns,
- * progressive memory management, touch gestures, and a legacy fallback scroll mode.
+ * BETON Price List & Catalogue - Fast 3D PDF Flipbook Engine
+ * Features instant initial page display, background page streaming, 
+ * device-adaptive scaling, StPageFlip 3D physics, and zero-lag fallback.
  */
 
 (function () {
     'use strict';
 
-    // PDF Configuration
-    const PDF_URL = 'assets/docs/beton-price-list.pdf';
+    // Parse target PDF file from URL query string (default: beton-price-list.pdf)
+    const urlParams = new URLSearchParams(window.location.search);
+    const pdfPath = urlParams.get('file') || 'assets/docs/beton-price-list.pdf';
+    const isCatalogueDoc = pdfPath.toLowerCase().includes('catalogue');
 
     // State Variables
     let pdfDoc = null;
     let pageFlip = null;
     let pageNum = 1;
     let totalPages = 0;
-    let renderedPages = new Map();
-    let isRendering = false;
+    let renderedCanvasMap = new Map();
     let isSoundEnabled = true;
     let currentMode = 'flip'; // 'flip' or 'scroll'
     let currentZoom = 1.0;
@@ -31,6 +32,8 @@
         loadingOverlay: document.getElementById('loading-overlay'),
         loadingBar: document.getElementById('loading-bar'),
         loadingText: document.getElementById('loading-text'),
+        docTitle: document.getElementById('doc-title'),
+        btnDownloadHeader: document.getElementById('btn-download-header'),
         currentPageInput: document.getElementById('current-page-input'),
         totalPagesSpan: document.getElementById('total-pages'),
         btnPrev: document.getElementById('btn-prev'),
@@ -61,10 +64,10 @@
         return cores <= 2 || memory <= 2 || (isMobile && window.innerWidth < 640);
     })();
 
-    // Device Pixel Ratio scaling for crisp text vs low RAM tuning
-    const renderScale = isLowEndDevice ? 1.25 : Math.min(window.devicePixelRatio || 1, 2.0);
+    // Device Pixel Ratio scaling (lower on low-spec hardware for sub-second speed)
+    const renderScale = isLowEndDevice ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.75);
 
-    // Initialize Web Audio Paper Flip Sound
+    // Fast Web Audio Paper Turn Sound
     function playPaperTurnSound() {
         if (!isSoundEnabled) return;
         try {
@@ -75,36 +78,32 @@
                 audioCtx.resume();
             }
 
-            const bufferSize = audioCtx.sampleRate * 0.15;
+            const bufferSize = audioCtx.sampleRate * 0.12;
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = buffer.getChannelData(0);
 
-            // Generate white noise with soft exponential decay for realistic paper rustle
             for (let i = 0; i < bufferSize; i++) {
-                data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+                data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.2));
             }
 
             const noise = audioCtx.createBufferSource();
             noise.buffer = buffer;
 
-            // Low-pass filter to sound like soft paper
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, audioCtx.currentTime);
-            filter.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.15);
+            filter.frequency.setValueAtTime(700, audioCtx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(180, audioCtx.currentTime + 0.12);
 
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
 
             noise.connect(filter);
             filter.connect(gain);
             gain.connect(audioCtx.destination);
 
             noise.start();
-        } catch (e) {
-            // Audio context failed or blocked by browser policy
-        }
+        } catch (e) {}
     }
 
     // Configure PDF.js worker
@@ -112,143 +111,199 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    // Load PDF Document
+    // Set document title in header
+    if (elements.docTitle) {
+        elements.docTitle.textContent = isCatalogueDoc ? 'BETON - PRODUCT CATALOGUE' : 'BETON - PRICE LIST CATALOG';
+    }
+    if (elements.btnDownloadHeader) {
+        elements.btnDownloadHeader.href = pdfPath;
+    }
+
+    // Initialize PDF document with fast progressive rendering
     async function initPDF() {
         try {
-            updateLoadingProgress(10, 'Fetching PDF catalog...');
-            
-            const loadingTask = pdfjsLib.getDocument({
-                url: PDF_URL,
-                cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
-                cMapPacked: true
-            });
+            updateLoadingProgress(20, 'Opening document...');
 
-            loadingTask.onProgress = function (progress) {
-                if (progress.total > 0) {
-                    const percent = Math.round((progress.loaded / progress.total) * 60);
-                    updateLoadingProgress(10 + percent, `Downloading PDF... (${Math.round(progress.loaded / 1024 / 1024 * 10) / 10} MB)`);
-                }
-            };
+            const loadingTask = pdfjsLib.getDocument({
+                url: pdfPath,
+                cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+                cMapPacked: true,
+                rangeChunkSize: 65536
+            });
 
             pdfDoc = await loadingTask.promise;
             totalPages = pdfDoc.numPages;
             elements.totalPagesSpan.textContent = totalPages;
 
-            updateLoadingProgress(70, 'Rendering document pages...');
+            updateLoadingProgress(50, 'Rendering page 1...');
 
-            // Determine dimensions from first page
+            // Get base dimensions from page 1
             const firstPage = await pdfDoc.getPage(1);
             const viewport = firstPage.getViewport({ scale: 1.0 });
             const pageWidth = Math.round(viewport.width);
             const pageHeight = Math.round(viewport.height);
 
-            // Render pages into container
-            await renderAllPages(pageWidth, pageHeight);
+            // Create page DOM containers
+            setupPageStructure(pageWidth, pageHeight);
 
-            updateLoadingProgress(90, 'Initializing 3D flipbook engine...');
+            // Render Page 1 & 2 IMMEDIATELY so user gets instant access
+            await Promise.all([
+                loadAndRenderPage(1, pageWidth, pageHeight),
+                totalPages >= 2 ? loadAndRenderPage(2, pageWidth, pageHeight) : Promise.resolve()
+            ]);
 
+            // Initialize StPageFlip engine
             if (typeof St !== 'undefined' && St.PageFlip) {
                 initPageFlip(pageWidth, pageHeight);
             } else {
-                console.warn('StPageFlip library not detected, switching to fallback scroll mode');
                 enableScrollMode();
             }
 
-            // Build page thumbnails
-            generateThumbnails();
+            // Hide loading overlay immediately - INSTANT RESPONSE!
+            updateLoadingProgress(100, 'Done');
+            hideLoadingOverlay();
 
-            updateLoadingProgress(100, 'Ready');
-            setTimeout(() => {
-                elements.loadingOverlay.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => elements.loadingOverlay.style.display = 'none', 300);
-            }, 400);
+            // Background load remaining pages & thumbnails asynchronously
+            streamRemainingPages(pageWidth, pageHeight);
 
         } catch (err) {
-            console.error('PDF initialization error:', err);
-            elements.loadingText.innerHTML = `<span class="text-red-400">Failed to load PDF. <button id="btn-retry" class="underline font-bold">Retry</button> or <a href="${PDF_URL}" class="underline font-bold" download>Download Directly</a></span>`;
-            document.getElementById('btn-retry')?.addEventListener('click', () => location.reload());
+            console.error('PDF loading error:', err);
+            if (elements.loadingText) {
+                elements.loadingText.innerHTML = `<span class="text-red-400 font-bold">Failed to load PDF. <a href="${pdfPath}" class="underline" download>Download Directly</a></span>`;
+            }
         }
     }
 
-    function updateLoadingProgress(percent, statusText) {
+    function updateLoadingProgress(percent, text) {
         if (elements.loadingBar) elements.loadingBar.style.width = `${percent}%`;
-        if (elements.loadingText) elements.loadingText.textContent = statusText;
+        if (elements.loadingText) elements.loadingText.textContent = text;
     }
 
-    // Render individual page canvas to data URL or DOM node
-    async function renderPageCanvas(pageNumToRender, targetWidth, targetHeight) {
-        if (renderedPages.has(pageNumToRender)) {
-            return renderedPages.get(pageNumToRender);
+    function hideLoadingOverlay() {
+        if (elements.loadingOverlay) {
+            elements.loadingOverlay.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                elements.loadingOverlay.style.display = 'none';
+            }, 250);
         }
-
-        const page = await pdfDoc.getPage(pageNumToRender);
-        const unscaledViewport = page.getViewport({ scale: 1.0 });
-        const scale = (targetWidth / unscaledViewport.width) * renderScale;
-        const viewport = page.getViewport({ scale: scale });
-
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d', { alpha: false });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-
-        await page.render({
-            canvasContext: context,
-            viewport: viewport
-        }).promise;
-
-        const imgUrl = canvas.toDataURL('image/jpeg', isLowEndDevice ? 0.85 : 0.95);
-        renderedPages.set(pageNumToRender, imgUrl);
-        return imgUrl;
     }
 
-    // Build DOM elements for StPageFlip
-    async function renderAllPages(pageWidth, pageHeight) {
+    // Render single canvas image quickly
+    async function loadAndRenderPage(pgNum, targetWidth, targetHeight) {
+        if (renderedCanvasMap.has(pgNum)) return renderedCanvasMap.get(pgNum);
+
+        try {
+            const page = await pdfDoc.getPage(pgNum);
+            const unscaledViewport = page.getViewport({ scale: 1.0 });
+            const scale = (targetWidth / unscaledViewport.width) * renderScale;
+            const viewport = page.getViewport({ scale: scale });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d', { alpha: false });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            await page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise;
+
+            const imgUrl = canvas.toDataURL('image/jpeg', isLowEndDevice ? 0.8 : 0.9);
+            renderedCanvasMap.set(pgNum, imgUrl);
+
+            // Apply to DOM page image
+            const flipImg = document.querySelector(`#page-node-${pgNum} img`);
+            if (flipImg) flipImg.src = imgUrl;
+
+            const scrollImg = document.querySelector(`#scroll-node-${pgNum} img`);
+            if (scrollImg) scrollImg.src = imgUrl;
+
+            return imgUrl;
+        } catch (e) {
+            console.warn(`Failed to render page ${pgNum}:`, e);
+            return '';
+        }
+    }
+
+    // Create Page Skeleton HTML structure
+    function setupPageStructure(pageWidth, pageHeight) {
         elements.bookElement.innerHTML = '';
         elements.scrollContainer.innerHTML = '';
 
         for (let i = 1; i <= totalPages; i++) {
-            // Page wrapper for 3D flipbook
+            // Flipbook Page Wrapper
             const pageDiv = document.createElement('div');
             pageDiv.className = 'my-page bg-white shadow-md relative overflow-hidden flex items-center justify-center';
+            pageDiv.id = `page-node-${i}`;
             pageDiv.setAttribute('data-density', i === 1 || i === totalPages ? 'hard' : 'soft');
 
-            // Page image canvas element
             const img = document.createElement('img');
             img.className = 'w-full h-full object-contain pointer-events-none select-none';
             img.alt = `Page ${i}`;
-            img.loading = i <= 4 ? 'eager' : 'lazy';
-
             pageDiv.appendChild(img);
             elements.bookElement.appendChild(pageDiv);
 
-            // Scroll container wrapper for fallback view
+            // Scroll Mode Wrapper
             const scrollItem = document.createElement('div');
-            scrollItem.className = 'scroll-page bg-white shadow-xl my-4 rounded border border-gray-700 max-w-4xl mx-auto overflow-hidden';
-            scrollItem.id = `scroll-page-${i}`;
-            
+            scrollItem.className = 'scroll-page bg-white shadow-lg my-3 rounded border border-slate-700 max-w-4xl mx-auto overflow-hidden';
+            scrollItem.id = `scroll-node-${i}`;
+
             const scrollImg = document.createElement('img');
             scrollImg.className = 'w-full h-auto block';
             scrollImg.alt = `Page ${i}`;
             scrollItem.appendChild(scrollImg);
-            
             elements.scrollContainer.appendChild(scrollItem);
+        }
+    }
 
-            // Render page 1 to 4 immediately, remainder lazily
-            if (i <= 4) {
-                renderPageCanvas(i, pageWidth, pageHeight).then(url => {
-                    img.src = url;
-                    scrollImg.src = url;
-                });
-            }
+    // Stream remaining pages in background to preserve zero latency
+    async function streamRemainingPages(pageWidth, pageHeight) {
+        for (let i = 3; i <= totalPages; i++) {
+            await loadAndRenderPage(i, pageWidth, pageHeight);
+        }
+        buildThumbnails();
+    }
+
+    // Build sidebar thumbnails
+    function buildThumbnails() {
+        if (!elements.thumbnailsList) return;
+        elements.thumbnailsList.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const item = document.createElement('div');
+            item.className = 'thumbnail-item cursor-pointer p-1.5 rounded transition-all hover:bg-slate-800 flex flex-col items-center group';
+            item.setAttribute('data-page', i);
+
+            const box = document.createElement('div');
+            box.className = 'w-20 h-28 bg-slate-800 rounded border border-slate-700 overflow-hidden flex items-center justify-center shadow group-hover:border-amber-500';
+
+            const img = document.createElement('img');
+            img.className = 'w-full h-full object-cover';
+            img.alt = `Thumb ${i}`;
+
+            const url = renderedCanvasMap.get(i);
+            if (url) img.src = url;
+
+            box.appendChild(img);
+
+            const label = document.createElement('span');
+            label.className = 'text-[10px] text-slate-400 mt-1 font-mono group-hover:text-white';
+            label.textContent = `Page ${i}`;
+
+            item.appendChild(box);
+            item.appendChild(label);
+
+            item.addEventListener('click', () => {
+                goToPage(i);
+                elements.thumbnailsDrawer?.classList.add('-translate-x-full');
+            });
+
+            elements.thumbnailsList.appendChild(item);
         }
     }
 
     // Initialize StPageFlip
     function initPageFlip(pageWidth, pageHeight) {
-        const isPortrait = window.innerWidth < 768;
-
         pageFlip = new St.PageFlip(elements.bookElement, {
             width: pageWidth,
             height: pageHeight,
@@ -258,12 +313,12 @@
             minHeight: 400,
             maxHeight: 1200,
             drawShadow: !isLowEndDevice,
-            flippingTime: isLowEndDevice ? 500 : 800,
+            flippingTime: isLowEndDevice ? 400 : 700,
             usePortrait: true,
             startZIndex: 1,
             startPage: 0,
             autoSize: true,
-            maxShadowOpacity: 0.5,
+            maxShadowOpacity: 0.4,
             showCover: true,
             mobileScrollSupport: true,
             swipeDistance: 25,
@@ -272,173 +327,90 @@
             disableFlipByClick: false
         });
 
-        const pages = elements.bookElement.querySelectorAll('.my-page');
-        pageFlip.loadFromHTML(pages);
+        pageFlip.loadFromHTML(elements.bookElement.querySelectorAll('.my-page'));
 
-        // Event Listeners for StPageFlip
         pageFlip.on('flip', (e) => {
-            const newIdx = e.data + 1;
-            pageNum = newIdx;
+            pageNum = e.data + 1;
             updateUI();
             playPaperTurnSound();
-            preloadAdjacentPages(pageNum, pageWidth, pageHeight);
         });
 
         pageFlip.on('changeState', (e) => {
-            if (e.data === 'flipping') {
-                playPaperTurnSound();
-            }
+            if (e.data === 'flipping') playPaperTurnSound();
         });
-
-        // Preload first neighbor pages
-        preloadAdjacentPages(1, pageWidth, pageHeight);
     }
 
-    // Preload neighbor pages into RAM dynamically
-    async function preloadAdjacentPages(currentPg, width, height) {
-        const range = isLowEndDevice ? 1 : 2;
-        const pagesToLoad = [];
-        for (let p = Math.max(1, currentPg - range); p <= Math.min(totalPages, currentPg + range); p++) {
-            pagesToLoad.push(p);
-        }
-
-        for (const p of pagesToLoad) {
-            const url = await renderPageCanvas(p, width, height);
-            const pageDivs = elements.bookElement.querySelectorAll('.my-page');
-            if (pageDivs[p - 1]) {
-                const img = pageDivs[p - 1].querySelector('img');
-                if (img && !img.src) img.src = url;
-            }
-            const scrollImg = document.querySelector(`#scroll-page-${p} img`);
-            if (scrollImg && !scrollImg.src) scrollImg.src = url;
-        }
-    }
-
-    // Thumbnail Generation
-    async function generateThumbnails() {
-        elements.thumbnailsList.innerHTML = '';
-        for (let i = 1; i <= totalPages; i++) {
-            const thumbItem = document.createElement('div');
-            thumbItem.className = 'thumbnail-item cursor-pointer p-2 rounded transition-all hover:bg-gray-800 flex flex-col items-center group';
-            thumbItem.setAttribute('data-page', i);
-
-            const thumbBox = document.createElement('div');
-            thumbBox.className = 'w-24 h-32 bg-gray-700 rounded border border-gray-600 overflow-hidden flex items-center justify-center shadow group-hover:border-secondary';
-
-            const thumbImg = document.createElement('img');
-            thumbImg.className = 'w-full h-full object-cover';
-            thumbImg.alt = `Thumb ${i}`;
-
-            thumbBox.appendChild(thumbImg);
-
-            const label = document.createElement('span');
-            label.className = 'text-xs text-gray-400 mt-1 font-mono group-hover:text-white';
-            label.textContent = `Page ${i}`;
-
-            thumbItem.appendChild(thumbBox);
-            thumbItem.appendChild(label);
-
-            thumbItem.addEventListener('click', () => {
-                goToPage(i);
-                elements.thumbnailsDrawer.classList.add('-translate-x-full');
-            });
-
-            elements.thumbnailsList.appendChild(thumbItem);
-
-            // Lazy render thumbnails when drawer opens or in background
-            renderPageCanvas(i, 150, 200).then(url => {
-                thumbImg.src = url;
-            });
-        }
-    }
-
-    // Page Navigation Methods
-    function goToPage(targetPage) {
-        const validPage = Math.max(1, Math.min(totalPages, targetPage));
-        pageNum = validPage;
+    // Page Navigation
+    function goToPage(targetPg) {
+        const pg = Math.max(1, Math.min(totalPages, targetPg));
+        pageNum = pg;
 
         if (currentMode === 'flip' && pageFlip) {
-            pageFlip.turnToPage(validPage - 1);
+            pageFlip.turnToPage(pg - 1);
         } else {
-            const targetEl = document.getElementById(`scroll-page-${validPage}`);
-            if (targetEl) {
-                targetEl.scrollIntoView({ behavior: 'smooth' });
-            }
+            const node = document.getElementById(`scroll-node-${pg}`);
+            if (node) node.scrollIntoView({ behavior: 'smooth' });
         }
         updateUI();
     }
 
     function updateUI() {
-        elements.currentPageInput.value = pageNum;
-        elements.btnPrev.disabled = pageNum <= 1;
-        elements.btnNext.disabled = pageNum >= totalPages;
-        elements.btnFirst.disabled = pageNum <= 1;
-        elements.btnLast.disabled = pageNum >= totalPages;
+        if (elements.currentPageInput) elements.currentPageInput.value = pageNum;
+        if (elements.btnPrev) elements.btnPrev.disabled = pageNum <= 1;
+        if (elements.btnNext) elements.btnNext.disabled = pageNum >= totalPages;
+        if (elements.btnFirst) elements.btnFirst.disabled = pageNum <= 1;
+        if (elements.btnLast) elements.btnLast.disabled = pageNum >= totalPages;
 
-        // Highlight active thumbnail
-        const thumbs = elements.thumbnailsList.querySelectorAll('.thumbnail-item');
-        thumbs.forEach(t => {
+        const thumbs = elements.thumbnailsList?.querySelectorAll('.thumbnail-item');
+        thumbs?.forEach(t => {
             const p = parseInt(t.getAttribute('data-page'));
             if (p === pageNum) {
-                t.classList.add('ring-2', 'ring-secondary', 'bg-gray-800');
+                t.classList.add('ring-2', 'ring-amber-500', 'bg-slate-800');
             } else {
-                t.classList.remove('ring-2', 'ring-secondary', 'bg-gray-800');
+                t.classList.remove('ring-2', 'ring-amber-500', 'bg-slate-800');
             }
         });
     }
 
-    // Toggle Modes (3D Flipbook vs Scroll Mode)
+    // Toggle Modes
     function enableScrollMode() {
         currentMode = 'scroll';
-        elements.bookContainer.classList.add('hidden');
-        elements.scrollContainer.classList.remove('hidden');
-        elements.modeText.textContent = '3D Flip View';
-        
-        // Ensure all pages are rendered for scroll mode
-        for (let i = 1; i <= totalPages; i++) {
-            renderPageCanvas(i, 800, 1100).then(url => {
-                const img = document.querySelector(`#scroll-page-${i} img`);
-                if (img) img.src = url;
-            });
-        }
+        elements.bookContainer?.classList.add('hidden');
+        elements.scrollContainer?.classList.remove('hidden');
+        if (elements.modeText) elements.modeText.textContent = '3D Flip View';
     }
 
     function enableFlipMode() {
         currentMode = 'flip';
-        elements.scrollContainer.classList.add('hidden');
-        elements.bookContainer.classList.remove('hidden');
-        elements.modeText.textContent = 'Scroll View';
-        if (pageFlip) {
-            pageFlip.updateFromHTML(elements.bookElement.querySelectorAll('.my-page'));
-        }
+        elements.scrollContainer?.classList.add('hidden');
+        elements.bookContainer?.classList.remove('hidden');
+        if (elements.modeText) elements.modeText.textContent = 'Scroll View';
     }
 
     function toggleMode() {
-        if (currentMode === 'flip') {
-            enableScrollMode();
-        } else {
-            enableFlipMode();
-        }
+        if (currentMode === 'flip') enableScrollMode();
+        else enableFlipMode();
     }
 
-    // Zoom Handling
+    // Zoom Controls
     function applyZoom(delta) {
         currentZoom = Math.max(0.75, Math.min(2.5, currentZoom + delta));
-        const targetContainer = currentMode === 'flip' ? elements.bookElement : elements.scrollContainer;
-        targetContainer.style.transform = `scale(${currentZoom})`;
-        targetContainer.style.transformOrigin = 'center top';
-        targetContainer.style.transition = 'transform 0.2s ease-out';
+        const target = currentMode === 'flip' ? elements.bookElement : elements.scrollContainer;
+        if (target) {
+            target.style.transform = `scale(${currentZoom})`;
+            target.style.transformOrigin = 'center top';
+            target.style.transition = 'transform 0.15s ease-out';
+        }
     }
 
     function resetZoom() {
         currentZoom = 1.0;
-        const targetContainer = currentMode === 'flip' ? elements.bookElement : elements.scrollContainer;
-        targetContainer.style.transform = 'scale(1.0)';
+        const target = currentMode === 'flip' ? elements.bookElement : elements.scrollContainer;
+        if (target) target.style.transform = 'scale(1.0)';
     }
 
-    // Event Bindings
+    // Bind Event Listeners
     function bindEvents() {
-        // Prev / Next Buttons
         elements.btnPrev?.addEventListener('click', () => {
             if (currentMode === 'flip' && pageFlip) pageFlip.flipPrev();
             else goToPage(pageNum - 1);
@@ -452,59 +424,52 @@
         elements.btnFirst?.addEventListener('click', () => goToPage(1));
         elements.btnLast?.addEventListener('click', () => goToPage(totalPages));
 
-        // Jump Page Input
         elements.currentPageInput?.addEventListener('change', (e) => {
             const val = parseInt(e.target.value);
             if (!isNaN(val)) goToPage(val);
         });
 
-        // Zoom Controls
-        elements.btnZoomIn?.addEventListener('click', () => applyZoom(0.25));
-        elements.btnZoomOut?.addEventListener('click', () => applyZoom(-0.25));
+        elements.btnZoomIn?.addEventListener('click', () => applyZoom(0.2));
+        elements.btnZoomOut?.addEventListener('click', () => applyZoom(-0.2));
         elements.btnZoomReset?.addEventListener('click', () => resetZoom());
 
-        // Mode Toggle
         elements.btnToggleMode?.addEventListener('click', () => toggleMode());
 
-        // Sound Toggle
         elements.btnToggleSound?.addEventListener('click', () => {
             isSoundEnabled = !isSoundEnabled;
-            elements.soundIcon.textContent = isSoundEnabled ? 'volume_up' : 'volume_off';
-            elements.btnToggleSound.classList.toggle('text-secondary', isSoundEnabled);
-            elements.btnToggleSound.classList.toggle('text-gray-500', !isSoundEnabled);
+            if (elements.soundIcon) elements.soundIcon.textContent = isSoundEnabled ? 'volume_up' : 'volume_off';
+            elements.btnToggleSound.classList.toggle('text-amber-500', isSoundEnabled);
+            elements.btnToggleSound.classList.toggle('text-slate-500', !isSoundEnabled);
         });
 
-        // Sidebar Thumbnails
         elements.btnToggleThumbnails?.addEventListener('click', () => {
-            elements.thumbnailsDrawer.classList.toggle('-translate-x-full');
+            elements.thumbnailsDrawer?.classList.toggle('-translate-x-full');
         });
         elements.closeThumbnails?.addEventListener('click', () => {
-            elements.thumbnailsDrawer.classList.add('-translate-x-full');
+            elements.thumbnailsDrawer?.classList.add('-translate-x-full');
         });
 
-        // Fullscreen
         elements.btnFullscreen?.addEventListener('click', () => {
             if (!document.fullscreenElement) {
-                elements.appContainer.requestFullscreen().catch(err => console.error(err));
+                elements.appContainer?.requestFullscreen().catch(err => console.error(err));
             } else {
                 document.exitFullscreen();
             }
         });
 
-        // Download & Print
         elements.btnDownload?.addEventListener('click', () => {
             const a = document.createElement('a');
-            a.href = PDF_URL;
-            a.download = 'BETON - PRICE LIST.pdf';
+            a.href = pdfPath;
+            a.download = pdfPath.split('/').pop();
             a.click();
         });
 
         elements.btnPrint?.addEventListener('click', () => {
-            const printWin = window.open(PDF_URL, '_blank');
+            const printWin = window.open(pdfPath, '_blank');
             if (printWin) printWin.print();
         });
 
-        // Keyboard Navigation Shortcuts
+        // Keyboard Shortcuts
         window.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT') return;
             switch (e.key) {
@@ -525,16 +490,6 @@
                 case 'End':
                     goToPage(totalPages);
                     break;
-                case '+':
-                case '=':
-                    applyZoom(0.2);
-                    break;
-                case '-':
-                    applyZoom(-0.2);
-                    break;
-                case '0':
-                    resetZoom();
-                    break;
                 case 'f':
                 case 'F':
                     elements.btnFullscreen?.click();
@@ -549,16 +504,8 @@
                     break;
             }
         });
-
-        // Auto-switch orientation on window resize
-        window.addEventListener('resize', () => {
-            if (currentMode === 'flip' && pageFlip) {
-                // StPageFlip handles responsive auto-resizing internally
-            }
-        });
     }
 
-    // Start App on DOM Ready
     document.addEventListener('DOMContentLoaded', () => {
         bindEvents();
         initPDF();

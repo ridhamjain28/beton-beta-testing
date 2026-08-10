@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"/>
-    <title>BETON - Price List Catalog (Interactive Flipbook)</title>
-    <meta name="description" content="Explore the official BETON Architectural Lighting Price List catalog in an interactive 3D Flipbook viewer."/>
+    <title>BETON - Digital Resources (Interactive 3D Flipbook)</title>
+    <meta name="description" content="Explore the official BETON Architectural Lighting Price List & Catalogue in an interactive 3D Flipbook viewer."/>
     
     <!-- Favicons -->
     <link rel="icon" href="favicons/favicon.ico" sizes="any">
@@ -35,20 +35,17 @@
             -webkit-user-select: none;
         }
 
-        /* 3D Flipbook canvas wrapper styling */
         .book-wrapper {
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        /* Glassmorphism Controls Bar */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Custom Scrollbar for Thumbnails & Scroll Mode */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -78,19 +75,19 @@
         <header class="glass-panel z-20 px-4 py-3 flex items-center justify-between border-b border-slate-800">
             <div class="flex items-center space-x-3">
                 <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="assets/Beton_logo.webp" alt="BETON Logo" class="h-7 w-auto bg-white p-1 rounded"/>
+                    <img src="Beton_logo.webp" alt="BETON Logo" class="h-8 w-auto bg-white p-1 rounded" onerror="this.src='Beton_logo.jpg'"/>
                 </a>
                 <div class="h-5 w-px bg-slate-700 mx-1"></div>
-                <h1 class="text-sm md:text-base font-semibold text-slate-100 truncate max-w-[200px] sm:max-w-md">
+                <h1 id="doc-title" class="text-xs sm:text-sm md:text-base font-bold text-slate-100 truncate max-w-[180px] sm:max-w-md uppercase tracking-wide">
                     BETON - PRICE LIST CATALOG
                 </h1>
-                <span class="hidden sm:inline-block bg-slate-800 text-amber-500 text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-amber-500/30">
+                <span class="hidden md:inline-block bg-slate-800 text-amber-500 text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-amber-500/30">
                     INTERACTIVE 3D
                 </span>
             </div>
 
             <div class="flex items-center space-x-2">
-                <a href="assets/docs/beton-price-list.pdf" download class="inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-all shadow-sm">
+                <a id="btn-download-header" href="assets/docs/beton-price-list.pdf" download class="inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-all shadow-sm">
                     <span class="material-symbols-outlined text-sm">download</span>
                     <span class="hidden sm:inline">Download PDF</span>
                 </a>
@@ -105,19 +102,16 @@
         <main class="relative flex-1 w-full h-full overflow-hidden flex items-center justify-center p-2 sm:p-6 bg-slate-900/60">
 
             <!-- Loading Overlay -->
-            <div id="loading-overlay" class="absolute inset-0 z-40 bg-slate-950/95 flex flex-col items-center justify-center p-6 transition-opacity duration-300">
-                <div class="w-16 h-16 relative mb-6">
+            <div id="loading-overlay" class="absolute inset-0 z-40 bg-slate-950/95 flex flex-col items-center justify-center p-6 transition-opacity duration-200">
+                <div class="w-12 h-12 relative mb-4">
                     <div class="absolute inset-0 rounded-full border-4 border-amber-500/20 animate-ping"></div>
                     <div class="absolute inset-0 rounded-full border-4 border-t-amber-500 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
                 </div>
-                <h2 class="text-lg font-bold text-slate-100 mb-2">Preparing BETON Price List...</h2>
-                <div class="w-64 sm:w-80 h-2 bg-slate-800 rounded-full overflow-hidden mb-3 border border-slate-700">
-                    <div id="loading-bar" class="h-full bg-gradient-to-r from-amber-600 to-amber-400 w-0 transition-all duration-300"></div>
+                <h2 class="text-base font-bold text-slate-100 mb-2">Loading BETON Digital Resource...</h2>
+                <div class="w-56 h-1.5 bg-slate-800 rounded-full overflow-hidden mb-2 border border-slate-700">
+                    <div id="loading-bar" class="h-full bg-amber-500 w-0 transition-all duration-150"></div>
                 </div>
-                <p id="loading-text" class="text-xs font-mono text-slate-400">Loading engine...</p>
-                <p class="text-[11px] text-slate-500 mt-6 max-w-sm text-center">
-                    Optimized for desktop and mobile devices. Low-spec hardware automatically switches to fast scroll view.
-                </p>
+                <p id="loading-text" class="text-[11px] font-mono text-slate-400">Opening document...</p>
             </div>
 
             <!-- 3D Flipbook Container -->
@@ -133,8 +127,8 @@
             </div>
 
             <!-- Left Slide-out Thumbnails Drawer -->
-            <aside id="thumbnails-drawer" class="absolute top-0 left-0 bottom-0 w-64 sm:w-72 bg-slate-900/95 border-r border-slate-800 z-30 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl backdrop-blur-md">
-                <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <aside id="thumbnails-drawer" class="absolute top-0 left-0 bottom-0 w-64 sm:w-72 bg-slate-900/95 border-r border-slate-800 z-30 transform -translate-x-full transition-transform duration-200 flex flex-col shadow-2xl backdrop-blur-md">
+                <div class="p-3 border-b border-slate-800 flex items-center justify-between">
                     <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-sm text-amber-500">grid_view</span> Page Index
                     </span>
@@ -142,7 +136,7 @@
                         <span class="material-symbols-outlined text-sm">close</span>
                     </button>
                 </div>
-                <div id="thumbnails-list" class="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-3">
+                <div id="thumbnails-list" class="flex-1 overflow-y-auto p-2 grid grid-cols-2 gap-2">
                     <!-- Page preview thumbnails rendered here -->
                 </div>
             </aside>
