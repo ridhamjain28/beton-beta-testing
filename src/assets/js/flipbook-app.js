@@ -106,9 +106,9 @@
         } catch (e) {}
     }
 
-    // Configure PDF.js worker
+    // Configure PDF.js worker (must match the CDN version loaded in price-list.html)
     if (typeof pdfjsLib !== 'undefined') {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/js/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
     // Set document title in header
