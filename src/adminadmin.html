@@ -1253,7 +1253,19 @@
     }
     window.exportInquiriesCSV = exportInquiriesCSV;
 
+    // Helper to guard DB actions against unauthenticated executions
+    function verifyAdminSession() {
+        if (sessionStorage.getItem('beton_admin_session') !== 'true') {
+            showToast('Session expired or unauthorized. Please log in.', 'error');
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'block';
+            return false;
+        }
+        return true;
+    }
+
     async function deleteInquiryById(id) {
+        if (!verifyAdminSession()) return;
         const ok = await showCustomConfirm({
             title: 'Delete Inquiry Submission',
             message: 'Are you sure you want to delete this customer inquiry submission? This action cannot be undone.',
@@ -1377,6 +1389,7 @@
 
     // ── Save Product ───────────────────────────────────────
     async function saveProduct() {
+        if (!verifyAdminSession()) return;
         const newCatInput = document.getElementById('new-cat-input');
         if (document.getElementById('add-cat-row').classList.contains('visible') && newCatInput.value.trim()) {
             confirmNewCategory();
@@ -1393,7 +1406,7 @@
         let imageUrl   = document.getElementById('p-image-url').value.trim();
 
         if (!ref || !name || !category || category === '__add__') {
-            alert('Please fill in Reference, Product Name and Category.');
+            showToast('Please fill in Reference, Product Name and Category.', 'error');
             return;
         }
 
@@ -1408,7 +1421,12 @@
                 try {
                     imageUrl = await uploadImage(_pendingFile, ref);
                 } catch (uploadErr) {
-                    const proceed = confirm(`Image upload failed: ${uploadErr.message}\n\nContinue saving WITHOUT new image?`);
+                    const proceed = await showCustomConfirm({
+                        title: 'Upload Warning',
+                        message: `Image upload failed: ${uploadErr.message}. Continue saving WITHOUT new image?`,
+                        confirmText: 'Save Anyway',
+                        actionKey: 'upload_warning'
+                    });
                     if (!proceed) {
                         btn.disabled = false;
                         document.getElementById('save-btn-text').textContent = id ? 'Update Product' : 'Save Product';
@@ -1433,8 +1451,6 @@
                 _galleryPendingFiles = [];
             }
 
-            // Pack main image + gallery extras into image_url as JSON array
-            // Eliminates need for separate gallery_urls DB column
             const galleryExtras = _galleryImagesArray.filter(u => u && u !== imageUrl);
             const allImages = [imageUrl, ...galleryExtras].filter(Boolean);
             const imageUrlToSave = allImages.length > 1 ? JSON.stringify(allImages) : (imageUrl || '');
@@ -1447,9 +1463,10 @@
             if (result.error) throw result.error;
             clearForm();
             await loadProducts();
-            alert('Product saved successfully!');
+            showToast('Product saved successfully!', 'success');
         } catch (err) {
-            alert('Error saving product: ' + err.message);
+            console.error('Error saving product:', err);
+            showToast('Error saving product: ' + err.message, 'error');
         } finally {
             btn.disabled = false;
             document.getElementById('save-btn-text').textContent = id ? 'Update Product' : 'Save Product';
@@ -1458,6 +1475,7 @@
 
     // ── Delete Product ──────────────────────────────────────
     async function deleteProductById(id) {
+        if (!verifyAdminSession()) return;
         const p = _productsMap.get(id);
         const refName = p ? (p.ref || p.name) : 'this product';
         const ok = await showCustomConfirm({
@@ -1536,6 +1554,7 @@
 
     // ── Save Project ───────────────────────────────────────
     async function saveProject() {
+        if (!verifyAdminSession()) return;
         const id = document.getElementById('proj-id').value;
         const title = document.getElementById('proj-title').value.trim();
         const category = document.getElementById('proj-category').value;
@@ -1598,6 +1617,7 @@
 
     // ── Delete Project ──────────────────────────────────────
     async function deleteProjectById(id) {
+        if (!verifyAdminSession()) return;
         const p = _projectsMap.get(id);
         const title = p ? p.title : 'this project';
         const ok = await showCustomConfirm({
