@@ -1,2 +1,0 @@
-:HL["/light-simulation-992x/_next/static/chunks/0v9tuhy~t_~tn.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"73lvB1FqD0IjS6XHoLAxZ"}

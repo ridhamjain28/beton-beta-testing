@@ -1,472 +1,697 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Resources | Beton Lighting</title>
-<link rel="icon" href="favicons/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-<link rel="manifest" href="favicons/manifest.webmanifest">
-    <meta name="description" content="Access technical resources, catalogs, and installation guides from Beton Lighting, Surat, Gujarat."/>
-    <meta property="og:title" content="Resources | Beton Lighting, Surat, Gujarat"/>
-    <meta property="og:description" content="Access technical resources, catalogs, and installation guides from Beton Lighting, Surat, Gujarat."/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://www.betonlighting.com/"/>
-    <meta property="og:image" content="https://www.betonlighting.com/assets/Beton_logo.webp"/>
-    <meta property="og:locale" content="en_IN"/>
-<link rel="stylesheet" href="styles.css">
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
-<style>
-        :root {
-            --bg-cream: #FEFEFE;
-            --border-neutral: rgba(19, 64, 149, 0.15);
-            --text-primary: #134095;
-            --accent-orange: #EF7F1A;
-            --text-secondary: #737373;
-        }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-primary);
-            background-color: var(--bg-cream);
-            overflow-x: hidden;
-        }
-        .font-serif {
-            font-family: 'Montserrat', sans-serif;
-        }
-        .image-grayscale { filter: grayscale(20%); transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .image-grayscale:hover { filter: grayscale(0%); transform: scale(1.02); }
-        .underline-hover { position: relative; }
-        .underline-hover::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.3s ease; }
-        .underline-hover:hover::after { width: 100%; }
-        .underline-hover:hover { color: #EF7F1A; }
-        .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 1.2s ease forwards; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        .stagger-1 { animation-delay: 0.2s; }
-        .stagger-2 { animation-delay: 0.4s; }
-        .stagger-3 { animation-delay: 0.6s; }
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resources | Beton Lighting</title>
+  <meta name="description" content="BETON Lighting technical catalogues and price lists."/>
+  <link rel="icon" href="favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+  <link rel="manifest" href="favicons/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="assets/js/page-flip.browser.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:      #134095;
+      --blue-hov:  #1a52c4;
+      --blue-lgt:  rgba(19,64,149,0.07);
+      --blue-mid:  rgba(19,64,149,0.16);
+      --bg:        #F2F6FC;
+      --surface:   #FFFFFF;
+      --border:    rgba(19,64,149,0.11);
+      --text:      #1a2340;
+      --muted:     #6b7280;
+      --vbg:       #E6EDF9;
+      --accent-orange: #EF7F1A;
+      --border-navy: rgba(19, 64, 149, 0.15);
+    }
+    html, body { height: 100%; font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
 
-        
-        .pdf-icon {
-            font-variation-settings: 'FILL' 1;
-        }
-        /* Custom baseline grid alignment */
-        .technical-grid {
-            background-size: 40px 40px;
-            background-image: radial-gradient(circle, #e2e2e9 1px, transparent 1px);
-        }
-        /* Accordion transition */
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-        .accordion-item.active .accordion-content {
-            max-height: 500px;
-        }
-        .accordion-item.active .rotate-icon {
-            transform: rotate(180deg);
-        }
-    
-    </style>
+    /* Library container */
+    #library-view { display: flex; flex-direction: column; min-height: 100vh; background: #FEFEFE; }
+
+    #lib-top-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 18px 32px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    #lib-heading { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); }
+    #search-wrap { position: relative; width: 280px; max-width: 100%; }
+    #search-wrap .s-ico { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 17px; color: var(--muted); pointer-events: none; }
+    #search-input {
+      width: 100%; padding: 8px 12px 8px 34px;
+      border: 1px solid var(--border); border-radius: 6px;
+      font-family: inherit; font-size: 12px; color: var(--text); background: var(--bg);
+      outline: none; transition: border-color 0.15s;
+    }
+    #search-input:focus { border-color: var(--blue); }
+    #search-input::placeholder { color: var(--muted); }
+
+    #lib-main { flex: 1; padding: 36px 32px; }
+    #doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; max-width: 1100px; }
+
+    .doc-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.18s, border-color 0.18s;
+      display: flex; flex-direction: column; user-select: none;
+    }
+    .doc-card:hover { box-shadow: 0 8px 30px rgba(19,64,149,0.12); transform: translateY(-2px); border-color: rgba(19,64,149,0.26); }
+    .card-thumb {
+      height: 164px;
+      background: linear-gradient(135deg, #0d1e4a 0%, #193a90 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-thumb canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .card-thumb .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1; }
+    .card-thumb .ph .material-symbols-outlined { font-size: 38px; color: rgba(255,255,255,0.25); }
+    .card-thumb .ph .spin { font-size: 22px; color: #EF7F1A; animation: spin-a 1s linear infinite; }
+    @keyframes spin-a { to { transform: rotate(360deg); } }
+    .card-thumb .overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(to top, rgba(0,0,0,0.42), transparent); }
+    .card-body { padding: 14px 16px; }
+    .card-name { font-size: 13px; font-weight: 600; color: var(--blue); line-height: 1.4; margin-bottom: 10px; }
+    .card-foot { display: flex; align-items: center; justify-content: space-between; }
+    .card-pages { font-size: 10px; color: var(--muted); font-weight: 500; }
+    .card-open {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.07em;
+      color: var(--blue); text-transform: uppercase;
+      padding: 5px 10px; border: 1px solid var(--border); border-radius: 4px;
+      transition: background 0.14s, color 0.14s, border-color 0.14s;
+    }
+    .card-open .material-symbols-outlined { font-size: 13px; }
+    .doc-card:hover .card-open { background: var(--blue); color: #fff; border-color: var(--blue); }
+    #no-results { display: none; grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); font-size: 13px; }
+    #no-results .material-symbols-outlined { font-size: 40px; display: block; margin-bottom: 12px; color: #d1d5db; }
+
+    #viewer-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      display: none; flex-direction: column;
+      background: var(--vbg);
+      opacity: 0; transition: opacity 0.22s ease;
+    }
+    #viewer-overlay.visible { display: flex; opacity: 1; }
+
+    #viewer-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 6px rgba(19,64,149,0.06);
+      flex-shrink: 0;
+    }
+    #viewer-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #btn-download {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 16px; border-radius: 5px;
+      background: var(--blue); color: #fff;
+      font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+      text-decoration: none; border: none; cursor: pointer; flex-shrink: 0;
+      transition: background 0.14s;
+    }
+    #btn-download:hover { background: var(--blue-hov); }
+    #btn-download .material-symbols-outlined { font-size: 16px; }
+    #btn-close {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 5px;
+      background: transparent; color: var(--muted);
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      border: 1px solid var(--border); cursor: pointer; flex-shrink: 0;
+      transition: background 0.14s, color 0.14s, border-color 0.14s;
+    }
+    #btn-close:hover { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
+    #btn-close .material-symbols-outlined { font-size: 16px; }
+
+    #viewer-main {
+      flex: 1; min-height: 0; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; background: var(--vbg);
+    }
+    #viewer-loading {
+      position: absolute; inset: 0; z-index: 20;
+      background: var(--surface);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; transition: opacity 0.2s;
+    }
+    .loader-ring {
+      width: 44px; height: 44px;
+      border: 3px solid var(--blue-mid); border-top-color: var(--blue);
+      border-radius: 50%; animation: spin-a 0.8s linear infinite;
+    }
+    #loading-lbl { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+    #loading-track { width: 200px; height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    #loading-fill { height: 100%; background: var(--blue); width: 0%; transition: width 0.15s; border-radius: 99px; }
+
+    #flip-area {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 12px;
+    }
+    #book-el {
+      display: flex; align-items: center; justify-content: center;
+      margin: auto;
+    }
+    .my-page {
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(19,64,149,0.08);
+      overflow: hidden;
+    }
+    .my-page img {
+      width: 100%; height: 100%;
+      object-fit: fill;
+      display: block;
+    }
+    #scroll-area { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 20px 16px; }
+    .scroll-pg { background: #fff; max-width: 900px; margin: 0 auto 16px; box-shadow: 0 4px 20px rgba(19,64,149,0.10); border-radius: 2px; }
+    .scroll-pg img { width: 100%; height: auto; display: block; }
+
+    #viewer-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px; padding: 8px 16px;
+      background: var(--surface); border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .ctrl-grp { display: flex; align-items: center; gap: 3px; }
+    .ctrl-sep { width: 1px; height: 24px; background: var(--border); margin: 0 6px; }
+    .cb {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 32px; min-width: 32px; padding: 0 8px;
+      border-radius: 5px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted);
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      cursor: pointer; gap: 5px; white-space: nowrap;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      letter-spacing: 0.04em;
+    }
+    .cb .material-symbols-outlined { font-size: 17px; }
+    .cb:hover:not(:disabled) { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
+    .cb:disabled { opacity: 0.3; pointer-events: none; }
+    .cb.active { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
+    #pg-nav {
+      display: flex; align-items: center; gap: 6px;
+      padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg);
+    }
+    #pg-lbl { font-size: 10px; color: var(--muted); }
+    #pg-input {
+      width: 36px; text-align: center;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
+      color: var(--text); font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 2px 4px; outline: none; transition: border-color 0.14s;
+    }
+    #pg-input:focus { border-color: var(--blue); }
+    #pg-sep { font-size: 11px; color: var(--muted); }
+    #pg-total { font-size: 12px; font-weight: 600; color: var(--text); }
+    #zoom-pct { font-size: 11px; font-weight: 600; color: var(--muted); min-width: 42px; text-align: center; }
+
+    @media (max-width: 768px) {
+      #lib-header { padding: 10px 14px; gap: 10px; }
+      #search-wrap { width: auto; flex: 1; }
+      .back-lbl { display: none; }
+      #lib-main { padding: 16px; }
+      #doc-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+      #viewer-header { padding: 8px 12px; }
+      #viewer-footer { padding: 6px 10px; gap: 6px; }
+      .ctrl-sep { display: none; }
+      #zoom-pct { display: none; }
+    }
+    @media (max-width: 480px) { #doc-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
-<div class="flex-1">
-<a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp"/></a>
+
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]" id="library-view">
+  <!-- GLOBAL HEADER -->
+  <header class="about-site-header sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between" id="site-header">
+    <div class="flex-1">
+      <a class="about-logo-link flex items-center" href="index.html">
+        <img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.onerror=null; this.src='Beton_logo.jpg';"/>
+      </a>
+    </div>
+    <nav class="hidden lg:flex items-center gap-10 flex-none">
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors text-[#EF7F1A] italic" href="resources.html">Resources</a>
+    </nav>
+    <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+      <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
+    </div>
+    <!-- Mobile Hamburger Icon -->
+    <div class="about-mobile-menu-shell flex-1 flex lg:hidden justify-end items-center">
+      <button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn" aria-label="Open Menu">
+        <iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="fixed inset-0 bg-[#FEFEFE]/95 backdrop-blur-md z-[100] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+    <button class="absolute top-6 right-8 text-3xl text-[#134095] focus:outline-none" id="mobile-menu-close" aria-label="Close Menu">
+      <iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+    </button>
+    <div class="flex flex-col items-center gap-8 text-center">
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors text-[#EF7F1A] italic" href="resources.html">Resources</a>
+      <a class="mt-4 px-8 py-3 border border-[#EF7F1A] text-[#EF7F1A] text-sm uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Library Sub-bar with Title and Search -->
+  <div id="lib-top-bar" class="px-8 lg:px-16">
+    <span id="lib-heading">Document Library</span>
+    <div id="search-wrap">
+      <span class="material-symbols-outlined s-ico">search</span>
+      <input id="search-input" type="search" placeholder="Search documents…" autocomplete="off"/>
+    </div>
+  </div>
+  <main id="lib-main">
+    <div id="doc-grid">
+
+      <!-- PRICE LIST (visible) -->
+      <div class="doc-card" data-file="assets/docs/beton-price-list.pdf" data-name="BETON Price List">
+        <div class="card-thumb" id="thumb-0">
+          <div class="ph">
+            <span class="material-symbols-outlined">picture_as_pdf</span>
+            <span class="material-symbols-outlined spin">progress_activity</span>
+          </div>
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">BETON Price List</div>
+          <div class="card-foot">
+            <span class="card-pages" id="pages-0">—</span>
+            <span class="card-open"><span class="material-symbols-outlined">auto_stories</span>Open</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATALOGUE (hidden - remove style when ready) -->
+      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue" style="display:none">
+        <div class="card-thumb" id="thumb-1">
+          <div class="ph">
+            <span class="material-symbols-outlined">picture_as_pdf</span>
+            <span class="material-symbols-outlined spin">progress_activity</span>
+          </div>
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">BETON Product Catalogue</div>
+          <div class="card-foot">
+            <span class="card-pages" id="pages-1">—</span>
+            <span class="card-open"><span class="material-symbols-outlined">auto_stories</span>Open</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="no-results">
+        <span class="material-symbols-outlined">search_off</span>
+        No documents found.
+      </div>
+    </div>
+  </main>
 </div>
-<nav class="hidden lg:flex items-center gap-12 flex-none">
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
-<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
-</nav>
-<div class="flex-1 hidden lg:flex justify-end items-center gap-6">
-<a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
+
+<!-- VIEWER -->
+<div id="viewer-overlay" role="dialog" aria-modal="true">
+  <header id="viewer-header">
+    <div id="viewer-title">Document Viewer</div>
+    <a id="btn-download" href="#" download>
+      <span class="material-symbols-outlined">download</span>
+      Download PDF
+    </a>
+    <button id="btn-close">
+      <span class="material-symbols-outlined">close</span>
+      Close
+    </button>
+  </header>
+  <div id="viewer-main">
+    <div id="viewer-loading">
+      <div class="loader-ring"></div>
+      <div id="loading-lbl">Opening document…</div>
+      <div id="loading-track"><div id="loading-fill"></div></div>
+    </div>
+    <div id="flip-area"><div id="book-el"></div></div>
+    <div id="scroll-area"></div>
+  </div>
+  <footer id="viewer-footer">
+    <div class="ctrl-grp">
+      <button class="cb" id="btn-mode"><span class="material-symbols-outlined">import_contacts</span><span id="mode-lbl">Scroll View</span></button>
+      <button class="cb active" id="btn-sound"><span class="material-symbols-outlined" id="sound-ico">volume_up</span></button>
+    </div>
+    <div class="ctrl-sep"></div>
+    <div class="ctrl-grp">
+      <button class="cb" id="btn-first"><span class="material-symbols-outlined">first_page</span></button>
+      <button class="cb" id="btn-prev"><span class="material-symbols-outlined">navigate_before</span></button>
+      <div id="pg-nav">
+        <span id="pg-lbl">Page</span>
+        <input id="pg-input" type="number" min="1" value="1"/>
+        <span id="pg-sep">/</span>
+        <span id="pg-total">1</span>
+      </div>
+      <button class="cb" id="btn-next"><span class="material-symbols-outlined">navigate_next</span></button>
+      <button class="cb" id="btn-last"><span class="material-symbols-outlined">last_page</span></button>
+    </div>
+    <div class="ctrl-sep"></div>
+    <div class="ctrl-grp">
+      <button class="cb" id="btn-zoom-out"><span class="material-symbols-outlined">zoom_out</span></button>
+      <span id="zoom-pct">100%</span>
+      <button class="cb" id="btn-zoom-in"><span class="material-symbols-outlined">zoom_in</span></button>
+      <button class="cb" id="btn-zoom-rst"><span class="material-symbols-outlined">fit_screen</span></button>
+      <div class="ctrl-sep"></div>
+      <button class="cb" id="btn-fs"><span class="material-symbols-outlined">fullscreen</span></button>
+    </div>
+  </footer>
 </div>
-<!-- Mobile Hamburger Icon -->
-<div class="flex-1 flex lg:hidden justify-end items-center">
-<button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn"  aria-label="Open Menu">
-<iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
-</button>
-</div>
-</header>
-<!-- Mobile Menu Overlay -->
-<div class="fixed inset-0 bg-[#FEFEFE]/95 backdrop-blur-md z-[100] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
-<button class="absolute top-6 right-8 text-3xl text-[#134095] focus:outline-none" id="mobile-menu-close" aria-label="Close Menu">
-<iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
-</button>
-<div class="flex flex-col items-center gap-8 text-center">
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
-<a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" style="display: none;" href="professionals.html">For Professionals</a>
-<a class="mt-4 px-8 py-3 border border-[#EF7F1A] text-[#EF7F1A] text-sm uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
-</div>
-</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const btn = document.getElementById('mobile-menu-btn');
-        const close = document.getElementById('mobile-menu-close');
-        const overlay = document.getElementById('mobile-menu-overlay');
-        
-        if(btn && close && overlay) {
-            btn.addEventListener('click', () => {
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
-                overlay.classList.add('opacity-100', 'pointer-events-auto');
-                document.body.style.overflow = 'hidden';
-            });
-            close.addEventListener('click', () => {
-                overlay.classList.remove('opacity-100', 'pointer-events-auto');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = '';
-            });
-        }
+(function(){
+  'use strict';
+  if(typeof pdfjsLib!=='undefined') pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const CMAP='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/';
+  const isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||window.innerWidth<768;
+  const isLowEnd=(()=>{const c=navigator.hardwareConcurrency||4,m=navigator.deviceMemory||4;return c<=2||m<=2||(isMobile&&window.innerWidth<640);})();
+  const DPR=isLowEnd?1.0:Math.min(window.devicePixelRatio||1,1.75);
+
+  const visibleCards=new Set();
+  document.querySelectorAll('.doc-card').forEach(c=>{if(c.style.display!=='none')visibleCards.add(c);});
+
+  document.querySelectorAll('.doc-card').forEach((card,idx)=>{
+    if(!visibleCards.has(card))return;
+    const file=card.dataset.file;
+    const thumbEl=document.getElementById('thumb-'+idx);
+    const pagesEl=document.getElementById('pages-'+idx);
+    if(!pdfjsLib||!file)return;
+    pdfjsLib.getDocument({url:file,cMapUrl:CMAP,cMapPacked:true}).promise
+      .then(pdf=>{if(pagesEl)pagesEl.textContent=pdf.numPages+' pages';return pdf.getPage(1);})
+      .then(page=>{
+        const vp=page.getViewport({scale:0.38});
+        const cvs=document.createElement('canvas');
+        cvs.width=vp.width;cvs.height=vp.height;
+        cvs.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+        const ctx=cvs.getContext('2d',{alpha:false});
+        return page.render({canvasContext:ctx,viewport:vp}).promise.then(()=>cvs);
+      })
+      .then(cvs=>{
+        const ph=thumbEl.querySelector('.ph');if(ph)ph.remove();
+        thumbEl.insertBefore(cvs,thumbEl.querySelector('.overlay'));
+      })
+      .catch(()=>{const s=thumbEl.querySelector('.spin');if(s)s.remove();if(pagesEl)pagesEl.textContent='PDF';});
+  });
+
+  document.getElementById('search-input').addEventListener('input',function(){
+    const q=this.value.toLowerCase().trim();let count=0;
+    document.querySelectorAll('.doc-card').forEach(card=>{
+      if(!visibleCards.has(card))return;
+      const m=!q||(card.dataset.name||'').toLowerCase().includes(q);
+      card.style.display=m?'':'none';if(m)count++;
     });
-</script>
-<!-- Global Header -->
-<main>
-<section class="h-[307px] flex flex-col justify-center items-start px-8 max-w-container-max mx-auto technical-grid">
-<div class="border-l-4 border-secondary pl-6">
-<h1 class="font-display-lg text-display-lg text-primary mb-2">Resources</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-                    Comprehensive installation guides, wiring diagrams, and technical articles designed for architectural precision and electrical safety.
-                </p>
-</div>
-</section>
-<!-- Document Library Section -->
-<section class="px-8 max-w-container-max mx-auto my-section-gap">
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-<div>
-<h2 class="font-headline-md text-headline-md text-primary uppercase">Document Library</h2>
-<div class="h-1 w-20 bg-secondary mt-2"></div>
-</div>
-<div class="relative w-full md:w-96">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-<input class="w-full pl-10 pr-4 py-3 bg-surface-alt border border-outline-variant focus:outline-none focus:border-secondary rounded-DEFAULT font-label-md transition-colors" placeholder="Search documentation..." type="text"/>
-</div>
-</div>
-<!-- Bento-style Grid for Downloads -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- Item 1 -->
-<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
-<div>
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
-<h3 class="font-title-lg text-title-lg text-primary mb-2">Installation Guide - Series 7</h3>
-<p class="text-sm text-on-surface-variant">Step-by-step mounting and alignment instructions for recessed systems.</p>
-</div>
-<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="javascript:void(0)">
-                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
-</a>
-</div>
-<!-- Item 2 -->
-<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
-<div>
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
-<h3 class="font-title-lg text-title-lg text-primary mb-2">Maintenance Manual</h3>
-<p class="text-sm text-on-surface-variant">Cleaning protocols and thermal management checks for long-term reliability.</p>
-</div>
-<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="javascript:void(0)">
-                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
-</a>
-</div>
-<!-- Item 3 -->
-<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
-<div>
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
-<h3 class="font-title-lg text-title-lg text-primary mb-2">Standard Warranty Policy</h3>
-<p class="text-sm text-on-surface-variant">Terms of performance guarantee and component replacement schedules.</p>
-</div>
-<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="javascript:void(0)">
-                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
-</a>
-</div>
-<!-- Item 4 -->
-<div class="group bg-surface-container-lowest border-t-2 border-secondary p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-64">
-<div>
-<span class="material-symbols-outlined text-secondary text-4xl mb-4 pdf-icon" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
-<h3 class="font-title-lg text-title-lg text-primary mb-2">Wiring Diagrams - Magnetic Systems</h3>
-<p class="text-sm text-on-surface-variant">Low-voltage track connection maps and driver load calculations.</p>
-</div>
-<a class="flex items-center gap-2 text-secondary font-label-md hover:underline group-hover:gap-3 transition-all" href="javascript:void(0)">
-                        DOWNLOAD PDF <span class="material-symbols-outlined text-sm">download</span>
-</a>
-</div>
-</div>
-</section>
-<!-- Technical Knowledge Section (Asymmetric) -->
-<section class="bg-surface-alt py-section-gap px-8">
-<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div class="order-2 lg:order-1">
-<div class="w-full aspect-video bg-cover bg-center border border-outline-variant shadow-sm relative" data-alt="A clean, clinical architectural photography shot of a modern factory hallway illuminated by precise magnetic track lighting. The scene highlights the engineering detail of the fixtures against a backdrop of brushed concrete and industrial steel, reflecting a professional and authoritative manufacturer atmosphere." style="background-image: url('assets/images/temporary/beton-architectural-space.webp')">
-<div class="absolute -bottom-6 -right-6 bg-secondary text-on-primary p-8 hidden md:block">
-<p class="font-display-lg text-display-lg-mobile leading-none">98+</p>
-<p class="font-label-md text-label-md opacity-80 uppercase">CRI Accuracy</p>
-</div>
-</div>
-</div>
-<div class="order-1 lg:order-2">
-<h2 class="font-headline-md text-headline-md text-primary mb-6">ENGINEERING EXCELLENCE</h2>
-<p class="font-body-md text-body-md text-on-surface-variant mb-6">
-                        At Beton Lighting, we believe that technical transparency is the foundation of architectural success. Our resources are developed by the same team that supports Beton luminaires from Surat.
-                    </p>
-<ul class="space-y-4">
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-secondary mt-1">verified</span>
-<div>
-<h4 class="font-label-md text-label-md text-primary">Lab-Certified Data</h4>
-<p class="text-sm text-on-surface-variant">Every IES file is generated in our in-house photometric darkroom.</p>
-</div>
-</li>
-<li class="flex items-start gap-4">
-<span class="material-symbols-outlined text-secondary mt-1">settings_input_component</span>
-<div>
-<h4 class="font-label-md text-label-md text-primary">System Compatibility</h4>
-<p class="text-sm text-on-surface-variant">Validated integration with major dimming protocols including DALI and 0-10V.</p>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- FAQ Section -->
-<section class="px-8 max-w-3xl mx-auto my-section-gap">
-<div class="text-center mb-16">
-<h2 class="font-headline-md text-headline-md text-primary uppercase">Frequently Asked Questions</h2>
-<div class="h-1 w-20 bg-secondary mx-auto mt-2"></div>
-</div>
-<div class="space-y-4">
-<!-- Question 1 -->
-<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
-<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
-<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">What is the standard warranty period?</span>
-<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
-                            Beton Lighting provides a standard 5-year replacement warranty on all LED engines and integrated drivers. Extended 7-year and 10-year warranties are available for project-specific industrial applications upon request.
-                        </div>
-</div>
-</div>
-<!-- Question 2 -->
-<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
-<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
-<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">Can I request custom wiring diagrams?</span>
-<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
-                            Yes. For complex architectural installations involving non-standard layouts, our engineering team can provide bespoke CAD-ready wiring schematics. Please contact the Technical Support team with your floor plan.
-                        </div>
-</div>
-</div>
-<!-- Question 3 -->
-<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
-<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
-<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">How do I book a technical walkthrough?</span>
-<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
-                            Technical walkthroughs and product discussions are available by appointment for industry professionals. Please use the Contact page to share your preferred date and project context.
-                        </div>
-</div>
-</div>
-<!-- Question 4 -->
-<div class="accordion-item border border-outline-variant bg-surface group transition-colors hover:border-secondary">
-<button class="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none" onclick="toggleAccordion(this)">
-<span class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">Are IES files available for all products?</span>
-<span class="material-symbols-outlined rotate-icon transition-transform text-outline">expand_more</span>
-</button>
-<div class="accordion-content">
-<div class="px-6 pb-6 text-on-surface-variant text-sm border-t border-outline-variant pt-4">
-                            Absolutely. We provide full photometric data including IES and LDT files for all luminaire configurations. These can be found in the technical section of each individual product page or requested as a bulk library for Dialux/Relux simulations.
-                        </div>
-</div>
-</div>
-</div>
-</section>
-<div class="text-center mt-12 mb-16 animate-slide-up">
-    <p class="text-sm text-[#134095]/70">
-        Still have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] font-semibold hover:underline">info@betonlighting.com</a>.
-    </p>
-</div>
-</main>
-<!-- Footer -->
-<!-- FOOTER -->
-<script>
-        function toggleAccordion(button) {
-            const item = button.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Close all items
-            document.querySelectorAll('.accordion-item').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // Toggle clicked item
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        }
+    document.getElementById('no-results').style.display=count===0?'block':'none';
+  });
 
-        // Add a simple fade-in interaction on scroll for cards
-        const observerOptions = {
-            threshold: 0.1
-        };
+  document.querySelectorAll('.doc-card').forEach(card=>{
+    card.addEventListener('click',()=>{if(!visibleCards.has(card))return;openViewer(card.dataset.file,card.dataset.name);});
+  });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, observerOptions);
+  let pdfDoc=null,pageFlip=null,pageNum=1,totalPages=0;
+  let rendered=new Map(),viewerMode='flip',currentZoom=1.0,soundOn=true,audioCtx=null,zoomEl=null;
 
-        document.querySelectorAll('.group').forEach(card => {
-            card.style.opacity = "0";
-            card.style.transform = "translateY(20px)";
-            card.style.transition = "all 0.6s cubic-bezier(0.22, 1, 0.36, 1)";
-            observer.observe(card);
-        });
-    </script>
-<footer class="py-12 md:py-24 px-8 lg:px-16 bg-[#134095] text-[#FEFEFE]">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
-<div class="col-span-1 lg:col-span-1">
-<a class="block mb-8" href="index.html"><img alt="Beton" class="h-14 object-contain rounded" src="Beton_logo.webp"/></a>
-<p class="text-xs leading-relaxed text-[#FEFEFE]/90 max-w-xs mb-4">Architectural lighting solutions designed for longevity, performance, and aesthetic purity. Based in India, illuminating the world.</p>
-<p class="text-xs text-[#FEFEFE]/90 mb-8 font-medium">Have questions? Ask us at <a href="mailto:info@betonlighting.com" class="text-[#EF7F1A] hover:underline font-semibold transition-colors">info@betonlighting.com</a></p>
-<div class="flex gap-6">
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.instagram.com/beton_lighting" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://www.facebook.com/share/1Dmq8ha2n7" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><iconify-icon class="text-xl" icon="mdi:facebook"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="mailto:info@betonlighting.com" aria-label="Email"><iconify-icon class="text-xl" icon="mdi:email"></iconify-icon></a>
-<a class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors" href="https://maps.app.goo.gl/ns9xnbYXUZdAXLPT6" target="_blank" rel="noopener noreferrer" aria-label="Location"><iconify-icon class="text-xl" icon="mdi:map-marker"></iconify-icon></a>
-</div>
-</div>
-<div>
-<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Portfolio</h4>
-<ul class="space-y-4">
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Indoor Lighting</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Outdoor Systems</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Magnetic Tracks</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">New Arrivals</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Resources</h4>
-<ul class="space-y-4">
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Digital Catalogues</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Technical Datasheets</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Installation Guides</a></li>
-<li><a class="text-xs text-[#FEFEFE]/90 hover:text-white transition-colors" href="products.html">Warranty Policy</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-10 text-[#FEFEFE]/90">Newsletter</h4>
-<p class="text-xs text-[#FEFEFE]/90 mb-6">Subscribe for updates on our latest projects and architectural innovations.</p>
-<form id="newsletter-form" class="relative flex border-b border-[#EF7F1A]/30 pb-2 w-full">
-<input type="hidden" name="access_key" value="d3fc88dd-15fc-46ad-b02a-0bba498f0718">
-<input type="hidden" name="subject" value="New Newsletter Subscription">
-<input type="hidden" name="from_name" value="Beton Website Newsletter">
-<input type="hidden" name="message" id="newsletter-message" value="for newsletter subscription request">
-<input class="bg-transparent border-none text-xs w-full focus:outline-none placeholder:text-white/90 text-white" placeholder="Email address" type="email" name="email" required/>
-<button type="submit" class="text-[#EF7F1A] hover:text-[#EF7F1A]/80 transition-colors"><iconify-icon icon="lucide:arrow-right"></iconify-icon></button>
-</form>
-</div>
-</div>
-<div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-[10px] uppercase tracking-widest text-[#FEFEFE]/90">© <span data-current-year>2026</span> Beton Lighting. All Rights Reserved.</p>
-<div class="flex gap-10">
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="privacy.html">Privacy</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="terms.html">Terms</a>
-<a class="text-[10px] uppercase tracking-widest text-[#EF7F1A] hover:text-[#EF7F1A]/80" href="legal.html">Legal</a>
-</div>
-</div>
-</footer></div>
-<div class="beton-sticky-enquiry" aria-label="Quick enquiry actions">
-<a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon> Call</a>
-<a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon> Contact Us</a>
-</div>
-<script>
-    document.querySelectorAll('[data-current-year]').forEach((node) => {
-        node.textContent = new Date().getFullYear();
+  const overlay=document.getElementById('viewer-overlay');
+  const loadingEl=document.getElementById('viewer-loading');
+  const fillEl=document.getElementById('loading-fill');
+  const lblEl=document.getElementById('loading-lbl');
+  const flipArea=document.getElementById('flip-area');
+  const bookEl=document.getElementById('book-el');
+  const scrollArea=document.getElementById('scroll-area');
+  const titleEl=document.getElementById('viewer-title');
+  const dlBtn=document.getElementById('btn-download');
+  const closeBtn=document.getElementById('btn-close');
+  const pgInput=document.getElementById('pg-input');
+  const pgTotal=document.getElementById('pg-total');
+  const btnFirst=document.getElementById('btn-first');
+  const btnPrev=document.getElementById('btn-prev');
+  const btnNext=document.getElementById('btn-next');
+  const btnLast=document.getElementById('btn-last');
+  const btnMode=document.getElementById('btn-mode');
+  const modeLbl=document.getElementById('mode-lbl');
+  const btnSound=document.getElementById('btn-sound');
+  const soundIco=document.getElementById('sound-ico');
+  const btnZI=document.getElementById('btn-zoom-in');
+  const btnZO=document.getElementById('btn-zoom-out');
+  const btnZR=document.getElementById('btn-zoom-rst');
+  const zoomPct=document.getElementById('zoom-pct');
+  const btnFS=document.getElementById('btn-fs');
+
+  function setProgress(pct,txt){fillEl.style.width=pct+'%';lblEl.textContent=txt;}
+  function hideLoading(){loadingEl.style.opacity='0';loadingEl.style.pointerEvents='none';setTimeout(()=>{loadingEl.style.display='none';},200);}
+
+  function playSound(){
+    if(!soundOn)return;
+    try{
+      if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state==='suspended')audioCtx.resume();
+      const sr=audioCtx.sampleRate,len=Math.round(sr*0.1);
+      const buf=audioCtx.createBuffer(1,len,sr);const d=buf.getChannelData(0);
+      for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/(len*0.2));
+      const src=audioCtx.createBufferSource();src.buffer=buf;
+      const flt=audioCtx.createBiquadFilter();flt.type='lowpass';flt.frequency.value=600;
+      const gn=audioCtx.createGain();gn.gain.setValueAtTime(0.2,audioCtx.currentTime);gn.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.1);
+      src.connect(flt);flt.connect(gn);gn.connect(audioCtx.destination);src.start();
+    }catch(e){}
+  }
+
+  async function renderPage(n,tw,th){
+    if(rendered.has(n))return rendered.get(n);
+    try{
+      const page=await pdfDoc.getPage(n);
+      const uvp=page.getViewport({scale:1});
+      const sc=(tw/uvp.width)*DPR;
+      const vp=page.getViewport({scale:sc});
+      const cvs=document.createElement('canvas');
+      const ctx=cvs.getContext('2d',{alpha:false});
+      cvs.width=vp.width;cvs.height=vp.height;
+      await page.render({canvasContext:ctx,viewport:vp}).promise;
+      const url=cvs.toDataURL('image/jpeg',isLowEnd?0.78:0.88);
+      rendered.set(n,url);
+      const fi=document.querySelector('#fp-'+n+' img');if(fi)fi.src=url;
+      const si=document.querySelector('#sp-'+n+' img');if(si)si.src=url;
+      return url;
+    }catch(e){return '';}
+  }
+
+  function buildStructure(pw,ph){
+    bookEl.innerHTML='';scrollArea.innerHTML='';
+    for(let i=1;i<=totalPages;i++){
+      const fp=document.createElement('div');
+      fp.className='my-page';fp.id='fp-'+i;
+      fp.setAttribute('data-density',(i===1||i===totalPages)?'hard':'soft');
+      const fi=document.createElement('img');
+      fi.className='w-full h-full object-contain pointer-events-none select-none';
+      fi.alt='Page '+i;fp.appendChild(fi);bookEl.appendChild(fp);
+      const sp=document.createElement('div');
+      sp.className='scroll-pg';sp.id='sp-'+i;
+      sp.appendChild(si);
+      scrollArea.appendChild(sp);
+    }
+  }
+
+  function initFlip(pw, ph){
+    if(typeof St==='undefined'||!St.PageFlip)return enableScroll();
+    const vMain = document.getElementById('viewer-main');
+    const availW = Math.max(320, (vMain ? vMain.clientWidth : window.innerWidth) - 32);
+    const availH = Math.max(260, (vMain ? vMain.clientHeight : (window.innerHeight - 104)) - 32);
+
+    // Calculate aspect-ratio matching single page dimension
+    const pageAspect = pw / ph;
+    let singleW, singleH;
+
+    if ((availW / 2) / availH > pageAspect) {
+      singleH = availH;
+      singleW = Math.round(singleH * pageAspect);
+    } else {
+      singleW = Math.round(availW / 2);
+      singleH = Math.round(singleW / pageAspect);
+    }
+
+    pageFlip = new St.PageFlip(bookEl, {
+      width: singleW,
+      height: singleH,
+      size: 'fixed',
+      minWidth: 200,
+      maxWidth: 2000,
+      minHeight: 200,
+      maxHeight: 2000,
+      drawShadow: !isLowEnd,
+      flippingTime: isLowEnd ? 360 : 620,
+      usePortrait: true,
+      startZIndex: 1,
+      autoSize: true,
+      showCover: true,
+      mobileScrollSupport: true,
+      swipeDistance: 20,
+      useMouseEvents: true,
+      disableFlipByClick: false
     });
-</script>
+    pageFlip.loadFromHTML(bookEl.querySelectorAll('.my-page'));
+    pageFlip.on('flip', e => { pageNum = e.data + 1; syncUI(); playSound(); });
+    pageFlip.on('changeState', e => { if (e.data === 'flipping') playSound(); });
+  }
 
-<script type="module">
-    import { supabase, handleSupabaseError } from './supabase-client.js';
+  function enableFlip(){
+    viewerMode='flip';scrollArea.style.display='none';flipArea.style.display='block';
+    modeLbl.textContent='Scroll View';
+    btnMode.querySelector('.material-symbols-outlined').textContent='import_contacts';
+    zoomEl=bookEl;applyZoomCSS();
+  }
+  function enableScroll(){
+    viewerMode='scroll';flipArea.style.display='none';scrollArea.style.display='block';
+    modeLbl.textContent='3D Flip View';
+    btnMode.querySelector('.material-symbols-outlined').textContent='auto_stories';
+    zoomEl=scrollArea;applyZoomCSS();
+  }
+  function applyZoomCSS(){
+    if(!zoomEl)return;
+    zoomEl.style.transform=currentZoom===1?'':`scale(${currentZoom})`;
+    zoomEl.style.transformOrigin='center top';
+    zoomPct.textContent=Math.round(currentZoom*100)+'%';
+  }
+  function applyZoom(d){currentZoom=Math.max(0.5,Math.min(3.0,+(currentZoom+d).toFixed(2)));applyZoomCSS();}
+  function resetZoom(){currentZoom=1.0;applyZoomCSS();}
 
-    // Newsletter Form AJAX handler
-    document.querySelectorAll('#newsletter-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = form.querySelector('input[type="email"]');
-            const button = form.querySelector('button');
-            const originalContent = button.innerHTML;
-            
-            const messageInput = form.querySelector('#newsletter-message');
-            messageInput.value = `for newsletter - ${emailInput.value}`;
-            
-            button.disabled = true;
-            button.innerHTML = '<iconify-icon icon="line-md:loading-loop"></iconify-icon>';
-            
-            // Send to Web3Forms
-            const web3Promise = fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: new FormData(form)
-            });
+  function goTo(n){
+    n=Math.max(1,Math.min(totalPages,n));pageNum=n;
+    if(viewerMode==='flip'&&pageFlip)pageFlip.turnToPage(n-1);
+    else{const nd=document.getElementById('sp-'+n);if(nd)nd.scrollIntoView({behavior:'smooth'});}
+    syncUI();
+  }
+  function syncUI(){
+    pgInput.value=pageNum;
+    btnFirst.disabled=pageNum<=1;btnPrev.disabled=pageNum<=1;
+    btnNext.disabled=pageNum>=totalPages;btnLast.disabled=pageNum>=totalPages;
+  }
 
-            // Send to Supabase
-            const supabasePromise = typeof supabase !== 'undefined' 
-                ? supabase.from('inquiries').insert([{ 
-                    name: 'Newsletter Subscriber', 
-                    email: emailInput.value, 
-                    message: 'Newsletter Subscription' 
-                  }])
-                : Promise.resolve();
+  async function openViewer(file,name){
+    pdfDoc=null;pageFlip=null;pageNum=1;totalPages=0;
+    rendered.clear();currentZoom=1.0;viewerMode='flip';
+    bookEl.innerHTML='';scrollArea.innerHTML='';
+    scrollArea.style.display='none';flipArea.style.display='block';
+    loadingEl.style.cssText='display:flex;opacity:1;pointer-events:auto;';
+    fillEl.style.width='0%';
+    titleEl.textContent=name;
+    dlBtn.href=file;dlBtn.download=file.split('/').pop();
+    resetZoom();
+    modeLbl.textContent='Scroll View';
+    btnMode.querySelector('.material-symbols-outlined').textContent='import_contacts';
+    overlay.style.display='flex';
+    requestAnimationFrame(()=>overlay.classList.add('visible'));
+    document.body.style.overflow='hidden';
+    if(typeof pdfjsLib==='undefined'){lblEl.textContent='PDF.js not loaded - refresh.';return;}
+    try{
+      setProgress(12,'Opening document…');
+      pdfDoc=await pdfjsLib.getDocument({url:file,cMapUrl:CMAP,cMapPacked:true,rangeChunkSize:65536}).promise;
+      totalPages=pdfDoc.numPages;pgTotal.textContent=totalPages;pgInput.max=totalPages;
+      setProgress(40,'Preparing pages…');
+      const fp0=await pdfDoc.getPage(1);
+      const vp0=fp0.getViewport({scale:1});
+      const pw=Math.round(vp0.width),ph=Math.round(vp0.height);
+      buildStructure(pw,ph);
+      setProgress(60,'Rendering…');
+      await Promise.all([renderPage(1,pw,ph),totalPages>=2?renderPage(2,pw,ph):Promise.resolve()]);
+      setProgress(90,'Starting viewer…');
+      initFlip(pw,ph);
+      if(isMobile)enableScroll();
+      else{zoomEl=bookEl;}
+      hideLoading();syncUI();applyZoomCSS();
+      (async()=>{for(let i=3;i<=totalPages;i++)await renderPage(i,pw,ph);})();
+    }catch(err){
+      console.error(err);
+      lblEl.innerHTML='<span style="color:#dc2626">Failed to load. <a href="'+file+'" download style="color:var(--blue);text-decoration:underline">Download directly</a></span>';
+    }
+  }
 
-            Promise.all([web3Promise, supabasePromise])
-            .then(responses => responses[0])
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    emailInput.value = '';
-                    emailInput.placeholder = 'Subscribed successfully!';
-                    button.innerHTML = '<iconify-icon icon="lucide:check" class="text-green-500"></iconify-icon>';
-                } else {
-                    emailInput.placeholder = 'Please try again';
-                    button.innerHTML = originalContent;
-                    button.disabled = false;
-                }
-                setTimeout(() => {
-                    emailInput.placeholder = 'Email address';
-                    button.innerHTML = originalContent;
-                    button.disabled = false;
-                }, 3000);
-            })
-            .catch(() => {
-                emailInput.placeholder = 'Submission failed';
-                button.innerHTML = originalContent;
-                button.disabled = false;
-            });
-        });
+  function closeViewer(){
+    overlay.classList.remove('visible');
+    setTimeout(()=>{
+      overlay.style.display='none';
+      document.body.style.overflow='';
+      try{if(pageFlip){pageFlip.destroy();pageFlip=null;}}catch(e){}
+    },240);
+  }
+
+  closeBtn.addEventListener('click',closeViewer);
+  btnPrev.addEventListener('click',()=>{if(viewerMode==='flip'&&pageFlip)pageFlip.flipPrev();else goTo(pageNum-1);});
+  btnNext.addEventListener('click',()=>{if(viewerMode==='flip'&&pageFlip)pageFlip.flipNext();else goTo(pageNum+1);});
+  btnFirst.addEventListener('click',()=>goTo(1));
+  btnLast.addEventListener('click',()=>goTo(totalPages));
+  pgInput.addEventListener('change',e=>{const v=parseInt(e.target.value);if(!isNaN(v))goTo(v);});
+  btnMode.addEventListener('click',()=>{if(viewerMode==='flip')enableScroll();else{if(pageFlip)enableFlip();else enableFlip();}});
+  btnSound.addEventListener('click',()=>{
+    soundOn=!soundOn;
+    soundIco.textContent=soundOn?'volume_up':'volume_off';
+    btnSound.classList.toggle('active',soundOn);
+  });
+  btnZI.addEventListener('click',()=>applyZoom(+0.2));
+  btnZO.addEventListener('click',()=>applyZoom(-0.2));
+  btnZR.addEventListener('click',()=>resetZoom());
+  btnFS.addEventListener('click',()=>{
+    if(!document.fullscreenElement)overlay.requestFullscreen().catch(()=>{});
+    else document.exitFullscreen();
+  });
+  document.addEventListener('fullscreenchange',()=>{
+    btnFS.querySelector('.material-symbols-outlined').textContent=
+      document.fullscreenElement?'fullscreen_exit':'fullscreen';
+  });
+  window.addEventListener('keydown',e=>{
+    if(overlay.style.display!=='flex')return;
+    if(e.target.tagName==='INPUT')return;
+    switch(e.key){
+      case 'Escape':closeViewer();break;
+      case 'ArrowLeft':case 'PageUp':
+        if(viewerMode==='flip'&&pageFlip)pageFlip.flipPrev();else goTo(pageNum-1);break;
+      case 'ArrowRight':case 'PageDown':case ' ':
+        e.preventDefault();
+        if(viewerMode==='flip'&&pageFlip)pageFlip.flipNext();else goTo(pageNum+1);break;
+      case 'Home':goTo(1);break;
+      case 'End':goTo(totalPages);break;
+      case 'f':case 'F':btnFS.click();break;
+      case '+':case '=':applyZoom(+0.2);break;
+      case '-':applyZoom(-0.2);break;
+      case '0':resetZoom();break;
+    }
+  });
+
+  // Global Header Mobile Menu
+  const mBtn = document.getElementById('mobile-menu-btn');
+  const mClose = document.getElementById('mobile-menu-close');
+  const mOverlay = document.getElementById('mobile-menu-overlay');
+  if(mBtn && mClose && mOverlay) {
+    mBtn.addEventListener('click', () => {
+      mOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      mOverlay.classList.add('opacity-100', 'pointer-events-auto');
+      document.body.style.overflow = 'hidden';
     });
+    mClose.addEventListener('click', () => {
+      mOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+      mOverlay.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    });
+  }
+})();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
