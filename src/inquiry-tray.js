@@ -98,19 +98,27 @@ function updateInquiryTrayUI() {
     const lastItem = count > 0 ? list[count - 1] : null;
     const label = count > 0 ? (count > 1 ? `${lastItem.name} +${count - 1} more` : lastItem.name) : 'No items selected';
 
+    // If no items selected and popover is closed, hide tray completely so it does not block buttons
+    if (count === 0 && !_popoverOpen) {
+        tray.style.display = 'none';
+        return;
+    } else {
+        tray.style.display = '';
+    }
+
     if (!_popoverOpen) {
         // COMPACT COLLAPSED FLOATING BAR STATE
-        tray.className = 'fixed bottom-16 right-3 sm:bottom-6 sm:right-6 z-[100] max-w-[calc(100vw-24px)] w-auto bg-[#134095] text-white px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-full shadow-xl border border-white/20 flex items-center justify-between sm:justify-start gap-2 transition-all duration-300 transform translate-y-0 opacity-100 overflow-hidden';
+        tray.className = 'fixed bottom-5 right-4 z-[100] max-w-[calc(100vw-32px)] w-auto bg-[#134095] text-white px-3 py-2 rounded-full shadow-2xl border border-white/20 flex items-center justify-between sm:justify-start gap-2.5 transition-all duration-300 transform translate-y-0 opacity-100 overflow-hidden';
         tray.innerHTML = `
             <a href="contact.html#step-3" class="flex items-center gap-2 group text-left min-w-0 flex-1 overflow-hidden">
-                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full ${count > 0 ? 'bg-[#EF7F1A]' : 'bg-gray-500'} text-white text-[10px] sm:text-xs font-bold flex items-center justify-center shadow-inner flex-shrink-0">${count}</span>
-                <div class="flex flex-col text-left min-w-0 flex-1 overflow-hidden leading-tight">
+                <span class="w-6 h-6 rounded-full bg-[#EF7F1A] text-white text-xs font-bold flex items-center justify-center shadow-inner flex-shrink-0">${count}</span>
+                <div class="flex flex-col text-left min-w-0 flex-1 overflow-hidden leading-tight pr-1">
                     <span class="text-[8px] uppercase tracking-wider text-[#EF7F1A] font-bold truncate">Inquiry Tray</span>
                     <span class="text-[11px] sm:text-xs font-semibold truncate text-white/90">${label}</span>
                 </div>
             </a>
             
-            <button type="button" onclick="toggleInquiryPopover(event)" class="p-1 sm:p-1.5 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center flex-shrink-0" title="Expand Inquiry Tray">
+            <button type="button" onclick="toggleInquiryPopover(event)" class="p-1.5 rounded-full bg-white/10 hover:bg-[#EF7F1A] text-white transition-all flex items-center justify-center flex-shrink-0" title="Expand Inquiry Tray">
                 <iconify-icon icon="heroicons:chevron-up-20-solid" class="text-sm sm:text-base block"></iconify-icon>
             </button>
         `;
