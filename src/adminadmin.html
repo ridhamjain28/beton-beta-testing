@@ -157,9 +157,137 @@
 
         /* Inquiries */
         .inq-date { white-space: nowrap; color: #6b7280; font-size: 0.8rem; }
-        .inq-name { font-weight: 600; white-space: nowrap; }
-        .inq-email a { color: #134095; text-decoration: none; white-space: nowrap; }
-        .inq-msg { min-width: 300px; color: #374151; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word; }
+        /* Custom In-Page Confirmation Modal */
+        .beton-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .beton-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .beton-modal-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            max-width: 420px;
+            width: 100%;
+            padding: 1.75rem;
+            transform: scale(0.95) translateY(8px);
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+        }
+        .beton-modal-overlay.active .beton-modal-card {
+            transform: scale(1) translateY(0);
+        }
+        .beton-modal-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #fee2e2;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.1rem;
+        }
+        .beton-modal-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        .beton-modal-msg {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .beton-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        .beton-modal-btn-cancel {
+            flex: 1;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            background: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .beton-modal-btn-cancel:hover {
+            background: #e5e7eb;
+            color: #111827;
+        }
+        .beton-modal-btn-confirm {
+            flex: 1;
+            padding: 0.625rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .beton-modal-btn-confirm:hover {
+            background: #dc2626;
+        }
+
+        /* In-Page Toast notification */
+        .beton-toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .beton-toast {
+            background: #111827;
+            color: #ffffff;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: translateY(12px);
+            opacity: 0;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+        .beton-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .beton-toast.toast-error {
+            background: #ef4444;
+        }
+        .beton-toast.toast-success {
+            background: #059669;
+        }
     </style>
 </head>
 <body>
@@ -528,11 +656,91 @@
     </div>
 </div>
 
+<!-- Custom Confirmation Modal -->
+<div class="beton-modal-overlay" id="beton-confirm-modal">
+    <div class="beton-modal-card">
+        <div class="beton-modal-icon">
+            <svg style="width:26px; height:26px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+        </div>
+        <h4 class="beton-modal-title" id="beton-modal-title">Confirm Action</h4>
+        <p class="beton-modal-msg" id="beton-modal-msg">Are you sure you want to proceed?</p>
+        <div class="beton-modal-actions">
+            <button type="button" class="beton-modal-btn-cancel" id="beton-modal-cancel">Cancel</button>
+            <button type="button" class="beton-modal-btn-confirm" id="beton-modal-confirm">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="beton-toast-container" id="beton-toast-container"></div>
 
 <script type="module">
     import { supabase, handleSupabaseError } from './supabase-client.js';
     const STORAGE_BUCKET = 'product-images';
     const _db = supabase;
+
+    // ── Toast Notifications ─────────────────────────────────────
+    function showToast(message, type = 'normal') {
+        const container = document.getElementById('beton-toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = `beton-toast ${type === 'error' ? 'toast-error' : type === 'success' ? 'toast-success' : ''}`;
+        toast.innerHTML = `<span>${message}</span>`;
+        container.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 250);
+        }, 3000);
+    }
+
+    // ── Smart In-Website Confirmation Modal with Frequency Tracking ──
+    const _actionCounts = {};
+    function showCustomConfirm({ title = 'Confirm Deletion', message = 'Are you sure you want to delete this item?', confirmText = 'Delete', actionKey = 'general' }) {
+        return new Promise((resolve) => {
+            const count = _actionCounts[actionKey] || 0;
+            // First 2 times show warning, 3rd time onwards auto-confirm directly
+            if (count >= 2) {
+                _actionCounts[actionKey] = count + 1;
+                resolve(true);
+                return;
+            }
+
+            const modal = document.getElementById('beton-confirm-modal');
+            const titleEl = document.getElementById('beton-modal-title');
+            const msgEl = document.getElementById('beton-modal-msg');
+            const confirmBtn = document.getElementById('beton-modal-confirm');
+            const cancelBtn = document.getElementById('beton-modal-cancel');
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            confirmBtn.textContent = confirmText;
+
+            modal.classList.add('active');
+
+            function cleanup() {
+                modal.classList.remove('active');
+                confirmBtn.removeEventListener('click', onConfirm);
+                cancelBtn.removeEventListener('click', onCancel);
+            }
+
+            function onConfirm() {
+                cleanup();
+                _actionCounts[actionKey] = (_actionCounts[actionKey] || 0) + 1;
+                resolve(true);
+            }
+
+            function onCancel() {
+                cleanup();
+                resolve(false);
+            }
+
+            confirmBtn.addEventListener('click', onConfirm);
+            cancelBtn.addEventListener('click', onCancel);
+        });
+    }
 
     // Auth session
     function checkAuth() {
@@ -1046,13 +1254,30 @@
     window.exportInquiriesCSV = exportInquiriesCSV;
 
     async function deleteInquiryById(id) {
-        if (!confirm('Are you sure you want to delete this inquiry submission?')) return;
+        const ok = await showCustomConfirm({
+            title: 'Delete Inquiry Submission',
+            message: 'Are you sure you want to delete this customer inquiry submission? This action cannot be undone.',
+            confirmText: 'Delete Submission',
+            actionKey: 'inquiry_delete'
+        });
+        if (!ok) return;
+
         try {
+            // Optimistically remove from UI for instant snappy feel
+            const btn = document.querySelector(`button[onclick="deleteInquiryById('${id}')"]`);
+            if (btn) {
+                const row = btn.closest('tr');
+                if (row) row.style.opacity = '0.3';
+            }
+
             const { error } = await _db.from('inquiries').delete().eq('id', id);
             if (error) throw error;
-            loadInquiries();
+            showToast('Inquiry deleted successfully', 'success');
+            await loadInquiries();
         } catch (err) {
-            alert('Failed to delete inquiry: ' + err.message);
+            console.error('Failed to delete inquiry:', err);
+            showToast('Failed to delete inquiry: ' + (err.message || 'Check database permissions'), 'error');
+            await loadInquiries();
         }
     }
     window.deleteInquiryById = deleteInquiryById;
@@ -1229,12 +1454,22 @@
     async function deleteProductById(id) {
         const p = _productsMap.get(id);
         const refName = p ? (p.ref || p.name) : 'this product';
-        if (!confirm(`Delete "${refName}"? This cannot be undone.`)) return;
+        const ok = await showCustomConfirm({
+            title: 'Delete Product',
+            message: `Are you sure you want to delete "${refName}"? This action cannot be undone.`,
+            confirmText: 'Delete Product',
+            actionKey: 'product_delete'
+        });
+        if (!ok) return;
         try {
             const { error } = await _db.from('products').delete().eq('id', id);
             if (error) throw error;
+            showToast(`Product "${refName}" deleted successfully`, 'success');
             await loadProducts();
-        } catch (err) { alert('Error deleting product: ' + err.message); }
+        } catch (err) {
+            console.error('Error deleting product:', err);
+            showToast('Error deleting product: ' + err.message, 'error');
+        }
     }
 
     // ── Project Form Helpers ─────────────────────────────────────
@@ -1306,7 +1541,7 @@
         let imageUrl = document.getElementById('proj-image-url').value.trim();
 
         if (!title || !category) {
-            alert('Please fill in Project Title and Category.');
+            showToast('Please fill in Project Title and Category.', 'error');
             return;
         }
 
@@ -1321,7 +1556,12 @@
                 try {
                     imageUrl = await uploadImage(_pendingProjectFile, 'proj-' + title.replace(/\s+/g, '-').toLowerCase());
                 } catch (uploadErr) {
-                    const proceed = confirm(`Project image upload failed: ${uploadErr.message}\n\nContinue saving WITHOUT new image?`);
+                    const proceed = await showCustomConfirm({
+                        title: 'Upload Warning',
+                        message: `Project image upload failed: ${uploadErr.message}. Continue saving WITHOUT new image?`,
+                        confirmText: 'Save Anyway',
+                        actionKey: 'upload_warning'
+                    });
                     if (!proceed) {
                         btn.disabled = false;
                         document.getElementById('proj-save-btn-text').textContent = id ? 'Update Project' : 'Save Project';
@@ -1340,8 +1580,10 @@
             if (result.error) throw result.error;
             clearProjectForm();
             await loadProjects();
+            showToast('Project saved successfully!', 'success');
         } catch (err) {
-            alert('Error saving project: ' + err.message);
+            console.error('Error saving project:', err);
+            showToast('Error saving project: ' + err.message, 'error');
         } finally {
             btn.disabled = false;
             document.getElementById('proj-save-btn-text').textContent = id ? 'Update Project' : 'Save Project';
@@ -1352,12 +1594,22 @@
     async function deleteProjectById(id) {
         const p = _projectsMap.get(id);
         const title = p ? p.title : 'this project';
-        if (!confirm(`Delete project "${title}"? This cannot be undone.`)) return;
+        const ok = await showCustomConfirm({
+            title: 'Delete Project Case Study',
+            message: `Are you sure you want to delete project "${title}"? This action cannot be undone.`,
+            confirmText: 'Delete Project',
+            actionKey: 'project_delete'
+        });
+        if (!ok) return;
         try {
             const { error } = await _db.from('projects').delete().eq('id', id);
             if (error) throw error;
+            showToast(`Project "${title}" deleted successfully`, 'success');
             await loadProjects();
-        } catch (err) { alert('Error deleting project: ' + err.message); }
+        } catch (err) {
+            console.error('Error deleting project:', err);
+            showToast('Error deleting project: ' + err.message, 'error');
+        }
     }
 
     // Expose functions to window since we are now in a module
