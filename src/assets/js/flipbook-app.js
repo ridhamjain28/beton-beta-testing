@@ -56,11 +56,13 @@
         modeText: document.getElementById('mode-text')
     };
 
+    // Device detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
     // Device performance assessment
     const isLowEndDevice = (function () {
         const cores = navigator.hardwareConcurrency || 4;
         const memory = navigator.deviceMemory || 4;
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         return cores <= 2 || memory <= 2 || (isMobile && window.innerWidth < 640);
     })();
 
@@ -156,6 +158,11 @@
             if (typeof St !== 'undefined' && St.PageFlip) {
                 initPageFlip(pageWidth, pageHeight);
             } else {
+                enableScrollMode();
+            }
+
+            // On mobile: default to scroll view for readability
+            if (isMobile) {
                 enableScrollMode();
             }
 
@@ -304,16 +311,24 @@
 
     // Initialize StPageFlip
     function initPageFlip(pageWidth, pageHeight) {
+        // Compute max dimensions from actual viewport so the book fills the screen
+        const headerH = 60;
+        const footerH = 56;
+        const padV    = isMobile ? 16 : 48;
+        const padH    = isMobile ? 8  : 48;
+        const maxW    = Math.max(400, window.innerWidth  - padH);
+        const maxH    = Math.max(300, window.innerHeight - headerH - footerH - padV);
+
         pageFlip = new St.PageFlip(elements.bookElement, {
             width: pageWidth,
             height: pageHeight,
             size: 'stretch',
-            minWidth: 280,
-            maxWidth: 900,
-            minHeight: 400,
-            maxHeight: 1200,
+            minWidth: 260,
+            maxWidth: maxW,
+            minHeight: 300,
+            maxHeight: maxH,
             drawShadow: !isLowEndDevice,
-            flippingTime: isLowEndDevice ? 400 : 700,
+            flippingTime: isLowEndDevice ? 380 : 650,
             usePortrait: true,
             startZIndex: 1,
             startPage: 0,
@@ -321,7 +336,7 @@
             maxShadowOpacity: 0.4,
             showCover: true,
             mobileScrollSupport: true,
-            swipeDistance: 25,
+            swipeDistance: 20,
             clickEventForward: true,
             useMouseEvents: true,
             disableFlipByClick: false
@@ -377,11 +392,13 @@
         currentMode = 'scroll';
         elements.bookContainer?.classList.add('hidden');
         elements.scrollContainer?.classList.remove('hidden');
+        elements.scrollContainer?.classList.add('flex');
         if (elements.modeText) elements.modeText.textContent = '3D Flip View';
     }
 
     function enableFlipMode() {
         currentMode = 'flip';
+        elements.scrollContainer?.classList.remove('flex');
         elements.scrollContainer?.classList.add('hidden');
         elements.bookContainer?.classList.remove('hidden');
         if (elements.modeText) elements.modeText.textContent = 'Scroll View';

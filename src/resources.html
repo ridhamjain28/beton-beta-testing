@@ -906,6 +906,7 @@
     const mob = /Android|iPhone|iPad/i.test(navigator.userAgent);
     return cores <= 2 || mem <= 2 || (mob && window.innerWidth < 640);
   })();
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
   const renderScale = isLowEnd ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.75);
 
   function setProgress(pct, text) {
@@ -971,11 +972,17 @@
 
   function initFlip(pw, ph) {
     if (typeof St === 'undefined' || !St.PageFlip) return enableScroll();
+    const headerH = 56;
+    const footerH = 52;
+    const padV    = isMobile ? 8  : 32;
+    const padH    = isMobile ? 4  : 32;
+    const maxW    = Math.max(320, window.innerWidth  - padH);
+    const maxH    = Math.max(260, window.innerHeight - headerH - footerH - padV);
     pageFlip = new St.PageFlip(bookEl, {
       width: pw, height: ph,
       size: 'stretch',
-      minWidth: 260, maxWidth: 880,
-      minHeight: 360, maxHeight: 1200,
+      minWidth: 260, maxWidth: maxW,
+      minHeight: 260, maxHeight: maxH,
       drawShadow: !isLowEnd,
       flippingTime: isLowEnd ? 380 : 650,
       usePortrait: true,
@@ -1091,6 +1098,8 @@
 
       setProgress(90, 'Starting viewer…');
       initFlip(pw, ph);
+      // Mobile: default to scroll mode for readability
+      if (isMobile) enableScroll();
       hideLoading();
       syncUI();
 
