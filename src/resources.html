@@ -13,6 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="assets/js/page-flip.browser.js"></script>
   <style>
@@ -28,23 +30,23 @@
       --text:      #1a2340;
       --muted:     #6b7280;
       --vbg:       #E6EDF9;
+      --accent-orange: #EF7F1A;
+      --border-navy: rgba(19, 64, 149, 0.15);
     }
-    html, body { height: 100%; font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+    html, body { height: 100%; font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); }
 
-    #library-view { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    /* Library container */
+    #library-view { display: flex; flex-direction: column; min-height: 100vh; background: #FEFEFE; }
 
-    #lib-header {
-      display: flex; align-items: center; gap: 14px;
-      padding: 12px 28px;
+    #lib-top-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 18px 32px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 1px 6px rgba(19,64,149,0.06);
       flex-shrink: 0;
     }
-    #lib-logo { height: 30px; object-fit: contain; }
-    .hdr-div { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; }
-    #lib-heading { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); }
-    #search-wrap { position: relative; width: 270px; max-width: 100%; margin-left: auto; }
+    #lib-heading { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); }
+    #search-wrap { position: relative; width: 280px; max-width: 100%; }
     #search-wrap .s-ico { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 17px; color: var(--muted); pointer-events: none; }
     #search-input {
       width: 100%; padding: 8px 12px 8px 34px;
@@ -54,17 +56,9 @@
     }
     #search-input:focus { border-color: var(--blue); }
     #search-input::placeholder { color: var(--muted); }
-    #back-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 11px; font-weight: 600; color: var(--muted);
-      text-decoration: none; letter-spacing: 0.04em; white-space: nowrap; flex-shrink: 0;
-      transition: color 0.14s;
-    }
-    #back-link:hover { color: var(--blue); }
-    #back-link .material-symbols-outlined { font-size: 15px; }
 
-    #lib-main { flex: 1; min-height: 0; overflow-y: auto; padding: 36px 40px; }
-    #doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; max-width: 1100px; }
+    #lib-main { flex: 1; padding: 36px 32px; }
+    #doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; max-width: 1100px; }
 
     .doc-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
@@ -158,10 +152,28 @@
     #loading-track { width: 200px; height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
     #loading-fill { height: 100%; background: var(--blue); width: 0%; transition: width 0.15s; border-radius: 99px; }
 
-    #flip-area { width: 100%; height: 100%; position: relative; overflow: hidden; }
-    .my-page { background: #ffffff; }
+    #flip-area {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 12px;
+    }
+    #book-el {
+      display: flex; align-items: center; justify-content: center;
+      margin: auto;
+    }
+    .my-page {
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(19,64,149,0.08);
+      overflow: hidden;
+    }
+    .my-page img {
+      width: 100%; height: 100%;
+      object-fit: fill;
+      display: block;
+    }
     #scroll-area { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 20px 16px; }
-    .scroll-pg { background: #fff; max-width: 800px; margin: 0 auto 16px; box-shadow: 0 4px 20px rgba(19,64,149,0.10); border-radius: 2px; }
+    .scroll-pg { background: #fff; max-width: 900px; margin: 0 auto 16px; box-shadow: 0 4px 20px rgba(19,64,149,0.10); border-radius: 2px; }
     .scroll-pg img { width: 100%; height: auto; display: block; }
 
     #viewer-footer {
@@ -218,20 +230,56 @@
 </head>
 <body>
 
-<div id="library-view">
-  <header id="lib-header">
-    <a href="index.html"><img id="lib-logo" src="Beton_logo.webp" alt="Beton" onerror="this.src='Beton_logo.jpg'"/></a>
-    <div class="hdr-div"></div>
-    <span id="lib-heading">Resources</span>
+<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]" id="library-view">
+  <!-- GLOBAL HEADER -->
+  <header class="about-site-header sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between" id="site-header">
+    <div class="flex-1">
+      <a class="about-logo-link flex items-center" href="index.html">
+        <img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.onerror=null; this.src='Beton_logo.jpg';"/>
+      </a>
+    </div>
+    <nav class="hidden lg:flex items-center gap-10 flex-none">
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
+      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors text-[#EF7F1A] italic" href="resources.html">Resources</a>
+    </nav>
+    <div class="flex-1 hidden lg:flex justify-end items-center gap-6">
+      <a class="px-5 py-2 border border-[#EF7F1A] text-[#EF7F1A] text-[10px] uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
+    </div>
+    <!-- Mobile Hamburger Icon -->
+    <div class="about-mobile-menu-shell flex-1 flex lg:hidden justify-end items-center">
+      <button class="text-2xl text-[#134095] focus:outline-none" id="mobile-menu-btn" aria-label="Open Menu">
+        <iconify-icon class="pointer-events-none" icon="heroicons:bars-3-20-solid"></iconify-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="fixed inset-0 bg-[#FEFEFE]/95 backdrop-blur-md z-[100] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu-overlay">
+    <button class="absolute top-6 right-8 text-3xl text-[#134095] focus:outline-none" id="mobile-menu-close" aria-label="Close Menu">
+      <iconify-icon icon="heroicons:x-mark-20-solid"></iconify-icon>
+    </button>
+    <div class="flex flex-col items-center gap-8 text-center">
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
+      <a class="text-lg uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors text-[#EF7F1A] italic" href="resources.html">Resources</a>
+      <a class="mt-4 px-8 py-3 border border-[#EF7F1A] text-[#EF7F1A] text-sm uppercase tracking-[0.2em] hover:bg-[#EF7F1A] hover:text-white transition-colors duration-500" href="contact.html">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Library Sub-bar with Title and Search -->
+  <div id="lib-top-bar" class="px-8 lg:px-16">
+    <span id="lib-heading">Document Library</span>
     <div id="search-wrap">
       <span class="material-symbols-outlined s-ico">search</span>
       <input id="search-input" type="search" placeholder="Search documents…" autocomplete="off"/>
     </div>
-    <a href="index.html" id="back-link">
-      <span class="material-symbols-outlined">arrow_back</span>
-      <span class="back-lbl">Back to site</span>
-    </a>
-  </header>
+  </div>
   <main id="lib-main">
     <div id="doc-grid">
 
@@ -457,32 +505,51 @@
       fi.alt='Page '+i;fp.appendChild(fi);bookEl.appendChild(fp);
       const sp=document.createElement('div');
       sp.className='scroll-pg';sp.id='sp-'+i;
-      const si=document.createElement('img');si.alt='Page '+i;
-      sp.appendChild(si);scrollArea.appendChild(sp);
+      sp.appendChild(si);
+      scrollArea.appendChild(sp);
     }
   }
 
-  function initFlip(pw,ph){
+  function initFlip(pw, ph){
     if(typeof St==='undefined'||!St.PageFlip)return enableScroll();
-    const hdrH=document.getElementById('viewer-header').offsetHeight||52;
-    const ftrH=document.getElementById('viewer-footer').offsetHeight||52;
-    const padV=isMobile?8:20,padH=isMobile?4:20;
-    const maxW=Math.max(280,window.innerWidth-padH);
-    const maxH=Math.max(220,window.innerHeight-hdrH-ftrH-padV);
-    pageFlip=new St.PageFlip(bookEl,{
-      width:pw,height:ph,size:'stretch',
-      minWidth:240,maxWidth:maxW,
-      minHeight:200,maxHeight:maxH,
-      drawShadow:!isLowEnd,
-      flippingTime:isLowEnd?360:620,
-      usePortrait:true,startZIndex:1,autoSize:true,
-      showCover:false,
-      mobileScrollSupport:true,swipeDistance:20,
-      useMouseEvents:true,disableFlipByClick:false
+    const vMain = document.getElementById('viewer-main');
+    const availW = Math.max(320, (vMain ? vMain.clientWidth : window.innerWidth) - 32);
+    const availH = Math.max(260, (vMain ? vMain.clientHeight : (window.innerHeight - 104)) - 32);
+
+    // Calculate aspect-ratio matching single page dimension
+    const pageAspect = pw / ph;
+    let singleW, singleH;
+
+    if ((availW / 2) / availH > pageAspect) {
+      singleH = availH;
+      singleW = Math.round(singleH * pageAspect);
+    } else {
+      singleW = Math.round(availW / 2);
+      singleH = Math.round(singleW / pageAspect);
+    }
+
+    pageFlip = new St.PageFlip(bookEl, {
+      width: singleW,
+      height: singleH,
+      size: 'fixed',
+      minWidth: 200,
+      maxWidth: 2000,
+      minHeight: 200,
+      maxHeight: 2000,
+      drawShadow: !isLowEnd,
+      flippingTime: isLowEnd ? 360 : 620,
+      usePortrait: true,
+      startZIndex: 1,
+      autoSize: true,
+      showCover: true,
+      mobileScrollSupport: true,
+      swipeDistance: 20,
+      useMouseEvents: true,
+      disableFlipByClick: false
     });
     pageFlip.loadFromHTML(bookEl.querySelectorAll('.my-page'));
-    pageFlip.on('flip',e=>{pageNum=e.data+1;syncUI();playSound();});
-    pageFlip.on('changeState',e=>{if(e.data==='flipping')playSound();});
+    pageFlip.on('flip', e => { pageNum = e.data + 1; syncUI(); playSound(); });
+    pageFlip.on('changeState', e => { if (e.data === 'flipping') playSound(); });
   }
 
   function enableFlip(){
@@ -607,6 +674,23 @@
       case '0':resetZoom();break;
     }
   });
+
+  // Global Header Mobile Menu
+  const mBtn = document.getElementById('mobile-menu-btn');
+  const mClose = document.getElementById('mobile-menu-close');
+  const mOverlay = document.getElementById('mobile-menu-overlay');
+  if(mBtn && mClose && mOverlay) {
+    mBtn.addEventListener('click', () => {
+      mOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      mOverlay.classList.add('opacity-100', 'pointer-events-auto');
+      document.body.style.overflow = 'hidden';
+    });
+    mClose.addEventListener('click', () => {
+      mOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+      mOverlay.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    });
+  }
 })();
 </script>
 </body>
