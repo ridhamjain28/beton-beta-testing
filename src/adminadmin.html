@@ -1270,8 +1270,14 @@
                 if (row) row.style.opacity = '0.3';
             }
 
-            const { error } = await _db.from('inquiries').delete().eq('id', id);
+            const { data, error } = await _db.from('inquiries').delete().eq('id', id).select();
             if (error) throw error;
+            if (!data || data.length === 0) {
+                console.warn('DELETE returned 0 affected rows. RLS policy on Supabase is likely preventing DELETE.');
+                showToast('Delete blocked by Supabase RLS policy. Enable DELETE on inquiries table.', 'error');
+                await loadInquiries();
+                return;
+            }
             showToast('Inquiry deleted successfully', 'success');
             await loadInquiries();
         } catch (err) {
