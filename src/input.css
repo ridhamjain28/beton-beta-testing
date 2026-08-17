@@ -230,7 +230,8 @@
       box-sizing: border-box;
     }
 
-    body > div,
+    body > .beton-page-root,
+    body > div:not(#beton-floating-inquiry-tray):not(#mobile-menu-overlay),
     .min-h-screen,
     .relative.min-h-screen {
       width: 100% !important;

@@ -7,11 +7,56 @@
 
 const INQUIRY_STORAGE_KEY = 'beton_inquiry_products';
 
-// Inject custom seamless scrollbar CSS for floating tray
+// Inject custom seamless scrollbar and positioning CSS for floating tray
 if (typeof document !== 'undefined' && !document.getElementById('inquiry-tray-custom-styles')) {
     const styleEl = document.createElement('style');
     styleEl.id = 'inquiry-tray-custom-styles';
     styleEl.innerHTML = `
+        #beton-floating-inquiry-tray {
+            position: fixed !important;
+            right: 16px !important;
+            z-index: 100 !important;
+            box-sizing: border-box !important;
+            transition: all 0.3s ease !important;
+        }
+        @media (max-width: 767px) {
+            #beton-floating-inquiry-tray {
+                bottom: 80px !important;
+            }
+        }
+        @media (min-width: 768px) {
+            #beton-floating-inquiry-tray {
+                bottom: 24px !important;
+            }
+        }
+        #beton-floating-inquiry-tray.tray-empty {
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            max-width: 44px !important;
+            border-radius: 9999px !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        #beton-floating-inquiry-tray.tray-collapsed {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: 280px !important;
+            border-radius: 9999px !important;
+            padding: 8px 12px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        #beton-floating-inquiry-tray.tray-expanded {
+            width: 288px !important;
+            max-width: calc(100vw - 32px) !important;
+            border-radius: 12px !important;
+            padding: 14px !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
         .inquiry-tray-scrollbar {
             scrollbar-width: thin;
             scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
@@ -103,16 +148,16 @@ function updateInquiryTrayUI() {
 
     if (!_popoverOpen) {
         if (count === 0) {
-            // MINIMAL ICON-ONLY PILL — empty state
-            tray.className = 'fixed bottom-5 right-4 z-[100] bg-[#134095] text-white w-10 h-10 rounded-full shadow-xl border border-white/20 flex items-center justify-center transition-all duration-300 cursor-pointer hover:bg-[#1a52c4] hover:scale-110';
+            // MINIMAL ICON-ONLY FLOATING ACTION BUTTON — empty state
+            tray.className = 'tray-empty bg-[#134095] text-white shadow-xl border border-white/20 cursor-pointer hover:bg-[#1a52c4] hover:scale-110';
             tray.innerHTML = `
                 <button type="button" onclick="toggleInquiryPopover(event)" title="Open Inquiry Tray" class="w-full h-full flex items-center justify-center">
                     <iconify-icon icon="heroicons:clipboard-document-list-20-solid" class="text-lg block text-white"></iconify-icon>
                 </button>
             `;
         } else {
-            // COMPACT COLLAPSED FLOATING BAR STATE — items present
-            tray.className = 'fixed bottom-5 right-4 z-[100] w-auto max-w-[280px] bg-[#134095] text-white px-3 py-2 rounded-full shadow-2xl border border-white/20 flex items-center justify-start gap-2.5 transition-all duration-300 overflow-hidden';
+            // COMPACT COLLAPSED FLOATING PILL — items present
+            tray.className = 'tray-collapsed bg-[#134095] text-white shadow-2xl border border-white/20 gap-2.5 overflow-hidden';
             tray.innerHTML = `
                 <a href="contact.html#step-3" class="flex items-center gap-2 group text-left min-w-0 flex-1 overflow-hidden">
                     <span class="w-6 h-6 rounded-full bg-[#EF7F1A] text-white text-xs font-bold flex items-center justify-center shadow-inner flex-shrink-0">${count}</span>
@@ -154,7 +199,7 @@ function updateInquiryTrayUI() {
             `;
         }
 
-        tray.className = 'fixed bottom-6 right-4 z-[100] w-72 bg-[#134095] text-white p-3.5 rounded-xl shadow-2xl border border-white/20 flex flex-col gap-2.5 transition-all duration-300 overflow-hidden';
+        tray.className = 'tray-expanded bg-[#134095] text-white shadow-2xl border border-white/20 gap-2.5 overflow-hidden';
         tray.innerHTML = `
             <!-- Header with Badge & Chevron Down -->
             <div class="flex justify-between items-center pb-2 border-b border-white/15">
