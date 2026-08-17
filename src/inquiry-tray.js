@@ -112,7 +112,7 @@ function updateInquiryTrayUI() {
             `;
         } else {
             // COMPACT COLLAPSED FLOATING BAR STATE — items present
-            tray.className = 'fixed bottom-5 right-4 z-[100] max-w-[calc(100vw-32px)] w-auto bg-[#134095] text-white px-3 py-2 rounded-full shadow-2xl border border-white/20 flex items-center justify-between sm:justify-start gap-2.5 transition-all duration-300 transform translate-y-0 opacity-100 overflow-hidden';
+            tray.className = 'fixed bottom-5 right-4 z-[100] w-auto max-w-[280px] bg-[#134095] text-white px-3 py-2 rounded-full shadow-2xl border border-white/20 flex items-center justify-start gap-2.5 transition-all duration-300 overflow-hidden';
             tray.innerHTML = `
                 <a href="contact.html#step-3" class="flex items-center gap-2 group text-left min-w-0 flex-1 overflow-hidden">
                     <span class="w-6 h-6 rounded-full bg-[#EF7F1A] text-white text-xs font-bold flex items-center justify-center shadow-inner flex-shrink-0">${count}</span>
@@ -154,7 +154,7 @@ function updateInquiryTrayUI() {
             `;
         }
 
-        tray.className = 'fixed bottom-16 right-3 sm:bottom-6 sm:right-6 z-[100] w-[calc(100vw-24px)] sm:w-72 max-w-xs bg-[#134095] text-white p-3 sm:p-3.5 rounded-xl shadow-2xl border border-white/20 flex flex-col gap-2.5 transition-all duration-300 transform translate-y-0 opacity-100 overflow-hidden';
+        tray.className = 'fixed bottom-6 right-4 z-[100] w-72 bg-[#134095] text-white p-3.5 rounded-xl shadow-2xl border border-white/20 flex flex-col gap-2.5 transition-all duration-300 overflow-hidden';
         tray.innerHTML = `
             <!-- Header with Badge & Chevron Down -->
             <div class="flex justify-between items-center pb-2 border-b border-white/15">
