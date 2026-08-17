@@ -134,6 +134,11 @@
             .home-hero-actions {
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .home-hero-actions a {
+                width: auto;
             }
         }
 
@@ -266,7 +271,7 @@
     </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="beton-page-root max-w-[1440px] mx-auto relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
 <div class="flex-1">
 <a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.onerror=null; this.src='Beton_logo.jpg';"/></a>
 </div>
@@ -324,7 +329,7 @@
     });
 </script>
 <!-- HERO SECTION -->
-<section class="home-hero flex flex-col lg:flex-row h-[calc(100vh-80px)] border-b border-[var(--border-neutral)]">
+<section class="home-hero flex flex-col lg:flex-row border-b border-[var(--border-neutral)]">
 <div class="home-hero-media lg:w-2/3 relative overflow-hidden group">
 <img alt="Architectural Lighting" class="w-full h-full object-cover image-grayscale" loading="lazy" src="assets/images/site/landing-page-beton2.jpeg"/>
 <div class="absolute bottom-8 left-8 text-[10px] tracking-[0.3em] uppercase text-white/80 font-medium">
@@ -339,14 +344,14 @@
 <p class="text-sm text-neutral-600 leading-relaxed mb-10 fade-in stagger-2">
                     Premium architectural lighting for homes, studios, showrooms, offices, and hospitality spaces. Designed with in-house assembly, testing, and quality control in Gujarat.
                 </p>
-<div class="home-hero-actions flex flex-col sm:flex-row gap-4 fade-in stagger-3">
-    <a class="flex items-center justify-center gap-4 px-6 py-4 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.2em] font-semibold group hover:bg-[#D96F16] transition-colors" href="contact.html">
-        Visit Showroom 
-        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300" icon="lucide:map-pin"></iconify-icon>
+<div class="home-hero-actions flex flex-col gap-3 fade-in stagger-3">
+    <a class="flex items-center justify-center gap-3 px-5 py-4 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.12em] lg:tracking-[0.2em] font-semibold group hover:bg-[#D96F16] transition-colors w-full" href="contact.html">
+        Visit Showroom
+        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" icon="lucide:map-pin"></iconify-icon>
     </a>
-    <a class="flex items-center justify-center gap-4 px-6 py-4 border border-[var(--border-neutral)] text-[var(--text-primary)] text-[10px] uppercase tracking-[0.2em] font-semibold group hover:bg-neutral-50 transition-colors" href="products.html">
-        Explore Collection 
-        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300" icon="lucide:arrow-right"></iconify-icon>
+    <a class="flex items-center justify-center gap-3 px-5 py-4 border border-[var(--border-neutral)] text-[var(--text-primary)] text-[10px] uppercase tracking-[0.12em] lg:tracking-[0.2em] font-semibold group hover:bg-neutral-50 transition-colors w-full" href="products.html">
+        Explore Collection
+        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" icon="lucide:arrow-right"></iconify-icon>
     </a>
 </div>
 </div>
