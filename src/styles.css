@@ -171,3 +171,161 @@ img {
     overflow-x: hidden;
   }
 }
+/* ============================================================
+   PRODUCTS PAGE — Mobile filter sidebar & product grid
+   ============================================================ */
+@media (max-width: 1023px) {
+  .products-sidebar-mobile-toggle {
+    display: flex;
+  }
+  aside.lg\:w-64 {
+    width: 100% !important;
+    max-width: 100%;
+  }
+  .flex-col.lg\:flex-row > aside {
+    order: 1;
+  }
+  .flex-col.lg\:flex-row > div.flex-1 {
+    order: 2;
+  }
+  #product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+}
+
+/* ============================================================
+   APPLICATION CATEGORY CARDS — Fix fixed-width label boxes
+   ============================================================ */
+@media (max-width: 767px) {
+  .category-label {
+    width: auto !important;
+    max-width: calc(100% - 16px) !important;
+    left: 8px !important;
+  }
+  .category-label h4 {
+    font-size: 16px !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+  .home-applications .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .home-applications .grid > a {
+    aspect-ratio: 3 / 4 !important;
+    min-height: 160px;
+  }
+}
+
+/* ============================================================
+   MANUFACTURING / SPLIT SECTIONS — Fix p-16 lg:p-24 padding
+   ============================================================ */
+@media (max-width: 767px) {
+  .p-16, .p-24, .lg\:p-24 {
+    padding: 28px 20px !important;
+  }
+  .grid.grid-cols-1.lg\:grid-cols-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+  }
+  .flex.flex-col.lg\:flex-row > div.lg\:w-1\/2 {
+    width: 100% !important;
+  }
+  .flex.flex-col.lg\:flex-row > div.lg\:w-1\/2.relative {
+    height: 260px !important;
+    min-height: 220px;
+  }
+  .flex.flex-col.lg\:flex-row > .lg\:w-1\/4,
+  .flex.flex-col.lg\:flex-row > .lg\:w-3\/4 {
+    width: 100% !important;
+  }
+  .gap-16 {
+    gap: 24px !important;
+  }
+  .gap-12 {
+    gap: 20px !important;
+  }
+}
+
+/* ============================================================
+   ABOUT PAGE — Mobile layout fixes
+   ============================================================ */
+@media (max-width: 767px) {
+  .about-hero h1 {
+    font-size: clamp(32px, 10vw, 44px) !important;
+    line-height: 1.1 !important;
+  }
+  .about-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ============================================================
+   PROJECTS PAGE — Mobile layout
+   ============================================================ */
+@media (max-width: 767px) {
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   CONTACT PAGE — Form and wizard fixes
+   ============================================================ */
+@media (max-width: 767px) {
+  .wizard-step-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px;
+  }
+  .form-input,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    width: 100% !important;
+    min-height: 48px;
+    font-size: 16px !important;
+  }
+  textarea {
+    min-height: 100px;
+  }
+}
+
+/* ============================================================
+   INQUIRY TRAY — Prevent any mobile overflow
+   ============================================================ */
+#beton-floating-inquiry-tray {
+  max-width: 288px;
+}
+
+/* ============================================================
+   GLOBAL TOUCH TARGETS — All interactive elements >= 44px
+   ============================================================ */
+@media (max-width: 1023px) {
+  nav a,
+  header a,
+  header button,
+  .pagination-btn,
+  .category-filter,
+  .ip-filter {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   PREVENT HORIZONTAL SCROLL — Universal safeguard
+   ============================================================ */
+html, body {
+  overflow-x: hidden;
+}
+
+.beton-page-root {
+  overflow-x: hidden;
+}
