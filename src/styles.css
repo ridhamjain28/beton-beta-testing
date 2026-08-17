@@ -67,3 +67,107 @@
     box-sizing: border-box;
   }
 }
+/* ============================================================
+   GLOBAL HEADER — tight padding on mobile, 44dp+ touch targets
+   ============================================================ */
+header {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* All header nav links and button touch targets >= 44px */
+header nav a,
+header .flex-1 a,
+header button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 1023px) {
+  /* Mobile header - tighter horizontal padding */
+  header.sticky,
+  header[class*="sticky"] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    height: 64px !important;
+  }
+
+  /* Logo smaller on mobile */
+  header img {
+    height: 40px !important;
+  }
+
+  /* Hamburger button - proper touch target */
+  #mobile-menu-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+}
+
+/* ============================================================
+   MOBILE MENU OVERLAY — safe font sizing, proper gaps
+   ============================================================ */
+#mobile-menu-overlay {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+#mobile-menu-overlay a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 16px !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ============================================================
+   SAFE AREA — bottom padding for content behind home indicator
+   ============================================================ */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
+  }
+
+  .beton-sticky-enquiry {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================================
+   IMAGES — prevent overflow, maintain ratio
+   ============================================================ */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================================
+   SECTIONS — consistent horizontal padding rhythm on mobile
+   ============================================================ */
+@media (max-width: 767px) {
+  /* Sections that use px-8 should be px-4 on mobile */
+  section[class*="px-8"],
+  div[class*="px-8"] {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* All interactive elements must be at least 44px tall */
+  a[class*="py-"][class*="px-"],
+  button[class*="py-"][class*="px-"] {
+    min-height: 44px;
+  }
+
+  /* Prevent any element from being wider than viewport */
+  .beton-page-root > * {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
