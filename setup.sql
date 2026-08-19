@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS documents (
 );
 
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow public select documents" ON documents FOR SELECT USING (true);
-CREATE POLICY "Allow admin manage documents" ON documents FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow public select documents" ON documents;
+DROP POLICY IF EXISTS "Allow admin manage documents" ON documents;
+DROP POLICY IF EXISTS "Allow public all documents" ON documents;
+CREATE POLICY "Allow public all documents" ON documents FOR ALL USING (true) WITH CHECK (true);
 
 -- Insert default documents if not existing
 INSERT INTO documents (title, file_url, category, is_visible) VALUES
