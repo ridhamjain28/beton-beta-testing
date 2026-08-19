@@ -570,7 +570,7 @@
   }
 
   function enableFlip(){
-    viewerMode='flip';scrollArea.style.display='none';flipArea.style.display='block';
+    viewerMode='flip';scrollArea.style.display='none';flipArea.style.display='flex';
     modeLbl.textContent='Scroll View';
     btnMode.querySelector('.material-symbols-outlined').textContent='import_contacts';
     zoomEl=bookEl;applyZoomCSS();
@@ -606,7 +606,7 @@
     pdfDoc=null;pageFlip=null;pageNum=1;totalPages=0;
     rendered.clear();currentZoom=1.0;viewerMode='flip';
     bookEl.innerHTML='';scrollArea.innerHTML='';
-    scrollArea.style.display='none';flipArea.style.display='block';
+    scrollArea.style.display='none';flipArea.style.display='flex';
     loadingEl.style.cssText='display:flex;opacity:1;pointer-events:auto;';
     fillEl.style.width='0%';
     titleEl.textContent=name;
