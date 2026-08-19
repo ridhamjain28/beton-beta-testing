@@ -74,9 +74,15 @@
       display: flex; align-items: center; justify-content: center;
     }
     .card-thumb canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .card-thumb .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1; }
-    .card-thumb .ph .material-symbols-outlined { font-size: 38px; color: rgba(255,255,255,0.25); }
-    .card-thumb .ph .spin { font-size: 22px; color: #EF7F1A; animation: spin-a 1s linear infinite; }
+    .card-thumb .ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 1; }
+    .card-thumb .ph .material-symbols-outlined { font-size: 32px; color: rgba(255,255,255,0.3); }
+    .thumb-spinner {
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #EF7F1A;
+      border-radius: 50%;
+      animation: spin-a 0.8s linear infinite;
+    }
     @keyframes spin-a { to { transform: rotate(360deg); } }
     .card-thumb .overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(to top, rgba(0,0,0,0.42), transparent); }
     .card-body { padding: 14px 16px; }
@@ -293,47 +299,11 @@
   </div>
   <main id="lib-main">
     <div id="doc-grid">
-
-      <!-- PRICE LIST (visible) -->
-      <div class="doc-card" data-file="assets/docs/beton-price-list.pdf" data-name="BETON Price List">
-        <div class="card-thumb" id="thumb-0">
-          <div class="ph">
-            <span class="material-symbols-outlined">picture_as_pdf</span>
-            <span class="material-symbols-outlined spin">progress_activity</span>
-          </div>
-          <div class="overlay"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-name">BETON Price List</div>
-          <div class="card-foot">
-            <span class="card-pages" id="pages-0">—</span>
-            <span class="card-open"><span class="material-symbols-outlined">auto_stories</span>Open</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CATALOGUE -->
-      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue">
-        <div class="card-thumb" id="thumb-1">
-          <div class="ph">
-            <span class="material-symbols-outlined">picture_as_pdf</span>
-            <span class="material-symbols-outlined spin">progress_activity</span>
-          </div>
-          <div class="overlay"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-name">BETON Product Catalogue</div>
-          <div class="card-foot">
-            <span class="card-pages" id="pages-1">—</span>
-            <span class="card-open"><span class="material-symbols-outlined">auto_stories</span>Open</span>
-          </div>
-        </div>
-      </div>
-
-      <div id="no-results">
-        <span class="material-symbols-outlined">search_off</span>
-        No documents found.
-      </div>
+      <!-- Dynamically populated from Supabase documents table -->
+    </div>
+    <div id="no-results" style="display:none;">
+      <span class="material-symbols-outlined">search_off</span>
+      No documents found.
     </div>
   </main>
 </div>
@@ -363,183 +333,318 @@
   <footer id="viewer-footer">
     <div class="ctrl-grp">
       <button class="cb" id="btn-mode"><span class="material-symbols-outlined">import_contacts</span><span id="mode-lbl">Scroll View</span></button>
-      <button class="cb active" id="btn-sound"><span class="material-symbols-outlined" id="sound-ico">volume_up</span></button>
+      <button class="cb active" id="btn-sound" title="Toggle Sound"><span class="material-symbols-outlined" id="sound-ico">volume_up</span></button>
     </div>
     <div class="ctrl-sep"></div>
     <div class="ctrl-grp">
-      <button class="cb" id="btn-first"><span class="material-symbols-outlined">first_page</span></button>
-      <button class="cb" id="btn-prev"><span class="material-symbols-outlined">navigate_before</span></button>
+      <button class="cb" id="btn-prev" title="Previous Page"><span class="material-symbols-outlined">navigate_before</span></button>
       <div id="pg-nav">
         <span id="pg-lbl">Page</span>
         <input id="pg-input" type="number" min="1" value="1"/>
         <span id="pg-sep">/</span>
         <span id="pg-total">1</span>
       </div>
-      <button class="cb" id="btn-next"><span class="material-symbols-outlined">navigate_next</span></button>
-      <button class="cb" id="btn-last"><span class="material-symbols-outlined">last_page</span></button>
+      <button class="cb" id="btn-next" title="Next Page"><span class="material-symbols-outlined">navigate_next</span></button>
     </div>
     <div class="ctrl-sep"></div>
     <div class="ctrl-grp">
-      <button class="cb" id="btn-zoom-out"><span class="material-symbols-outlined">zoom_out</span></button>
+      <button class="cb" id="btn-zoom-out" title="Zoom Out"><span class="material-symbols-outlined">zoom_out</span></button>
       <span id="zoom-pct">100%</span>
-      <button class="cb" id="btn-zoom-in"><span class="material-symbols-outlined">zoom_in</span></button>
-      <button class="cb" id="btn-zoom-rst"><span class="material-symbols-outlined">fit_screen</span></button>
+      <button class="cb" id="btn-zoom-in" title="Zoom In"><span class="material-symbols-outlined">zoom_in</span></button>
+      <button class="cb" id="btn-zoom-rst" title="Fit to Screen"><span class="material-symbols-outlined">fit_screen</span></button>
       <div class="ctrl-sep"></div>
-      <button class="cb" id="btn-fs"><span class="material-symbols-outlined">fullscreen</span></button>
+      <button class="cb" id="btn-fs" title="Fullscreen"><span class="material-symbols-outlined">fullscreen</span></button>
     </div>
   </footer>
 </div>
 
-<script>
+<script type="module">
+import { supabase } from './supabase-client.js';
+
 (function(){
   'use strict';
-  if(typeof pdfjsLib!=='undefined') pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  const CMAP='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/';
-  const isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||window.innerWidth<768;
-  const isLowEnd=(()=>{const c=navigator.hardwareConcurrency||4,m=navigator.deviceMemory||4;return c<=2||m<=2||(isMobile&&window.innerWidth<640);})();
-  const DPR=isLowEnd?1.0:Math.min(window.devicePixelRatio||1,1.75);
+  if(typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+  const CMAP = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/';
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+  const isLowEnd = (() => {
+    const c = navigator.hardwareConcurrency || 4;
+    const m = navigator.deviceMemory || 4;
+    return c <= 2 || m <= 2 || (isMobile && window.innerWidth < 640);
+  })();
+  const DPR = isLowEnd ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.75);
 
-  const visibleCards=new Set();
-  document.querySelectorAll('.doc-card').forEach(c=>{if(c.style.display!=='none')visibleCards.add(c);});
+  const docGrid = document.getElementById('doc-grid');
+  const noResults = document.getElementById('no-results');
+  const searchInput = document.getElementById('search-input');
 
-  document.querySelectorAll('.doc-card').forEach((card,idx)=>{
-    if(!visibleCards.has(card))return;
-    const file=card.dataset.file;
-    const thumbEl=document.getElementById('thumb-'+idx);
-    const pagesEl=document.getElementById('pages-'+idx);
-    if(!pdfjsLib||!file)return;
-    pdfjsLib.getDocument({url:file,cMapUrl:CMAP,cMapPacked:true}).promise
-      .then(pdf=>{if(pagesEl)pagesEl.textContent=pdf.numPages+' pages';return pdf.getPage(1);})
-      .then(page=>{
-        const vp=page.getViewport({scale:0.38});
-        const cvs=document.createElement('canvas');
-        cvs.width=vp.width;cvs.height=vp.height;
-        cvs.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
-        const ctx=cvs.getContext('2d',{alpha:false});
-        return page.render({canvasContext:ctx,viewport:vp}).promise.then(()=>cvs);
-      })
-      .then(cvs=>{
-        const ph=thumbEl.querySelector('.ph');if(ph)ph.remove();
-        thumbEl.insertBefore(cvs,thumbEl.querySelector('.overlay'));
-      })
-      .catch(()=>{const s=thumbEl.querySelector('.spin');if(s)s.remove();if(pagesEl)pagesEl.textContent='PDF';});
-  });
+  let pdfDoc = null, pageFlip = null, pageNum = 1, totalPages = 0;
+  let rendered = new Map(), viewerMode = 'flip', currentZoom = 1.0, soundOn = true, audioCtx = null, zoomEl = null;
+  let docPageWidth = 0, docPageHeight = 0;
 
-  document.getElementById('search-input').addEventListener('input',function(){
-    const q=this.value.toLowerCase().trim();let count=0;
-    document.querySelectorAll('.doc-card').forEach(card=>{
-      if(!visibleCards.has(card))return;
-      const m=!q||(card.dataset.name||'').toLowerCase().includes(q);
-      card.style.display=m?'':'none';if(m)count++;
+  const overlay = document.getElementById('viewer-overlay');
+  const loadingEl = document.getElementById('viewer-loading');
+  const fillEl = document.getElementById('loading-fill');
+  const lblEl = document.getElementById('loading-lbl');
+  const flipArea = document.getElementById('flip-area');
+  const bookEl = document.getElementById('book-el');
+  const scrollArea = document.getElementById('scroll-area');
+  const titleEl = document.getElementById('viewer-title');
+  const dlBtn = document.getElementById('btn-download');
+  const closeBtn = document.getElementById('btn-close');
+  const pgInput = document.getElementById('pg-input');
+  const pgTotal = document.getElementById('pg-total');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const btnMode = document.getElementById('btn-mode');
+  const modeLbl = document.getElementById('mode-lbl');
+  const btnSound = document.getElementById('btn-sound');
+  const soundIco = document.getElementById('sound-ico');
+  const btnZI = document.getElementById('btn-zoom-in');
+  const btnZO = document.getElementById('btn-zoom-out');
+  const btnZR = document.getElementById('btn-zoom-rst');
+  const zoomPct = document.getElementById('zoom-pct');
+  const btnFS = document.getElementById('btn-fs');
+
+  // Load documents from Supabase or fallback
+  async function loadLibraryDocuments() {
+    docGrid.innerHTML = `
+      <div style="grid-column: 1/-1; display:flex; align-items:center; justify-content:center; padding: 48px; color: var(--muted); gap: 12px;">
+        <div class="thumb-spinner" style="border-top-color: var(--blue);"></div>
+        <span style="font-size: 12px; font-weight: 500;">Loading documents…</span>
+      </div>
+    `;
+
+    let docs = [];
+    try {
+      if (supabase) {
+        const { data, error } = await supabase.from('documents').select('*').order('created_at', { ascending: false });
+        if (!error && data && data.length > 0) {
+          docs = data.filter(d => d.is_visible !== false);
+        }
+      }
+    } catch (e) {
+      console.warn('Supabase documents fetch failed, using fallback:', e);
+    }
+
+    if (!docs || docs.length === 0) {
+      docs = [
+        { title: 'BETON Price List', file_url: 'assets/docs/beton-price-list.pdf', category: 'Price List' }
+      ];
+    }
+
+    renderDocumentCards(docs);
+  }
+
+  function renderDocumentCards(docs) {
+    docGrid.innerHTML = '';
+    if (!docs || docs.length === 0) {
+      noResults.style.display = 'block';
+      return;
+    }
+    noResults.style.display = 'none';
+
+    docs.forEach((doc, idx) => {
+      const card = document.createElement('div');
+      card.className = 'doc-card';
+      card.dataset.file = doc.file_url;
+      card.dataset.name = doc.title;
+
+      card.innerHTML = `
+        <div class="card-thumb" id="thumb-${idx}">
+          <div class="ph">
+            <div class="thumb-spinner"></div>
+          </div>
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">${doc.title}</div>
+          <div class="card-foot">
+            <span class="card-pages" id="pages-${idx}">PDF Document</span>
+            <span class="card-open"><span class="material-symbols-outlined">auto_stories</span>Open</span>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener('click', () => {
+        openViewer(doc.file_url, doc.title);
+      });
+
+      docGrid.appendChild(card);
+
+      // Render thumbnail cover using PDF.js
+      if (typeof pdfjsLib !== 'undefined' && doc.file_url) {
+        pdfjsLib.getDocument({ url: doc.file_url, cMapUrl: CMAP, cMapPacked: true }).promise
+          .then(pdf => {
+            const pagesEl = document.getElementById('pages-' + idx);
+            if (pagesEl) pagesEl.textContent = pdf.numPages + ' pages';
+            return pdf.getPage(1);
+          })
+          .then(page => {
+            const vp = page.getViewport({ scale: 0.42 });
+            const cvs = document.createElement('canvas');
+            cvs.width = vp.width;
+            cvs.height = vp.height;
+            cvs.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+            const ctx = cvs.getContext('2d', { alpha: false });
+            return page.render({ canvasContext: ctx, viewport: vp }).promise.then(() => cvs);
+          })
+          .then(cvs => {
+            const thumbEl = document.getElementById('thumb-' + idx);
+            if (thumbEl) {
+              const ph = thumbEl.querySelector('.ph');
+              if (ph) ph.remove();
+              thumbEl.insertBefore(cvs, thumbEl.querySelector('.overlay'));
+            }
+          })
+          .catch(err => {
+            console.warn('Thumbnail render fallback:', err);
+            const thumbEl = document.getElementById('thumb-' + idx);
+            if (thumbEl) {
+              const ph = thumbEl.querySelector('.ph');
+              if (ph) ph.innerHTML = '<span class="material-symbols-outlined" style="font-size:36px;color:rgba(255,255,255,0.4);">picture_as_pdf</span>';
+            }
+          });
+      }
     });
-    document.getElementById('no-results').style.display=count===0?'block':'none';
-  });
-
-  document.querySelectorAll('.doc-card').forEach(card=>{
-    card.addEventListener('click',()=>{if(!visibleCards.has(card))return;openViewer(card.dataset.file,card.dataset.name);});
-  });
-
-  let pdfDoc=null,pageFlip=null,pageNum=1,totalPages=0;
-  let rendered=new Map(),viewerMode='flip',currentZoom=1.0,soundOn=true,audioCtx=null,zoomEl=null;
-
-  const overlay=document.getElementById('viewer-overlay');
-  const loadingEl=document.getElementById('viewer-loading');
-  const fillEl=document.getElementById('loading-fill');
-  const lblEl=document.getElementById('loading-lbl');
-  const flipArea=document.getElementById('flip-area');
-  const bookEl=document.getElementById('book-el');
-  const scrollArea=document.getElementById('scroll-area');
-  const titleEl=document.getElementById('viewer-title');
-  const dlBtn=document.getElementById('btn-download');
-  const closeBtn=document.getElementById('btn-close');
-  const pgInput=document.getElementById('pg-input');
-  const pgTotal=document.getElementById('pg-total');
-  const btnFirst=document.getElementById('btn-first');
-  const btnPrev=document.getElementById('btn-prev');
-  const btnNext=document.getElementById('btn-next');
-  const btnLast=document.getElementById('btn-last');
-  const btnMode=document.getElementById('btn-mode');
-  const modeLbl=document.getElementById('mode-lbl');
-  const btnSound=document.getElementById('btn-sound');
-  const soundIco=document.getElementById('sound-ico');
-  const btnZI=document.getElementById('btn-zoom-in');
-  const btnZO=document.getElementById('btn-zoom-out');
-  const btnZR=document.getElementById('btn-zoom-rst');
-  const zoomPct=document.getElementById('zoom-pct');
-  const btnFS=document.getElementById('btn-fs');
-
-  function setProgress(pct,txt){fillEl.style.width=pct+'%';lblEl.textContent=txt;}
-  function hideLoading(){loadingEl.style.opacity='0';loadingEl.style.pointerEvents='none';setTimeout(()=>{loadingEl.style.display='none';},200);}
-
-  function playSound(){
-    if(!soundOn)return;
-    try{
-      if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-      if(audioCtx.state==='suspended')audioCtx.resume();
-      const sr=audioCtx.sampleRate,len=Math.round(sr*0.1);
-      const buf=audioCtx.createBuffer(1,len,sr);const d=buf.getChannelData(0);
-      for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/(len*0.2));
-      const src=audioCtx.createBufferSource();src.buffer=buf;
-      const flt=audioCtx.createBiquadFilter();flt.type='lowpass';flt.frequency.value=600;
-      const gn=audioCtx.createGain();gn.gain.setValueAtTime(0.2,audioCtx.currentTime);gn.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+0.1);
-      src.connect(flt);flt.connect(gn);gn.connect(audioCtx.destination);src.start();
-    }catch(e){}
   }
 
-  async function renderPage(n,tw,th){
-    if(rendered.has(n))return rendered.get(n);
-    try{
-      const page=await pdfDoc.getPage(n);
-      const uvp=page.getViewport({scale:1});
-      const sc=(tw/uvp.width)*DPR;
-      const vp=page.getViewport({scale:sc});
-      const cvs=document.createElement('canvas');
-      const ctx=cvs.getContext('2d',{alpha:false});
-      cvs.width=vp.width;cvs.height=vp.height;
-      await page.render({canvasContext:ctx,viewport:vp}).promise;
-      const url=cvs.toDataURL('image/jpeg',isLowEnd?0.78:0.88);
-      rendered.set(n,url);
-      const fi=document.querySelector('#fp-'+n+' img');if(fi)fi.src=url;
-      const si=document.querySelector('#sp-'+n+' img');if(si)si.src=url;
+  // Search filtering
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      let count = 0;
+      document.querySelectorAll('.doc-card').forEach(card => {
+        const name = (card.dataset.name || '').toLowerCase();
+        const match = !q || name.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) count++;
+      });
+      noResults.style.display = count === 0 ? 'block' : 'none';
+    });
+  }
+
+  function setProgress(pct, txt) {
+    fillEl.style.width = pct + '%';
+    lblEl.textContent = txt;
+  }
+  function hideLoading() {
+    loadingEl.style.opacity = '0';
+    loadingEl.style.pointerEvents = 'none';
+    setTimeout(() => { loadingEl.style.display = 'none'; }, 200);
+  }
+
+  function playSound() {
+    if (!soundOn) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const sr = audioCtx.sampleRate, len = Math.round(sr * 0.08);
+      const buf = audioCtx.createBuffer(1, len, sr);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.2));
+      const src = audioCtx.createBufferSource();
+      src.buffer = buf;
+      const flt = audioCtx.createBiquadFilter();
+      flt.type = 'lowpass';
+      flt.frequency.value = 650;
+      const gn = audioCtx.createGain();
+      gn.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      gn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+      src.connect(flt);
+      flt.connect(gn);
+      gn.connect(audioCtx.destination);
+      src.start();
+    } catch(e) {}
+  }
+
+  async function renderPage(n, tw, th) {
+    if (rendered.has(n)) return rendered.get(n);
+    if (!pdfDoc || n < 1 || n > totalPages) return '';
+    try {
+      const page = await pdfDoc.getPage(n);
+      const uvp = page.getViewport({ scale: 1 });
+      const targetW = tw || uvp.width;
+      const sc = (targetW / uvp.width) * DPR;
+      const vp = page.getViewport({ scale: sc });
+      const cvs = document.createElement('canvas');
+      const ctx = cvs.getContext('2d', { alpha: false });
+      cvs.width = vp.width;
+      cvs.height = vp.height;
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+      const url = cvs.toDataURL('image/jpeg', isLowEnd ? 0.78 : 0.88);
+      rendered.set(n, url);
+
+      const fi = document.querySelector('#fp-' + n + ' img');
+      if (fi) fi.src = url;
+      const si = document.querySelector('#sp-' + n + ' img');
+      if (si) si.src = url;
+
       return url;
-    }catch(e){return '';}
+    } catch (e) {
+      console.warn('Page render error:', n, e);
+      return '';
+    }
   }
 
-  function buildStructure(pw,ph){
-    bookEl.innerHTML='';scrollArea.innerHTML='';
-    for(let i=1;i<=totalPages;i++){
-      const fp=document.createElement('div');
-      fp.className='my-page';fp.id='fp-'+i;
-      fp.setAttribute('data-density',(i===1||i===totalPages)?'hard':'soft');
-      const fi=document.createElement('img');
-      fi.className='w-full h-full object-contain pointer-events-none select-none';
-      fi.alt='Page '+i;fp.appendChild(fi);bookEl.appendChild(fp);
-      const sp=document.createElement('div');
-      sp.className='scroll-pg';sp.id='sp-'+i;
-      const si=document.createElement('img');
-      si.className='w-full h-auto block';si.alt='Page '+i;
+  function ensureNearbyRendered(p, pw, ph) {
+    if (!pdfDoc) return;
+    const toRender = [p - 2, p - 1, p, p + 1, p + 2, p + 3].filter(n => n >= 1 && n <= totalPages && !rendered.has(n));
+    toRender.forEach(n => renderPage(n, pw, ph));
+  }
+
+  function buildStructure(pw, ph) {
+    bookEl.innerHTML = '';
+    scrollArea.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const fp = document.createElement('div');
+      fp.className = 'my-page';
+      fp.id = 'fp-' + i;
+      fp.setAttribute('data-density', (i === 1 || i === totalPages) ? 'hard' : 'soft');
+      const fi = document.createElement('img');
+      fi.className = 'w-full h-full object-contain pointer-events-none select-none';
+      fi.alt = 'Page ' + i;
+      fp.appendChild(fi);
+      bookEl.appendChild(fp);
+
+      const sp = document.createElement('div');
+      sp.className = 'scroll-pg';
+      sp.id = 'sp-' + i;
+      const si = document.createElement('img');
+      si.className = 'w-full h-auto block';
+      si.alt = 'Page ' + i;
       sp.appendChild(si);
       scrollArea.appendChild(sp);
     }
   }
 
-  function initFlip(pw, ph){
-    if(typeof St==='undefined'||!St.PageFlip)return enableScroll();
-    const vMain = document.getElementById('viewer-main');
-    const availW = Math.max(320, (vMain ? vMain.clientWidth : window.innerWidth) - 32);
-    const availH = Math.max(260, (vMain ? vMain.clientHeight : (window.innerHeight - 104)) - 32);
+  function initFlip(pw, ph) {
+    if (typeof St === 'undefined' || !St.PageFlip) return enableScroll();
 
-    // Calculate aspect-ratio matching single page dimension
+    const isMobileWidth = window.innerWidth < 768;
+    const vMain = document.getElementById('viewer-main');
+    const availW = Math.max(280, (vMain ? vMain.clientWidth : window.innerWidth) - 16);
+    const availH = Math.max(260, (vMain ? vMain.clientHeight : (window.innerHeight - 104)) - 16);
+
     const pageAspect = pw / ph;
     let singleW, singleH;
 
-    if ((availW / 2) / availH > pageAspect) {
-      singleH = availH;
-      singleW = Math.round(singleH * pageAspect);
-    } else {
-      singleW = Math.round(availW / 2);
+    if (isMobileWidth) {
+      singleW = Math.min(availW, Math.round(availH * pageAspect));
       singleH = Math.round(singleW / pageAspect);
+    } else {
+      if ((availW / 2) / availH > pageAspect) {
+        singleH = availH;
+        singleW = Math.round(singleH * pageAspect);
+      } else {
+        singleW = Math.round(availW / 2);
+        singleH = Math.round(singleW / pageAspect);
+      }
     }
+
+    docPageWidth = singleW;
+    docPageHeight = singleH;
 
     pageFlip = new St.PageFlip(bookEl, {
       width: singleW,
@@ -550,8 +655,8 @@
       minHeight: 200,
       maxHeight: 2000,
       drawShadow: !isLowEnd,
-      flippingTime: isLowEnd ? 360 : 620,
-      usePortrait: isMobile,
+      flippingTime: isLowEnd ? 360 : 600,
+      usePortrait: isMobileWidth,
       startZIndex: 1,
       autoSize: true,
       showCover: true,
@@ -560,131 +665,238 @@
       useMouseEvents: true,
       disableFlipByClick: false
     });
+
     pageFlip.loadFromHTML(bookEl.querySelectorAll('.my-page'));
-    pageFlip.on('flip', e => { pageNum = e.data + 1; syncUI(); playSound(); });
-    pageFlip.on('changeState', e => { if (e.data === 'flipping') playSound(); });
+    pageFlip.on('flip', e => {
+      pageNum = e.data + 1;
+      syncUI();
+      playSound();
+      ensureNearbyRendered(pageNum, pw, ph);
+    });
+    pageFlip.on('changeState', e => {
+      if (e.data === 'flipping') playSound();
+    });
   }
 
-  function enableFlip(){
-    viewerMode='flip';scrollArea.style.display='none';flipArea.style.display='flex';
-    modeLbl.textContent='Scroll View';
-    btnMode.querySelector('.material-symbols-outlined').textContent='import_contacts';
-    zoomEl=bookEl;applyZoomCSS();
+  function enableFlip() {
+    viewerMode = 'flip';
+    scrollArea.style.display = 'none';
+    flipArea.style.display = 'flex';
+    modeLbl.textContent = 'Scroll View';
+    btnMode.querySelector('.material-symbols-outlined').textContent = 'import_contacts';
+    zoomEl = bookEl;
+    applyZoomCSS();
   }
-  function enableScroll(){
-    viewerMode='scroll';flipArea.style.display='none';scrollArea.style.display='block';
-    modeLbl.textContent='3D Flip View';
-    btnMode.querySelector('.material-symbols-outlined').textContent='auto_stories';
-    zoomEl=scrollArea;applyZoomCSS();
-  }
-  function applyZoomCSS(){
-    if(!zoomEl)return;
-    zoomEl.style.transform=currentZoom===1?'':`scale(${currentZoom})`;
-    zoomEl.style.transformOrigin='center top';
-    zoomPct.textContent=Math.round(currentZoom*100)+'%';
-  }
-  function applyZoom(d){currentZoom=Math.max(0.5,Math.min(3.0,+(currentZoom+d).toFixed(2)));applyZoomCSS();}
-  function resetZoom(){currentZoom=1.0;applyZoomCSS();}
 
-  function goTo(n){
-    n=Math.max(1,Math.min(totalPages,n));pageNum=n;
-    if(viewerMode==='flip'&&pageFlip)pageFlip.turnToPage(n-1);
-    else{const nd=document.getElementById('sp-'+n);if(nd)nd.scrollIntoView({behavior:'smooth'});}
+  function enableScroll() {
+    viewerMode = 'scroll';
+    flipArea.style.display = 'none';
+    scrollArea.style.display = 'block';
+    modeLbl.textContent = '3D Flip View';
+    btnMode.querySelector('.material-symbols-outlined').textContent = 'auto_stories';
+    zoomEl = scrollArea;
+    applyZoomCSS();
+  }
+
+  function applyZoomCSS() {
+    if (!zoomEl) return;
+    zoomEl.style.transform = currentZoom === 1 ? '' : `scale(${currentZoom})`;
+    zoomEl.style.transformOrigin = 'center top';
+    zoomPct.textContent = Math.round(currentZoom * 100) + '%';
+  }
+
+  function applyZoom(d) {
+    currentZoom = Math.max(0.5, Math.min(3.0, +(currentZoom + d).toFixed(2)));
+    applyZoomCSS();
+  }
+
+  function resetZoom() {
+    currentZoom = 1.0;
+    applyZoomCSS();
+  }
+
+  function goTo(n) {
+    n = Math.max(1, Math.min(totalPages, n));
+    pageNum = n;
+    if (viewerMode === 'flip' && pageFlip) {
+      pageFlip.turnToPage(n - 1);
+    } else {
+      const nd = document.getElementById('sp-' + n);
+      if (nd) nd.scrollIntoView({ behavior: 'smooth' });
+    }
     syncUI();
-  }
-  function syncUI(){
-    pgInput.value=pageNum;
-    btnFirst.disabled=pageNum<=1;btnPrev.disabled=pageNum<=1;
-    btnNext.disabled=pageNum>=totalPages;btnLast.disabled=pageNum>=totalPages;
+    ensureNearbyRendered(pageNum, docPageWidth, docPageHeight);
   }
 
-  async function openViewer(file,name){
-    pdfDoc=null;pageFlip=null;pageNum=1;totalPages=0;
-    rendered.clear();currentZoom=1.0;viewerMode='flip';
-    bookEl.innerHTML='';scrollArea.innerHTML='';
-    scrollArea.style.display='none';flipArea.style.display='flex';
-    loadingEl.style.cssText='display:flex;opacity:1;pointer-events:auto;';
-    fillEl.style.width='0%';
-    titleEl.textContent=name;
-    dlBtn.href=file;dlBtn.download=file.split('/').pop();
+  function syncUI() {
+    pgInput.value = pageNum;
+    btnPrev.disabled = pageNum <= 1;
+    btnNext.disabled = pageNum >= totalPages;
+  }
+
+  async function openViewer(file, name) {
+    pdfDoc = null;
+    pageFlip = null;
+    pageNum = 1;
+    totalPages = 0;
+    rendered.clear();
+    currentZoom = 1.0;
+    viewerMode = 'flip';
+    bookEl.innerHTML = '';
+    scrollArea.innerHTML = '';
+    scrollArea.style.display = 'none';
+    flipArea.style.display = 'flex';
+    loadingEl.style.cssText = 'display:flex;opacity:1;pointer-events:auto;';
+    fillEl.style.width = '0%';
+    titleEl.textContent = name;
+    dlBtn.href = file;
+    dlBtn.download = file.split('/').pop();
     resetZoom();
-    modeLbl.textContent='Scroll View';
-    btnMode.querySelector('.material-symbols-outlined').textContent='import_contacts';
-    overlay.style.display='flex';
-    requestAnimationFrame(()=>overlay.classList.add('visible'));
-    document.body.style.overflow='hidden';
-    if(typeof pdfjsLib==='undefined'){lblEl.textContent='PDF.js not loaded - refresh.';return;}
-    try{
-      setProgress(12,'Opening document…');
-      pdfDoc=await pdfjsLib.getDocument({url:file,cMapUrl:CMAP,cMapPacked:true,rangeChunkSize:65536}).promise;
-      totalPages=pdfDoc.numPages;pgTotal.textContent=totalPages;pgInput.max=totalPages;
-      setProgress(40,'Preparing pages…');
-      const fp0=await pdfDoc.getPage(1);
-      const vp0=fp0.getViewport({scale:1});
-      const pw=Math.round(vp0.width),ph=Math.round(vp0.height);
-      buildStructure(pw,ph);
-      setProgress(60,'Rendering…');
-      await Promise.all([renderPage(1,pw,ph),totalPages>=2?renderPage(2,pw,ph):Promise.resolve()]);
-      setProgress(90,'Starting viewer…');
-      initFlip(pw,ph);
-      if(isMobile)enableScroll();
-      else{zoomEl=bookEl;}
-      hideLoading();syncUI();applyZoomCSS();
-      (async()=>{for(let i=3;i<=totalPages;i++)await renderPage(i,pw,ph);})();
-    }catch(err){
-      console.error(err);
-      lblEl.innerHTML='<span style="color:#dc2626">Failed to load. <a href="'+file+'" download style="color:var(--blue);text-decoration:underline">Download directly</a></span>';
+    modeLbl.textContent = 'Scroll View';
+    btnMode.querySelector('.material-symbols-outlined').textContent = 'import_contacts';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    document.body.style.overflow = 'hidden';
+
+    if (typeof pdfjsLib === 'undefined') {
+      lblEl.textContent = 'PDF.js library not loaded - please refresh.';
+      return;
+    }
+
+    try {
+      setProgress(15, 'Opening document…');
+      pdfDoc = await pdfjsLib.getDocument({ url: file, cMapUrl: CMAP, cMapPacked: true }).promise;
+      totalPages = pdfDoc.numPages;
+      pgTotal.textContent = totalPages;
+      pgInput.max = totalPages;
+
+      setProgress(40, 'Building pages…');
+      const fp0 = await pdfDoc.getPage(1);
+      const vp0 = fp0.getViewport({ scale: 1 });
+      const pw = Math.round(vp0.width);
+      const ph = Math.round(vp0.height);
+      docPageWidth = pw;
+      docPageHeight = ph;
+
+      buildStructure(pw, ph);
+
+      setProgress(65, 'Rendering initial spread…');
+      // Pre-render pages 1 through 4
+      const initRenders = [renderPage(1, pw, ph)];
+      if (totalPages >= 2) initRenders.push(renderPage(2, pw, ph));
+      if (totalPages >= 3) initRenders.push(renderPage(3, pw, ph));
+      if (totalPages >= 4) initRenders.push(renderPage(4, pw, ph));
+      await Promise.all(initRenders);
+
+      setProgress(90, 'Starting viewer…');
+      initFlip(pw, ph);
+      zoomEl = bookEl;
+
+      hideLoading();
+      syncUI();
+      applyZoomCSS();
+
+      // Background progressive rendering of remaining pages
+      (async () => {
+        for (let i = 5; i <= totalPages; i++) {
+          if (!pdfDoc) break;
+          await renderPage(i, pw, ph);
+          await new Promise(r => setTimeout(r, 20));
+        }
+      })();
+    } catch (err) {
+      console.error('Error opening document:', err);
+      lblEl.innerHTML = '<span style="color:#dc2626">Failed to load. <a href="' + file + '" download style="color:var(--blue);text-decoration:underline;font-weight:600;">Download directly</a></span>';
     }
   }
 
-  function closeViewer(){
+  function closeViewer() {
     overlay.classList.remove('visible');
-    setTimeout(()=>{
-      overlay.style.display='none';
-      document.body.style.overflow='';
-      try{if(pageFlip){pageFlip.destroy();pageFlip=null;}}catch(e){}
-    },240);
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      try {
+        if (pageFlip) { pageFlip.destroy(); pageFlip = null; }
+      } catch (e) {}
+    }, 240);
   }
 
-  closeBtn.addEventListener('click',closeViewer);
-  btnPrev.addEventListener('click',()=>{if(viewerMode==='flip'&&pageFlip)pageFlip.flipPrev();else goTo(pageNum-1);});
-  btnNext.addEventListener('click',()=>{if(viewerMode==='flip'&&pageFlip)pageFlip.flipNext();else goTo(pageNum+1);});
-  btnFirst.addEventListener('click',()=>goTo(1));
-  btnLast.addEventListener('click',()=>goTo(totalPages));
-  pgInput.addEventListener('change',e=>{const v=parseInt(e.target.value);if(!isNaN(v))goTo(v);});
-  btnMode.addEventListener('click',()=>{if(viewerMode==='flip')enableScroll();else{if(pageFlip)enableFlip();else enableFlip();}});
-  btnSound.addEventListener('click',()=>{
-    soundOn=!soundOn;
-    soundIco.textContent=soundOn?'volume_up':'volume_off';
-    btnSound.classList.toggle('active',soundOn);
+  closeBtn.addEventListener('click', closeViewer);
+
+  btnPrev.addEventListener('click', () => {
+    if (viewerMode === 'flip' && pageFlip) {
+      try {
+        pageFlip.turnToPrevPage();
+      } catch (e) {
+        goTo(pageNum - 1);
+      }
+    } else {
+      goTo(pageNum - 1);
+    }
   });
-  btnZI.addEventListener('click',()=>applyZoom(+0.2));
-  btnZO.addEventListener('click',()=>applyZoom(-0.2));
-  btnZR.addEventListener('click',()=>resetZoom());
-  btnFS.addEventListener('click',()=>{
-    if(!document.fullscreenElement)overlay.requestFullscreen().catch(()=>{});
+
+  btnNext.addEventListener('click', () => {
+    if (viewerMode === 'flip' && pageFlip) {
+      try {
+        pageFlip.turnToNextPage();
+      } catch (e) {
+        goTo(pageNum + 1);
+      }
+    } else {
+      goTo(pageNum + 1);
+    }
+  });
+
+  pgInput.addEventListener('change', e => {
+    const v = parseInt(e.target.value);
+    if (!isNaN(v)) goTo(v);
+  });
+
+  btnMode.addEventListener('click', () => {
+    if (viewerMode === 'flip') enableScroll();
+    else enableFlip();
+  });
+
+  btnSound.addEventListener('click', () => {
+    soundOn = !soundOn;
+    soundIco.textContent = soundOn ? 'volume_up' : 'volume_off';
+    btnSound.classList.toggle('active', soundOn);
+  });
+
+  btnZI.addEventListener('click', () => applyZoom(+0.2));
+  btnZO.addEventListener('click', () => applyZoom(-0.2));
+  btnZR.addEventListener('click', () => resetZoom());
+
+  btnFS.addEventListener('click', () => {
+    if (!document.fullscreenElement) overlay.requestFullscreen().catch(() => {});
     else document.exitFullscreen();
   });
-  document.addEventListener('fullscreenchange',()=>{
-    btnFS.querySelector('.material-symbols-outlined').textContent=
-      document.fullscreenElement?'fullscreen_exit':'fullscreen';
+
+  document.addEventListener('fullscreenchange', () => {
+    btnFS.querySelector('.material-symbols-outlined').textContent =
+      document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
   });
-  window.addEventListener('keydown',e=>{
-    if(overlay.style.display!=='flex')return;
-    if(e.target.tagName==='INPUT')return;
-    switch(e.key){
-      case 'Escape':closeViewer();break;
-      case 'ArrowLeft':case 'PageUp':
-        if(viewerMode==='flip'&&pageFlip)pageFlip.flipPrev();else goTo(pageNum-1);break;
-      case 'ArrowRight':case 'PageDown':case ' ':
+
+  window.addEventListener('keydown', e => {
+    if (overlay.style.display !== 'flex') return;
+    if (e.target.tagName === 'INPUT') return;
+    switch (e.key) {
+      case 'Escape': closeViewer(); break;
+      case 'ArrowLeft': case 'PageUp':
+        if (viewerMode === 'flip' && pageFlip) {
+          try { pageFlip.turnToPrevPage(); } catch (err) { goTo(pageNum - 1); }
+        } else { goTo(pageNum - 1); }
+        break;
+      case 'ArrowRight': case 'PageDown': case ' ':
         e.preventDefault();
-        if(viewerMode==='flip'&&pageFlip)pageFlip.flipNext();else goTo(pageNum+1);break;
-      case 'Home':goTo(1);break;
-      case 'End':goTo(totalPages);break;
-      case 'f':case 'F':btnFS.click();break;
-      case '+':case '=':applyZoom(+0.2);break;
-      case '-':applyZoom(-0.2);break;
-      case '0':resetZoom();break;
+        if (viewerMode === 'flip' && pageFlip) {
+          try { pageFlip.turnToNextPage(); } catch (err) { goTo(pageNum + 1); }
+        } else { goTo(pageNum + 1); }
+        break;
+      case 'f': case 'F': btnFS.click(); break;
+      case '+': case '=': applyZoom(+0.2); break;
+      case '-': applyZoom(-0.2); break;
+      case '0': resetZoom(); break;
     }
   });
 
@@ -692,7 +904,7 @@
   const mBtn = document.getElementById('mobile-menu-btn');
   const mClose = document.getElementById('mobile-menu-close');
   const mOverlay = document.getElementById('mobile-menu-overlay');
-  if(mBtn && mClose && mOverlay) {
+  if (mBtn && mClose && mOverlay) {
     mBtn.addEventListener('click', () => {
       mOverlay.classList.remove('opacity-0', 'pointer-events-none');
       mOverlay.classList.add('opacity-100', 'pointer-events-auto');
@@ -704,6 +916,9 @@
       document.body.style.overflow = '';
     });
   }
+
+  // Initialize Library
+  loadLibraryDocuments();
 })();
 </script>
 </body>
