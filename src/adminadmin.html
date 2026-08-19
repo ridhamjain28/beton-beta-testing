@@ -1713,14 +1713,30 @@
 
     // ── Document Resources Functions ─────────────────────────
     let _documentsMap = new Map();
+    let _documentsSeeded = false;
 
     async function loadDocuments() {
         const tbody = document.getElementById('documents-tbody');
         if (!tbody) return;
         try {
-            const { data, error } = await _db.from('documents').select('*').order('created_at', { ascending: false });
+            let { data, error } = await _db.from('documents').select('*').order('created_at', { ascending: false });
             if (error) throw error;
             _documentsMap.clear();
+
+            // Auto-seed default files if Supabase documents table is empty
+            if ((!data || data.length === 0) && !_documentsSeeded) {
+                _documentsSeeded = true;
+                const defaultDocs = [
+                    { title: 'BETON Price List', category: 'Price List', file_url: 'assets/docs/beton-price-list.pdf', is_visible: true },
+                    { title: 'BETON Product Catalogue', category: 'Catalogue', file_url: 'assets/docs/BETON_Catalogue.pdf', is_visible: true }
+                ];
+                const { error: seedErr } = await _db.from('documents').insert(defaultDocs);
+                if (!seedErr) {
+                    const res = await _db.from('documents').select('*').order('created_at', { ascending: false });
+                    if (res.data) data = res.data;
+                }
+            }
+
             if (!data || data.length === 0) {
                 tbody.innerHTML = `<tr class="empty-row"><td colspan="5" style="text-align:center; padding:2rem; color:#9ca3af;">No uploaded PDF documents found in Supabase. Upload one above!</td></tr>`;
                 return;

@@ -329,7 +329,7 @@
             maxHeight: maxH,
             drawShadow: !isLowEndDevice,
             flippingTime: isLowEndDevice ? 380 : 650,
-            usePortrait: true,
+            usePortrait: isMobile,
             startZIndex: 1,
             startPage: 0,
             autoSize: true,
