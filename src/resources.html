@@ -111,26 +111,22 @@
       flex-shrink: 0;
     }
     #viewer-title { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    #btn-download {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 16px; border-radius: 5px;
-      background: var(--blue); color: #fff;
+    #btn-download, #btn-close {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      height: 36px; padding: 0 16px; border-radius: 5px;
       font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
-      text-decoration: none; border: none; cursor: pointer; flex-shrink: 0;
-      transition: background 0.14s;
+      cursor: pointer; flex-shrink: 0; box-sizing: border-box;
+      transition: all 0.14s;
     }
-    #btn-download:hover { background: var(--blue-hov); }
-    #btn-download .material-symbols-outlined { font-size: 16px; }
+    #btn-download {
+      background: var(--blue); color: #fff; text-decoration: none; border: 1px solid var(--blue);
+    }
+    #btn-download:hover { background: var(--blue-hov); border-color: var(--blue-hov); }
     #btn-close {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 14px; border-radius: 5px;
-      background: transparent; color: var(--muted);
-      font-family: inherit; font-size: 11px; font-weight: 600;
-      border: 1px solid var(--border); cursor: pointer; flex-shrink: 0;
-      transition: background 0.14s, color 0.14s, border-color 0.14s;
+      background: transparent; color: var(--muted); border: 1px solid var(--border);
     }
     #btn-close:hover { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
-    #btn-close .material-symbols-outlined { font-size: 16px; }
+    #btn-download .material-symbols-outlined, #btn-close .material-symbols-outlined { font-size: 16px; }
 
     #viewer-main {
       flex: 1; min-height: 0; overflow: hidden;
