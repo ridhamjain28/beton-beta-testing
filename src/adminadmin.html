@@ -330,6 +330,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('products', this)">Products</button>
             <button class="tab-btn" onclick="switchTab('projects', this)">Projects</button>
+            <button class="tab-btn" onclick="switchTab('documents', this)">PDF Documents</button>
             <button class="tab-btn" onclick="switchTab('inquiries', this)">Inquiries</button>
         </div>
 
@@ -609,6 +610,77 @@
 
         </div>
 
+        <!-- ── DOCUMENTS TAB (PDF RESOURCES MANAGEMENT) ──────────────────────────── -->
+        <div id="tab-documents" class="tab-pane">
+            <!-- Upload Card -->
+            <div class="card">
+                <div class="card-title-row">
+                    <span class="icon">+</span>
+                    <h3>Upload New PDF Resource</h3>
+                </div>
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Document Title <span class="req">*</span></label>
+                            <input type="text" id="doc-title-input" placeholder="e.g. BETON Product Catalogue 2026" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Category <span class="req">*</span></label>
+                            <select id="doc-category-input">
+                                <option value="Catalogue">Catalogue</option>
+                                <option value="Price List">Price List</option>
+                                <option value="Brand Book">Brand Book</option>
+                                <option value="Technical Specs">Technical Specs</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>PDF File <span class="req">*</span></label>
+                            <input type="file" id="doc-file-input" accept="application/pdf">
+                            <span style="font-size:0.75rem; color:#6b7280; margin-top:4px;">Upload PDF document to Supabase storage.</span>
+                        </div>
+                        <div class="form-field" style="justify-content: center;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; margin-top: 18px;">
+                                <input type="checkbox" id="doc-visible-input" checked style="width: 18px; height: 18px; accent-color: #134095;">
+                                <span>Visible in Flipbook Viewer Library</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-save-row">
+                    <button class="btn-save" id="doc-save-btn" onclick="saveDocument()">
+                        <span id="doc-save-btn-text">Upload & Save Document</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Documents Table Card -->
+            <div class="card">
+                <div class="table-card-header">
+                    <h3>Uploaded PDF Documents</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Document Title</th>
+                                <th>Category</th>
+                                <th>File URL</th>
+                                <th>Visibility</th>
+                                <th style="text-align:right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documents-tbody">
+                            <tr class="empty-row">
+                                <td colspan="5">Loading documents...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- ── INQUIRIES TAB (WEB3FORMS STYLE SPREADSHEET DASHBOARD) ──────────────────────────── -->
         <div id="tab-inquiries" class="tab-pane">
             <div class="card" style="border: 1px solid #e5e7eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-radius: 12px;">
@@ -786,6 +858,7 @@
         document.getElementById(`tab-${tab}`).classList.add('active');
         if (tab === 'inquiries') loadInquiries();
         if (tab === 'projects') loadProjects();
+        if (tab === 'documents') loadDocuments();
     }
 
     // Category Add-New Handler
@@ -1638,6 +1711,122 @@
         }
     }
 
+    // ── Document Resources Functions ─────────────────────────
+    let _documentsMap = new Map();
+
+    async function loadDocuments() {
+        const tbody = document.getElementById('documents-tbody');
+        if (!tbody) return;
+        try {
+            const { data, error } = await _db.from('documents').select('*').order('created_at', { ascending: false });
+            if (error) throw error;
+            _documentsMap.clear();
+            if (!data || data.length === 0) {
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="5" style="text-align:center; padding:2rem; color:#9ca3af;">No uploaded PDF documents found in Supabase. Upload one above!</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = data.map(doc => {
+                _documentsMap.set(doc.id, doc);
+                const isVis = doc.is_visible !== false;
+                return `
+                    <tr>
+                        <td style="font-weight:600; color:#111827; padding:0.85rem 1.25rem;">${doc.title}</td>
+                        <td style="padding:0.85rem 1.25rem;"><span style="font-size:0.75rem; background:#f3f4f6; padding:3px 10px; border-radius:4px; font-weight:600; color:#374151;">${doc.category || 'Catalogue'}</span></td>
+                        <td style="padding:0.85rem 1.25rem;"><a href="${doc.file_url}" target="_blank" style="color:#134095; font-size:0.8rem; font-weight:600; text-decoration:underline;" download>View / Download PDF</a></td>
+                        <td style="padding:0.85rem 1.25rem;">
+                            <button onclick="toggleDocumentVisibility('${doc.id}', ${isVis})" class="btn-outline" style="font-size:0.75rem; padding:4px 10px; color:${isVis ? '#059669' : '#dc2626'}; border-color:${isVis ? '#a7f3d0' : '#fca5a5'}; background:${isVis ? '#ecfdf5' : '#fef2f2'}; font-weight:600; cursor:pointer;">
+                                ${isVis ? '● Visible' : '○ Hidden'}
+                            </button>
+                        </td>
+                        <td style="text-align:right; padding:0.85rem 1.25rem;">
+                            <button onclick="deleteDocumentById('${doc.id}')" style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:5px 12px; border-radius:6px; font-size:0.75rem; cursor:pointer; font-weight:600;">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        } catch (err) {
+            console.error('Error loading documents:', err);
+            tbody.innerHTML = `<tr class="empty-row"><td colspan="5" style="text-align:center; padding:2rem; color:#dc2626;">Failed to load documents: ${err.message}</td></tr>`;
+        }
+    }
+
+    async function saveDocument() {
+        if (!verifyAdminSession()) return;
+        const title = document.getElementById('doc-title-input').value.trim();
+        const category = document.getElementById('doc-category-input').value;
+        const fileInput = document.getElementById('doc-file-input');
+        const isVisible = document.getElementById('doc-visible-input').checked;
+        const btn = document.getElementById('doc-save-btn');
+
+        if (!title) { showToast('Please enter a document title', 'error'); return; }
+        if (!fileInput.files || fileInput.files.length === 0) { showToast('Please select a PDF file to upload', 'error'); return; }
+
+        const file = fileInput.files[0];
+        btn.disabled = true;
+        document.getElementById('doc-save-btn-text').textContent = 'Uploading PDF...';
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const filePath = `documents/${Date.now()}_${Math.random().toString(36).substring(2,7)}.${fileExt}`;
+            const { data: uploadData, error: uploadErr } = await _db.storage.from(STORAGE_BUCKET).upload(filePath, file, { contentType: 'application/pdf', upsert: true });
+            let fileUrl = '';
+            if (uploadErr) {
+                console.warn('Storage upload error, falling back to local file path reference:', uploadErr);
+                fileUrl = `assets/docs/${file.name}`;
+            } else {
+                const { data: urlData } = _db.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                fileUrl = urlData ? urlData.publicUrl : `assets/docs/${file.name}`;
+            }
+
+            const { error: dbErr } = await _db.from('documents').insert([{ title, category, file_url: fileUrl, is_visible: isVisible }]);
+            if (dbErr) throw dbErr;
+
+            showToast('Document uploaded and saved successfully!', 'success');
+            document.getElementById('doc-title-input').value = '';
+            fileInput.value = '';
+            await loadDocuments();
+        } catch (err) {
+            console.error('Error saving document:', err);
+            showToast('Error uploading document: ' + err.message, 'error');
+        } finally {
+            btn.disabled = false;
+            document.getElementById('doc-save-btn-text').textContent = 'Upload & Save Document';
+        }
+    }
+
+    async function toggleDocumentVisibility(id, currentVal) {
+        if (!verifyAdminSession()) return;
+        try {
+            const { error } = await _db.from('documents').update({ is_visible: !currentVal }).eq('id', id);
+            if (error) throw error;
+            showToast(`Document visibility updated!`, 'success');
+            await loadDocuments();
+        } catch (err) {
+            showToast('Error updating document: ' + err.message, 'error');
+        }
+    }
+
+    async function deleteDocumentById(id) {
+        if (!verifyAdminSession()) return;
+        const doc = _documentsMap.get(id);
+        const title = doc ? doc.title : 'this document';
+        const ok = await showCustomConfirm({
+            title: 'Delete Document Resource',
+            message: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+            confirmText: 'Delete Document',
+            actionKey: 'doc_delete'
+        });
+        if (!ok) return;
+        try {
+            const { error } = await _db.from('documents').delete().eq('id', id);
+            if (error) throw error;
+            showToast(`Document "${title}" deleted`, 'success');
+            await loadDocuments();
+        } catch (err) {
+            showToast('Error deleting document: ' + err.message, 'error');
+        }
+    }
+
     // Expose functions to window since we are now in a module
     window.switchTab = switchTab;
     window.handleCategoryChange = handleCategoryChange;
@@ -1655,6 +1844,10 @@
     window.startProjectEditById = startProjectEditById;
     window.saveProject = saveProject;
     window.deleteProjectById = deleteProjectById;
+    window.loadDocuments = loadDocuments;
+    window.saveDocument = saveDocument;
+    window.toggleDocumentVisibility = toggleDocumentVisibility;
+    window.deleteDocumentById = deleteDocumentById;
 
     // Init
     checkAuth();

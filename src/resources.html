@@ -316,8 +316,8 @@
         </div>
       </div>
 
-      <!-- CATALOGUE (hidden - remove style when ready) -->
-      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue" style="display:none">
+      <!-- CATALOGUE -->
+      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue">
         <div class="card-thumb" id="thumb-1">
           <div class="ph">
             <span class="material-symbols-outlined">picture_as_pdf</span>
@@ -520,6 +520,8 @@
       fi.alt='Page '+i;fp.appendChild(fi);bookEl.appendChild(fp);
       const sp=document.createElement('div');
       sp.className='scroll-pg';sp.id='sp-'+i;
+      const si=document.createElement('img');
+      si.className='w-full h-auto block';si.alt='Page '+i;
       sp.appendChild(si);
       scrollArea.appendChild(sp);
     }

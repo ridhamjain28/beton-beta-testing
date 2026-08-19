@@ -34,3 +34,25 @@ INSERT INTO products (ref, name, category, subcategory, badge, ip_rating, optics
 ('L-552', 'Matrix 60 Profile', 'Linear Profiles', NULL, NULL, NULL, NULL, NULL, NULL, 'assets/images/products/render-2.webp', NULL, '2-3 Weeks', 'Surat, Gujarat', '5 Years Limited'),
 ('W-883', 'Titan Flood Max', 'Outdoor Lighting', NULL, NULL, NULL, NULL, NULL, NULL, 'assets/images/products/innova.webp', NULL, '3-4 Weeks', 'Surat, Gujarat', '5 Years Limited')
 ON CONFLICT (ref) DO NOTHING;
+
+-- Documents Table Setup (for 3D Flipbook PDF Management)
+CREATE TABLE IF NOT EXISTS documents (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  title text NOT NULL,
+  file_url text NOT NULL,
+  category text DEFAULT 'Catalogue',
+  pages_count integer DEFAULT 0,
+  is_visible boolean DEFAULT true,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow public select documents" ON documents FOR SELECT USING (true);
+CREATE POLICY "Allow admin manage documents" ON documents FOR ALL USING (auth.role() = 'authenticated');
+
+-- Insert default documents if not existing
+INSERT INTO documents (title, file_url, category, is_visible) VALUES
+('BETON Price List', 'assets/docs/beton-price-list.pdf', 'Price List', true),
+('BETON Product Catalogue', 'assets/docs/BETON_Catalogue.pdf', 'Catalogue', true)
+ON CONFLICT DO NOTHING;
+
