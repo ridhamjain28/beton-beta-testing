@@ -134,6 +134,11 @@
             .home-hero-actions {
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .home-hero-actions a {
+                width: auto;
             }
         }
 
@@ -266,11 +271,12 @@
     </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
+<div class="beton-page-root max-w-[1440px] mx-auto relative min-h-screen bg-[#FEFEFE]"><header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
 <div class="flex-1">
 <a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.onerror=null; this.src='Beton_logo.jpg';"/></a>
 </div>
 <nav class="hidden lg:flex items-center gap-8 flex-none">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium text-[#EF7F1A] italic transition-colors" href="index.html">Home</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
@@ -324,7 +330,7 @@
     });
 </script>
 <!-- HERO SECTION -->
-<section class="home-hero flex flex-col lg:flex-row h-[calc(100vh-80px)] border-b border-[var(--border-neutral)]">
+<section class="home-hero flex flex-col lg:flex-row border-b border-[var(--border-neutral)]">
 <div class="home-hero-media lg:w-2/3 relative overflow-hidden group">
 <img alt="Architectural Lighting" class="w-full h-full object-cover image-grayscale" loading="lazy" src="assets/images/site/landing-page-beton2.jpeg"/>
 <div class="absolute bottom-8 left-8 text-[10px] tracking-[0.3em] uppercase text-white/80 font-medium">
@@ -339,14 +345,14 @@
 <p class="text-sm text-neutral-600 leading-relaxed mb-10 fade-in stagger-2">
                     Premium architectural lighting for homes, studios, showrooms, offices, and hospitality spaces. Designed with in-house assembly, testing, and quality control in Gujarat.
                 </p>
-<div class="home-hero-actions flex flex-col sm:flex-row gap-4 fade-in stagger-3">
-    <a class="flex items-center justify-center gap-4 px-6 py-4 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.2em] font-semibold group hover:bg-[#D96F16] transition-colors" href="contact.html">
-        Visit Showroom 
-        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300" icon="lucide:map-pin"></iconify-icon>
+<div class="home-hero-actions flex flex-col gap-3 fade-in stagger-3">
+    <a class="flex items-center justify-center gap-3 px-5 py-4 bg-[#EF7F1A] text-white text-[10px] uppercase tracking-[0.12em] lg:tracking-[0.2em] font-semibold group hover:bg-[#D96F16] transition-colors w-full" href="https://maps.app.goo.gl/JLtPKETxD4c3Cwkz6" target="_blank" rel="noopener noreferrer">
+        Visit Showroom
+        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" icon="lucide:map-pin"></iconify-icon>
     </a>
-    <a class="flex items-center justify-center gap-4 px-6 py-4 border border-[var(--border-neutral)] text-[var(--text-primary)] text-[10px] uppercase tracking-[0.2em] font-semibold group hover:bg-neutral-50 transition-colors" href="products.html">
-        Explore Collection 
-        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300" icon="lucide:arrow-right"></iconify-icon>
+    <a class="flex items-center justify-center gap-3 px-5 py-4 border border-[var(--border-neutral)] text-[var(--text-primary)] text-[10px] uppercase tracking-[0.12em] lg:tracking-[0.2em] font-semibold group hover:bg-neutral-50 transition-colors w-full" href="products.html">
+        Explore Collection
+        <iconify-icon class="group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" icon="lucide:arrow-right"></iconify-icon>
     </a>
 </div>
 </div>
@@ -365,10 +371,10 @@
 <!-- SHOP BY SPACE -->
 <section class="home-applications border-b border-[var(--border-neutral)]">
 <div class="home-applications-intro flex border-b border-[var(--border-neutral)]">
-<div class="home-applications-label w-1/4 p-8 border-r border-[var(--border-neutral)] flex items-end">
+<div class="home-applications-label w-full lg:w-1/4 p-4 lg:p-8 border-r border-[var(--border-neutral)] flex items-end">
 <h3 class="text-[10px] uppercase tracking-[0.3em] font-semibold">Application Spheres</h3>
 </div>
-<div class="home-applications-copy w-3/4 p-8">
+<div class="home-applications-copy w-full lg:w-3/4 p-4 lg:p-8">
 <p class="text-xs text-[#134095]/90 max-w-md">Our products are designed to meet the rigorous demands of specialized environments, from residential sanctuaries to institutional benchmarks.</p>
 </div>
 </div>
@@ -433,7 +439,14 @@
 </div>
 <a class="text-[10px] uppercase tracking-[0.2em] font-semibold underline-hover" href="projects.html" id="view-all-projects">View Archive</a>
 </div>
-<div class="home-project-strip flex overflow-x-auto px-8 lg:px-16 gap-8 no-scrollbar">
+<style>
+.blue-scrollbar::-webkit-scrollbar { height: 8px; }
+.blue-scrollbar::-webkit-scrollbar-track { background: rgba(19, 64, 149, 0.08); border-radius: 4px; }
+.blue-scrollbar::-webkit-scrollbar-thumb { background: #134095; border-radius: 4px; }
+.blue-scrollbar::-webkit-scrollbar-thumb:hover { background: #0d2d6b; }
+.blue-scrollbar { scrollbar-color: #134095 rgba(19, 64, 149, 0.08); scrollbar-width: thin; }
+</style>
+<div class="home-project-strip flex overflow-x-auto px-8 lg:px-16 gap-8 pb-4 blue-scrollbar">
 <div class="home-project-card w-full md:w-auto md:min-w-[400px] lg:min-w-[600px] group">
 <div class="aspect-[16/10] overflow-hidden mb-6">
 <img class="w-full h-full object-cover image-grayscale group-hover:scale-105 transition-transform duration-1000" loading="lazy" src="assets/images/temporary/beton-product-render.webp"/>
@@ -448,7 +461,7 @@
 </div>
 <div class="home-project-card w-full md:w-auto md:min-w-[400px] lg:min-w-[600px] group">
 <div class="aspect-[16/10] overflow-hidden mb-6">
-<img class="w-full h-full object-cover image-grayscale group-hover:scale-105 transition-transform duration-1000" loading="lazy" src="assets/images/temporary/beton-product-render.webp"/>
+<img class="w-full h-full object-cover image-grayscale group-hover:scale-105 transition-transform duration-1000" loading="lazy" src="assets/images/temporary/beton-architectural-space.webp"/>
 </div>
 <div class="home-project-meta flex justify-between items-start">
 <div>
@@ -456,6 +469,18 @@
 <p class="text-[10px] uppercase tracking-widest text-[#134095]/90">Office • Ahmedabad</p>
 </div>
 <span class="text-[10px] border border-[#134095]/20 px-3 py-1">Case 02</span>
+</div>
+</div>
+<div class="home-project-card w-full md:w-auto md:min-w-[400px] lg:min-w-[600px] group">
+<div class="aspect-[16/10] overflow-hidden mb-6">
+<img class="w-full h-full object-cover image-grayscale group-hover:scale-105 transition-transform duration-1000" loading="lazy" src="assets/images/applications/commercial-showroom.jpg"/>
+</div>
+<div class="home-project-meta flex justify-between items-start">
+<div>
+<h3 class="text-lg font-serif mb-1 uppercase tracking-tight">Horizon Design Studio &amp; Gallery</h3>
+<p class="text-[10px] uppercase tracking-widest text-[#134095]/90">Commercial • Vadodara</p>
+</div>
+<span class="text-[10px] border border-[#134095]/20 px-3 py-1">Case 03</span>
 </div>
 </div>
 </div>
@@ -492,7 +517,7 @@
 </section>
 <!-- MANUFACTURING EXCELLENCE -->
 <section class="flex flex-col lg:flex-row border-b border-[var(--border-neutral)]">
-<div class="lg:w-1/2 p-16 lg:p-24 bg-[#FEFEFE]">
+<div class="lg:w-1/2 p-6 md:p-12 lg:p-24 bg-[#FEFEFE]">
 <span class="text-[10px] uppercase tracking-[0.4em] text-[#134095]/90 block mb-6">Craftsmanship</span>
 <h2 class="text-4xl lg:text-5xl font-serif leading-tight mb-8">
                     A Legacy of <br/><em class="italic text-[#EF7F1A]">Precision Engineering.</em>

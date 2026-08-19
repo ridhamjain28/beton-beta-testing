@@ -136,6 +136,7 @@
       flex: 1; min-height: 0; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       position: relative; background: var(--vbg);
+      width: 100%;
     }
     #viewer-loading {
       position: absolute; inset: 0; z-index: 20;
@@ -156,11 +157,12 @@
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
-      padding: 12px;
+      padding: 6px;
     }
     #book-el {
       display: flex; align-items: center; justify-content: center;
       margin: auto;
+      max-width: 100%; max-height: 100%;
     }
     .my-page {
       background: #ffffff;
@@ -172,13 +174,13 @@
       object-fit: fill;
       display: block;
     }
-    #scroll-area { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 20px 16px; }
-    .scroll-pg { background: #fff; max-width: 900px; margin: 0 auto 16px; box-shadow: 0 4px 20px rgba(19,64,149,0.10); border-radius: 2px; }
+    #scroll-area { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 16px 12px; }
+    .scroll-pg { background: #fff; max-width: 900px; margin: 0 auto 16px; box-shadow: 0 4px 20px rgba(19,64,149,0.10); border-radius: 2px; width: 100%; }
     .scroll-pg img { width: 100%; height: auto; display: block; }
 
     #viewer-footer {
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 8px; padding: 8px 16px;
+      flex-wrap: wrap; gap: 6px; padding: 6px 14px;
       background: var(--surface); border-top: 1px solid var(--border);
       flex-shrink: 0;
     }
@@ -186,51 +188,63 @@
     .ctrl-sep { width: 1px; height: 24px; background: var(--border); margin: 0 6px; }
     .cb {
       display: inline-flex; align-items: center; justify-content: center;
-      height: 32px; min-width: 32px; padding: 0 8px;
+      height: 30px; min-width: 30px; padding: 0 7px;
       border-radius: 5px; border: 1px solid var(--border);
       background: transparent; color: var(--muted);
       font-family: inherit; font-size: 11px; font-weight: 600;
-      cursor: pointer; gap: 5px; white-space: nowrap;
+      cursor: pointer; gap: 4px; white-space: normal; text-align: center;
       transition: background 0.12s, color 0.12s, border-color 0.12s;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
+      overflow-wrap: anywhere; word-break: break-word;
     }
-    .cb .material-symbols-outlined { font-size: 17px; }
+    .cb .material-symbols-outlined { font-size: 16px; }
     .cb:hover:not(:disabled) { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
     .cb:disabled { opacity: 0.3; pointer-events: none; }
     .cb.active { background: var(--blue-lgt); color: var(--blue); border-color: var(--blue-mid); }
     #pg-nav {
-      display: flex; align-items: center; gap: 6px;
-      padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg);
+      display: flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg);
     }
     #pg-lbl { font-size: 10px; color: var(--muted); }
     #pg-input {
-      width: 36px; text-align: center;
+      width: 34px; text-align: center;
       background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
-      color: var(--text); font-family: inherit; font-size: 12px; font-weight: 600;
-      padding: 2px 4px; outline: none; transition: border-color 0.14s;
+      color: var(--text); font-family: inherit; font-size: 11px; font-weight: 600;
+      padding: 2px 3px; outline: none; transition: border-color 0.14s;
     }
     #pg-input:focus { border-color: var(--blue); }
-    #pg-sep { font-size: 11px; color: var(--muted); }
-    #pg-total { font-size: 12px; font-weight: 600; color: var(--text); }
-    #zoom-pct { font-size: 11px; font-weight: 600; color: var(--muted); min-width: 42px; text-align: center; }
+    #pg-sep { font-size: 10px; color: var(--muted); }
+    #pg-total { font-size: 11px; font-weight: 600; color: var(--text); }
+    #zoom-pct { font-size: 11px; font-weight: 600; color: var(--muted); min-width: 38px; text-align: center; }
+
+    /* Button and text overflow safeguards */
+    button, a {
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
 
     @media (max-width: 768px) {
       #lib-header { padding: 10px 14px; gap: 10px; }
       #search-wrap { width: auto; flex: 1; }
       .back-lbl { display: none; }
       #lib-main { padding: 16px; }
-      #doc-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+      #doc-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
       #viewer-header { padding: 8px 12px; }
-      #viewer-footer { padding: 6px 10px; gap: 6px; }
+      #viewer-footer { padding: 4px 8px; gap: 4px; }
       .ctrl-sep { display: none; }
       #zoom-pct { display: none; }
+      .cb { padding: 0 5px; height: 28px; font-size: 10px; }
     }
-    @media (max-width: 480px) { #doc-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) {
+      #doc-grid { grid-template-columns: 1fr 1fr; }
+      #btn-download span:not(.material-symbols-outlined) { display: none; }
+      #btn-download { padding: 6px 10px; }
+    }
   </style>
 </head>
 <body>
 
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-navy)] relative min-h-screen bg-[#FEFEFE]" id="library-view">
+<div class="beton-page-root max-w-[1440px] mx-auto relative min-h-screen bg-[#FEFEFE]" id="library-view">
   <!-- GLOBAL HEADER -->
   <header class="about-site-header sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between" id="site-header">
     <div class="flex-1">
@@ -239,7 +253,8 @@
       </a>
     </div>
     <nav class="hidden lg:flex items-center gap-10 flex-none">
-      <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
       <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
       <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
       <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="projects.html">Projects</a>
@@ -301,8 +316,8 @@
         </div>
       </div>
 
-      <!-- CATALOGUE (hidden - remove style when ready) -->
-      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue" style="display:none">
+      <!-- CATALOGUE -->
+      <div class="doc-card" data-file="assets/docs/BETON_Catalogue.pdf" data-name="BETON Product Catalogue">
         <div class="card-thumb" id="thumb-1">
           <div class="ph">
             <span class="material-symbols-outlined">picture_as_pdf</span>
@@ -505,6 +520,8 @@
       fi.alt='Page '+i;fp.appendChild(fi);bookEl.appendChild(fp);
       const sp=document.createElement('div');
       sp.className='scroll-pg';sp.id='sp-'+i;
+      const si=document.createElement('img');
+      si.className='w-full h-auto block';si.alt='Page '+i;
       sp.appendChild(si);
       scrollArea.appendChild(sp);
     }

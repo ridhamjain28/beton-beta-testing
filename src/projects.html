@@ -12,6 +12,7 @@
 <meta name="description" content="Case studies and supplied lighting projects by Beton Lighting, premier manufacturer in Surat, Gujarat."/>
 <link rel="stylesheet" href="styles.css">
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="inquiry-tray.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <style>
     :root {
@@ -64,12 +65,13 @@
 </style>
 </head>
 <body>
-<div class="max-w-[1440px] mx-auto border-x border-[var(--border-neutral)] relative min-h-screen bg-[#FEFEFE]">
+<div class="beton-page-root max-w-[1440px] mx-auto relative min-h-screen bg-[#FEFEFE]">
 <header class="sticky top-0 z-50 bg-[#FEFEFE]/95 backdrop-blur-sm border-b border-[#134095]/15 h-20 flex items-center px-8 lg:px-16 justify-between">
 <div class="flex-1">
 <a class="flex items-center" href="index.html"><img alt="Beton" class="h-12 object-contain" src="Beton_logo.webp" onerror="this.src='Beton_logo.jpg'"/></a>
 </div>
 <nav class="hidden lg:flex items-center gap-10 flex-none">
+<a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="index.html">Home</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="about.html">About</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="products.html">Products</a>
 <a class="text-[10px] uppercase tracking-[0.2em] font-medium hover:text-[#EF7F1A] transition-colors" href="applications.html">Applications</a>
@@ -169,6 +171,24 @@ document.addEventListener('DOMContentLoaded', () => {
 <div><span class="project-label text-[#134095]/70 block mb-2">Specification Output</span><p class="text-sm text-[#374151]">Dimming compatibility notes and driver calculations</p></div>
 </div>
 </article>
+
+<!-- Case Study 3 -->
+<article id="gallery" class="project-card border border-[var(--border-neutral)] bg-white scroll-mt-24">
+<div class="aspect-[16/10] overflow-hidden">
+<img alt="Horizon Design Studio &amp; Gallery" class="project-image w-full h-full object-cover" src="assets/images/applications/commercial-showroom.jpg" loading="lazy"/>
+</div>
+<div class="p-6 md:p-8">
+<span class="project-label text-[#EF7F1A] block mb-3">Case Study Format / Studio &amp; Gallery</span>
+<h2 class="text-3xl font-serif mb-4">Horizon Design Studio &amp; Gallery</h2>
+<p class="text-base text-[#374151] leading-relaxed max-w-3xl">Architectural lighting for design studios and exhibition galleries requires seamless integration between ambient linear fixtures and glare-free directional spots.</p>
+</div>
+<div class="project-meta-grid">
+<div><span class="project-label text-[#134095]/70 block mb-2">Client Brief</span><p class="text-sm text-[#374151]">Balanced ambient illumination and focus lighting for artwork</p></div>
+<div><span class="project-label text-[#134095]/70 block mb-2">Beton Response</span><p class="text-sm text-[#374151]">Surface linear profile network paired with low-glare downlights</p></div>
+<div><span class="project-label text-[#134095]/70 block mb-2">Supplied Families</span><p class="text-sm text-[#374151]">Matrix 40 Profile, Apex Recessed Trimless</p></div>
+<div><span class="project-label text-[#134095]/70 block mb-2">Specification Output</span><p class="text-sm text-[#374151]">Custom driver layout and mounting hardware schedules</p></div>
+</div>
+</article>
 </div>
 </section>
 </main>
@@ -199,6 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 </div>
 </footer>
+<!-- Mobile Sticky Enquiry Bar -->
+<div class="beton-sticky-enquiry" aria-label="Quick enquiry actions">
+  <a class="secondary" href="tel:+919909912897"><iconify-icon icon="lucide:phone"></iconify-icon><span>Call Us</span></a>
+  <a class="primary" href="contact.html"><iconify-icon icon="lucide:send"></iconify-icon><span>Contact Us</span></a>
+</div>
 </div>
 </body>
 </html>
