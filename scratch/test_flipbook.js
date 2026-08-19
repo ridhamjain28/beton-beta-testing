@@ -20,13 +20,12 @@ const path = require('path');
   console.log('Waiting for viewer overlay and PDF loading...');
   await page.waitForSelector('#viewer-overlay.visible', { state: 'visible' });
   
-  // Wait until loading overlay vanishes or flip-area gets populated
+  // Wait until loading overlay vanishes
   await page.waitForFunction(() => {
     const loading = document.getElementById('viewer-loading');
     return loading && (loading.style.display === 'none' || loading.style.opacity === '0');
   }, { timeout: 15000 });
 
-  // Give additional time for page-flip rendering
   await page.waitForTimeout(1000);
 
   console.log('Navigating to Page 4...');
@@ -34,19 +33,16 @@ const path = require('path');
   await pgInput.fill('4');
   await pgInput.press('Enter');
 
-  // Wait for flip animation / render to complete
   await page.waitForTimeout(1500);
 
-  // Get current page number displayed in UI
   const currentPageVal = await pgInput.inputValue();
   console.log(`Current page input value: ${currentPageVal}`);
 
-  // Get bounding box of the flipbook container and pages
   const metrics = await page.evaluate(() => {
     const vMain = document.getElementById('viewer-main');
     const flipArea = document.getElementById('flip-area');
     const bookEl = document.getElementById('book-el');
-    const pageFlipContainer = bookEl.querySelector('.st-page-flip') || bookEl.firstElementChild || bookEl;
+    const pageFlipContainer = bookEl.querySelector('.stf__wrapper') || bookEl;
 
     const vMainRect = vMain.getBoundingClientRect();
     const flipAreaRect = flipArea.getBoundingClientRect();
@@ -56,7 +52,6 @@ const path = require('path');
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
-    // Check all page elements that are currently visible
     const pages = Array.from(document.querySelectorAll('.my-page')).map(p => {
       const rect = p.getBoundingClientRect();
       const style = window.getComputedStyle(p);
@@ -79,13 +74,11 @@ const path = require('path');
     };
   });
 
-  console.log('Metrics:', JSON.stringify(metrics, null, 2));
-
   const screenW = metrics.screenWidth;
   const spreadLeft = metrics.containerRect.left;
   const spreadRight = metrics.containerRect.right;
   const spreadWidth = metrics.containerRect.width;
-  const spreadCenter = spreadLeft + spreadWidth / 2;
+  const spreadCenter = (spreadLeft + spreadRight) / 2;
   const screenCenter = screenW / 2;
 
   const leftPct = (spreadLeft / screenW) * 100;
@@ -95,13 +88,14 @@ const path = require('path');
   console.log(`Screen Width: ${screenW}px`);
   console.log(`Spread Range: ${spreadLeft.toFixed(1)}px (${leftPct.toFixed(1)}%) to ${spreadRight.toFixed(1)}px (${rightPct.toFixed(1)}%)`);
   console.log(`Spread Width: ${spreadWidth.toFixed(1)}px`);
-  console.log(`Spread Center: ${spreadCenter.toFixed(1)}px (${centerPct.toFixed(1)}%) vs Screen Center: ${screenCenter}px (50%)`);
+  console.log(`Spread Center: ${spreadCenter.toFixed(1)}px (${centerPct.toFixed(1)}%) vs Screen Center: ${screenCenter}px (50.0%)`);
 
-  const isCenteredIn25to75 = (leftPct >= 20 && rightPct <= 80); // fits within 25%-75% or around middle screen
-  const isHorizontallyCentered = Math.abs(spreadCenter - screenCenter) < 10;
+  // Verify center is between 25% and 75% width of screen
+  const isCenterInMiddleRegion = (centerPct >= 25 && centerPct <= 75);
+  const offsetFromCenter = Math.abs(spreadCenter - screenCenter);
 
-  console.log(`Is horizontally centered in screen middle (25% - 75% region): ${isCenteredIn25to75}`);
-  console.log(`Exact center offset from screen midpoint: ${(spreadCenter - screenCenter).toFixed(1)}px`);
+  console.log(`Is spread center located in middle region (25% - 75% of screen width)? ${isCenterInMiddleRegion}`);
+  console.log(`Exact offset from screen midpoint: ${offsetFromCenter.toFixed(1)}px`);
 
   // Target paths for screenshot
   const targetDir1 = `C:\\Users\\vseri\\.gemini\\antigravity\\brain\\505357e3-8dbc-4ca5-b596-fe5555b24dce`;
